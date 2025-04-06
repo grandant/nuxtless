@@ -1,0 +1,53 @@
+fragment ProductBaseFragment on Product {
+  id
+  name
+  description
+  featuredAsset {
+    id
+    preview
+  }
+}
+
+fragment ProductDetailFragment on Product {
+  ...ProductBaseFragment
+  assets {
+    id
+    preview
+  }
+  variants {
+    id
+    name
+    sku
+    stockLevel
+    currencyCode
+    price
+    priceWithTax
+    featuredAsset {
+      id
+      preview
+    }
+    assets {
+      id
+      preview
+    }
+  }
+}
+
+fragment ProductSearchFragment on SearchResult {
+  productName
+  slug
+  productAsset {
+    id
+    preview
+  }
+  priceWithTax {
+    ... on SinglePrice {
+      value
+    }
+    ... on PriceRange {
+      min
+      max
+    }
+  }
+  currencyCode
+}

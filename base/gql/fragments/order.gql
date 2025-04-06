@@ -1,0 +1,59 @@
+fragment OrderBaseFragment on Order {
+  id
+  code
+  state
+  totalQuantity
+  totalWithTax
+  currencyCode
+  lines {
+    id
+    unitPriceWithTax
+    quantity
+    linePriceWithTax
+    productVariant {
+      id
+      name
+    }
+    featuredAsset {
+      id
+      preview
+    }
+  }
+}
+
+fragment OrderDetailFragment on Order {
+  id
+  code
+  couponCodes
+  state
+  currencyCode
+  totalQuantity
+  subTotalWithTax
+  shippingWithTax
+  totalWithTax
+  discounts {
+    description
+    amountWithTax
+  }
+  lines {
+    id
+    unitPriceWithTax
+    quantity
+    linePriceWithTax
+    productVariant {
+      id
+      name
+      sku
+    }
+    featuredAsset {
+      id
+      preview
+    }
+  }
+  shippingLines {
+    shippingMethod {
+      description
+    }
+    priceWithTax
+  }
+}
