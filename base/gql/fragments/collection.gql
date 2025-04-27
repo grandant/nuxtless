@@ -1,0 +1,26 @@
+fragment CollectionMenuFragment on Collection {
+  id
+  name
+  slug
+  parentId
+  featuredAsset {
+    id
+    preview
+  }
+  children {
+    id
+    name
+    slug
+  }
+}
+
+fragment CollectionPageFragment on Collection {
+  id
+  name
+  slug
+  description
+  featuredAsset {
+    id
+    preview
+  }
+}

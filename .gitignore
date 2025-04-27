@@ -1,0 +1,39 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+package-lock.yaml
+
+# Node dependencies
+node_modules
+
+# Playground files
+**/.playground/
+
+# Logs
+logs
+*.log
+.pnpm-debug.log
+
+# Local History
+.history
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Misc
+.DS_Store
+.idea
+.vscode/
+.swp
+.swx
+
+# Media files
+public/media/
+
+.wrangler

@@ -1,0 +1,29 @@
+query GetMenuCollections {
+  collections(options: { topLevelOnly: true }) {
+    items {
+      ...CollectionMenuFragment
+    }
+  }
+}
+
+query GetPageCollection($slug: String!) {
+  collection(slug: $slug) {
+    ...CollectionPageFragment
+  }
+}
+
+query GetCollectionProducts($slug: String!, $skip: Int, $take: Int) {
+  search(
+    input: {
+      collectionSlug: $slug
+      groupByProduct: true
+      skip: $skip
+      take: $take
+    }
+  ) {
+    totalItems
+    items {
+      ...ProductSearchFragment
+    }
+  }
+}
