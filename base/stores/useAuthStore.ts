@@ -1,20 +1,37 @@
+import { defineStore } from "pinia";
+import { ref, computed } from "vue";
+
 export const useAuthStore = defineStore(
   "auth",
   () => {
-    const token = ref<string | null>(null);
+    const session = ref<{
+      token: string | null;
+      tokenSource?: "vendure";
+      user?: {
+        id: string;
+        email: string;
+      };
+    } | null>(null);
 
-    function setToken(newToken: string) {
-      token.value = newToken;
+    function setSession(
+      token: string,
+      user?: { id: string; email: string },
+      source: "vendure" = "vendure",
+    ) {
+      session.value = { token, tokenSource: source, user };
     }
 
-    function clearToken() {
-      token.value = null;
+    function clearSession() {
+      session.value = null;
     }
+
+    const isAuthenticated = computed(() => !!session.value?.user?.id);
 
     return {
-      token,
-      setToken,
-      clearToken,
+      session,
+      setSession,
+      clearSession,
+      isAuthenticated,
     };
   },
   {

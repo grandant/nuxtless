@@ -1,10 +1,10 @@
-query GetOrder {
+query GetActiveOrder {
   activeOrder {
     ...OrderBaseFragment
   }
 }
 
-query GetOrderDetail {
+query GetActiveOrderDetail {
   activeOrder {
     ...OrderDetailFragment
   }

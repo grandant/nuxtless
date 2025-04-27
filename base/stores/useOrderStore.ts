@@ -2,6 +2,8 @@ import type { ActiveOrder } from "~~/types/order";
 
 export const useOrderStore = defineStore("order", () => {
   const order = ref<ActiveOrder>(null);
+  // TODO: Add logic for multiple coupon codes
+  const couponCode = computed(() => order.value?.couponCodes?.[0] ?? null);
   const loading = ref(false);
   const error = ref<string | null>(null);
 
@@ -10,9 +12,11 @@ export const useOrderStore = defineStore("order", () => {
     error.value = null;
 
     try {
-      const query = type === "detail" ? "GetOrderDetail" : "GetOrder";
-      const { data } = await useAsyncGql(query);
-      order.value = data.value?.activeOrder ?? null;
+      const { activeOrder } = await (type === "detail"
+        ? GqlGetActiveOrderDetail()
+        : GqlGetActiveOrder());
+
+      order.value = activeOrder ?? null;
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message || "Failed to fetch order";
@@ -52,11 +56,10 @@ export const useOrderStore = defineStore("order", () => {
     error.value = null;
 
     try {
-      const { data } = await useAsyncGql("RemoveItemFromOrder", {
+      const { removeOrderLine: result } = await GqlRemoveItemFromOrder({
         orderLineId,
       });
 
-      const result = data.value?.removeOrderLine;
       if (result) {
         const res = useOrderMutation(order, result);
         if (res.status === "error") {
@@ -77,12 +80,11 @@ export const useOrderStore = defineStore("order", () => {
     error.value = null;
 
     try {
-      const { data } = await useAsyncGql("AdjustOrderLine", {
+      const { adjustOrderLine: result } = await GqlAdjustOrderLine({
         orderLineId,
         quantity,
       });
 
-      const result = data.value?.adjustOrderLine;
       if (result) {
         const res = useOrderMutation(order, result);
         if (res.status === "error") {
@@ -103,11 +105,10 @@ export const useOrderStore = defineStore("order", () => {
     error.value = null;
 
     try {
-      const { data } = await useAsyncGql("ApplyCouponCode", {
+      const { applyCouponCode: result } = await GqlApplyCouponCode({
         couponCode,
       });
 
-      const result = data.value?.applyCouponCode;
       if (result) {
         const res = useOrderMutation(order, result);
         if (res.status === "error") {
@@ -128,13 +129,16 @@ export const useOrderStore = defineStore("order", () => {
     error.value = null;
 
     try {
-      const { data } = await useAsyncGql("RemoveCouponCode");
+      if (couponCode.value) {
+        const { removeCouponCode: result } = await GqlRemoveCouponCode({
+          couponCode: couponCode.value,
+        });
 
-      const result = data.value?.removeCouponCode;
-      if (result) {
-        const res = useOrderMutation(order, result);
-        if (res.status === "error") {
-          error.value = res.message;
+        if (result) {
+          const res = useOrderMutation(order, result);
+          if (res.status === "error") {
+            error.value = res.message;
+          }
         }
       }
     } catch (err) {

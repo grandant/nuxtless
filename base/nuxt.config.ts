@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     apiKey: "my-specific-api-key",
     public: {
       apiBase: process.env.API_BASE,
+      channelToken: process.env.CHANNEL_TOKEN,
       GQL_HOST: process.env.GQL_HOST,
       i18n: {
         baseUrl: process.env.I18_BASE_URL,

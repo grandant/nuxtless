@@ -1,0 +1,75 @@
+query GetActiveCustomer {
+  activeCustomer {
+    ...CustomerBase
+  }
+}
+
+mutation LogInUser(
+  $emailAddress: String!
+  $password: String!
+  $rememberMe: Boolean!
+) {
+  login(username: $emailAddress, password: $password, rememberMe: $rememberMe) {
+    ... on CurrentUser {
+      ...CurrentUser
+    }
+    ... on ErrorResult {
+      errorCode
+      message
+    }
+  }
+}
+
+mutation LogOutUser {
+  logout {
+    success
+  }
+}
+
+mutation RegisterCustomerAccount($input: RegisterCustomerInput!) {
+  registerCustomerAccount(input: $input) {
+    ... on Success {
+      success
+    }
+    ... on ErrorResult {
+      errorCode
+      message
+    }
+  }
+}
+
+mutation VerifyCustomerAccount($token: String!, $password: String) {
+  verifyCustomerAccount(token: $token, password: $password) {
+    ... on CurrentUser {
+      ...CurrentUser
+    }
+    ... on ErrorResult {
+      errorCode
+      message
+    }
+  }
+}
+
+mutation RequestPasswordReset($emailAddress: String!) {
+  requestPasswordReset(emailAddress: $emailAddress) {
+    ... on Success {
+      success
+    }
+    ... on ErrorResult {
+      errorCode
+      message
+    }
+  }
+}
+
+mutation ResetPassword($token: String!, $password: String!) {
+  resetPassword(token: $token, password: $password) {
+    ... on CurrentUser {
+      ...CurrentUser
+    }
+    ... on ErrorResult {
+      errorCode
+      message
+    }
+  }
+}

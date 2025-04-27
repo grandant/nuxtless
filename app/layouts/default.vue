@@ -3,36 +3,6 @@ const route = useRoute();
 const { t } = useI18n();
 const head = useLocaleHead();
 const title = computed(() => t(route.meta.title || "messages.layouts.title"));
-
-const query = `
-  mutation AddItemToOrder($variantId: ID!, $quantity: Int!) {
-    addItemToOrder(productVariantId: $variantId, quantity: $quantity) {
-      __typename
-      ... on Order {
-        id
-      }
-      ... on ErrorResult {
-        message
-      }
-    }
-  }
-`;
-
-const res = await fetch("http://localhost:3001/shop-api", {
-  method: "POST",
-  credentials: "include",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    query,
-    variables: { variantId: "1", quantity: 1 },
-  }),
-});
-
-console.log(res.headers);
-
-await useOrderStore().fetchOrder("base");
 </script>
 
 <template>

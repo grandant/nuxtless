@@ -1,0 +1,33 @@
+fragment CustomerBase on Customer {
+  id
+  title
+  firstName
+  lastName
+  emailAddress
+}
+
+fragment CustomerDetail on Customer {
+  ...CustomerBase
+  phoneNumber
+  addresses {
+    id
+    fullName
+    streetLine1
+    city
+    postalCode
+    country {
+      code
+      name
+    }
+  }
+  user {
+    id
+    identifier
+  }
+  customFields
+}
+
+fragment CurrentUser on CurrentUser {
+  id
+  identifier
+}

@@ -1,6 +1,7 @@
 fragment OrderBaseFragment on Order {
   id
   code
+  couponCodes
   state
   totalQuantity
   totalWithTax

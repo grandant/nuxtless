@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { order } = useOrderStore();
+const { order } = storeToRefs(useOrderStore());
 </script>
 
 <template>

@@ -20,3 +20,5 @@ const decrease = () => {
     <UButton size="xs" @click="increase">+</UButton>
   </div>
 </template>
+
+<style lang="css" scoped></style>

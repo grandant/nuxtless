@@ -5,16 +5,6 @@ const props = defineProps<{ line: OrderLine }>();
 
 const orderStore = useOrderStore();
 
-const increase = () => {
-  orderStore.adjustOrderLine(props.line.id, props.line.quantity + 1);
-};
-
-const decrease = () => {
-  if (props.line.quantity > 1) {
-    orderStore.adjustOrderLine(props.line.id, props.line.quantity - 1);
-  }
-};
-
 const remove = () => {
   orderStore.removeItemFromOrder(props.line.id);
 };
@@ -38,8 +28,10 @@ const remove = () => {
       </div>
 
       <div class="mt-2 flex gap-2">
-        <UButton size="xs" @click="decrease">−</UButton>
-        <UButton size="xs" @click="increase">+</UButton>
+        <CartQuantityInput
+          :quantity="line.quantity"
+          @update="(val) => orderStore.adjustOrderLine(line.id, val)"
+        />
         <UButton
           icon="i-lucide-trash"
           color="neutral"
