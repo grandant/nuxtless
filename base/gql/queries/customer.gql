@@ -38,8 +38,8 @@ mutation RegisterCustomerAccount($input: RegisterCustomerInput!) {
   }
 }
 
-mutation VerifyCustomerAccount($token: String!, $password: String) {
-  verifyCustomerAccount(token: $token, password: $password) {
+mutation VerifyCustomerAccount($password: String, $token: String!) {
+  verifyCustomerAccount(password: $password, token: $token) {
     ... on CurrentUser {
       ...CurrentUser
     }

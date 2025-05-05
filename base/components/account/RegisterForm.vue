@@ -13,19 +13,32 @@ const state = reactive({
 });
 
 const toast = useToast();
+
 async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
-  const success = await register({
+  const result = await register({
     firstName: event.data.firstName,
     lastName: event.data.lastName,
     emailAddress: event.data.emailAddress,
     password: event.data.password,
   });
 
-  if (success) {
+  if (result && "success" in result && result.success) {
     toast.add({
       title: "Registration Successful",
       description: "Please check your email to verify your account.",
       color: "success",
+    });
+  } else if (result && "message" in result) {
+    toast.add({
+      title: "Registration Failed",
+      description: result.message,
+      color: "error",
+    });
+  } else {
+    toast.add({
+      title: "Registration Failed",
+      description: "An unexpected error occurred.",
+      color: "error",
     });
   }
 }
@@ -39,15 +52,15 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
     @submit="onSubmit"
   >
     <UFormField label="First Name" name="firstName">
-      <UInput v-model="state.firstName" />
+      <UInput v-model="state.firstName" type="text" />
     </UFormField>
 
     <UFormField label="Last Name" name="lastName">
-      <UInput v-model="state.lastName" />
+      <UInput v-model="state.lastName" type="text" />
     </UFormField>
 
     <UFormField label="Email" name="email">
-      <UInput v-model="state.emailAddress" />
+      <UInput v-model="state.emailAddress" type="email" />
     </UFormField>
 
     <UFormField label="Password" name="password">

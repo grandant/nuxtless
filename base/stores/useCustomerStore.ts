@@ -82,103 +82,63 @@ export const useCustomerStore = defineStore("customer", () => {
     firstName: string;
     lastName: string;
     password?: string;
-  }) {
-    loading.value = true;
-    error.value = null;
-
+  }): Promise<RegisterResult | undefined> {
     try {
-      const result: RegisterResult = (
-        await GqlRegisterCustomerAccount({ input })
-      ).registerCustomerAccount;
+      const result = (await GqlRegisterCustomerAccount({ input }))
+        .registerCustomerAccount;
 
-      if ("success" in result && result.success) {
-        return true;
-      } else if ("message" in result) {
-        error.value = result.message;
-      } else {
-        error.value = "Registration failed";
-      }
+      return result;
     } catch (err) {
-      if (err instanceof Error) {
-        error.value = err.message;
-      }
-    } finally {
-      loading.value = false;
+      console.error("Registration error:", err);
+      return undefined;
     }
   }
 
-  async function verify(token: string, password?: string) {
-    loading.value = true;
-    error.value = null;
-
+  async function verify(token: string): Promise<VerifyResult | undefined> {
     try {
-      const result: VerifyResult = (
-        await GqlVerifyCustomerAccount({ token, password })
-      ).verifyCustomerAccount;
+      const result = (await GqlVerifyCustomerAccount({ token }))
+        .verifyCustomerAccount;
 
       if ("identifier" in result) {
         await fetchCustomer();
-        return true;
-      } else {
-        error.value = result.message;
       }
+      return result;
     } catch (err) {
-      if (err instanceof Error) {
-        error.value = err.message;
-      }
-    } finally {
-      loading.value = false;
+      console.error("Unexpected verification error:", err);
+      return undefined;
     }
   }
 
-  async function requestPasswordReset(emailAddress: string) {
-    loading.value = true;
-    error.value = null;
-
+  async function requestPasswordReset(
+    emailAddress: string,
+  ): Promise<RequestPasswordResetResult | undefined> {
     try {
-      const result: RequestPasswordResetResult = (
-        await GqlRequestPasswordReset({ emailAddress })
-      ).requestPasswordReset;
+      const result = (await GqlRequestPasswordReset({ emailAddress }))
+        .requestPasswordReset;
 
-      if (result && "success" in result && result.success) {
-        return true;
-      } else if (result && "message" in result) {
-        error.value = result.message;
-      } else {
-        error.value = "Password reset request failed";
-      }
+      return result;
     } catch (err) {
-      if (err instanceof Error) {
-        error.value = err.message;
-      }
-    } finally {
-      loading.value = false;
+      console.error("Password reset request error:", err);
+      return undefined;
     }
   }
 
-  async function resetPassword(token: string, password: string) {
-    loading.value = true;
-    error.value = null;
-
+  async function resetPassword(
+    token: string,
+    password: string,
+  ): Promise<ResetPasswordResult | undefined> {
     try {
-      const result: ResetPasswordResult = (
-        await GqlResetPassword({ token, password })
-      ).resetPassword;
+      const result = (await GqlResetPassword({ token, password }))
+        .resetPassword;
 
       if ("identifier" in result) {
         await fetchCustomer();
-        return true;
-      } else if ("message" in result) {
-        error.value = result.message;
-      } else {
-        error.value = "Failed to reset password";
       }
+
+      return result;
     } catch (err) {
-      if (err instanceof Error) {
-        error.value = err.message;
-      }
-    } finally {
-      loading.value = false;
+      console.error("Reset password error:", err);
+      return undefined;
     }
   }
 

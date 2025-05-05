@@ -8,13 +8,13 @@ const state = reactive({
 });
 
 const toast = useToast();
+
 async function onSubmit(event: FormSubmitEvent<LoginForm>) {
   toast.add({
     title: "Success",
     description: "The form has been submitted.",
     color: "success",
   });
-  console.log(event.data);
 }
 </script>
 
@@ -26,7 +26,7 @@ async function onSubmit(event: FormSubmitEvent<LoginForm>) {
     @submit="onSubmit"
   >
     <UFormField label="Email" name="email">
-      <UInput v-model="state.email" />
+      <UInput v-model="state.email" type="email" />
     </UFormField>
 
     <UFormField label="Password" name="password">
