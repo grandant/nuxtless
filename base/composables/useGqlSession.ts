@@ -1,25 +1,38 @@
-export async function useGqlSession(locale: string, gqlHost: string) {
+export async function useGqlSession(
+  locale: string,
+  gqlHost: string | undefined,
+  channelToken: string,
+  queryType: "default" | "login" = "default",
+  variables?: Record<string, unknown>,
+) {
   if (!gqlHost) {
-    throw new Error("GQL_HOST is not defined");
+    console.error("useGqlSession: GQL_HOST is not defined");
+    return null;
   }
 
-  const authToken: Ref<string | null> = useState("authToken");
-  const channelToken: Ref<string | null> = useState("channelToken");
-  const headers: Ref<Record<string, string>> = useState("headers");
+  const authStore = useAuthStore();
 
-  if (authToken.value) {
-    headers.value.authorization = `Bearer ${authToken.value}`;
+  const headers = useState<Record<string, string>>("headers", () => ({
+    "Content-Type": "application/json",
+  }));
+
+  const token = authStore.session?.token;
+
+  if (token) {
+    headers.value.authorization = `Bearer ${token}`;
+    authStore.setSession(token);
   }
 
-  if (channelToken.value) {
-    headers.value["vendure-token"] = channelToken.value;
+  if (channelToken) {
+    headers.value["vendure-token"] = channelToken;
   }
 
   if (locale) {
     headers.value["Accept-Language"] = locale;
   }
 
-  const query = `query ActiveOrder {
+  const defaultQuery = `
+    query ActiveOrder {
       activeOrder {
         id
         state
@@ -27,17 +40,42 @@ export async function useGqlSession(locale: string, gqlHost: string) {
     }
   `;
 
+  const loginQuery = `
+    mutation LogInUser($emailAddress: String!, $password: String!, $rememberMe: Boolean!) {
+      login(username: $emailAddress, password: $password, rememberMe: $rememberMe) {
+        ... on CurrentUser {
+          id
+          identifier
+        }
+        ... on ErrorResult {
+          errorCode
+          message
+        }
+      }
+    }
+  `;
+
+  const query = queryType === "login" ? loginQuery : defaultQuery;
+
   try {
     const res = await fetch(`${gqlHost}?languageCode=${locale}`, {
       method: "POST",
       credentials: "include",
       headers: headers.value,
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query, variables }),
     });
-    authToken.value = res.headers.get("vendure-auth-token");
-    console.log(`from useGqlSession: ${authToken.value}`);
+
+    const newToken = res.headers.get("vendure-auth-token");
+    if (newToken) {
+      headers.value.authorization = `Bearer ${newToken}`;
+      authStore.setSession(newToken);
+    }
+
+    useGqlHeaders(headers.value);
+
+    return "success";
   } catch (error) {
     console.error("Failed to fetch session token:", error);
-    return;
+    return null;
   }
 }

@@ -1,11 +1,11 @@
 <script setup lang="ts">
+const router = useRouter();
 const localePath = useLocalePath();
-
 const submitted = ref(false);
 
-watch(submitted, async (v) => {
+watch(submitted, (v) => {
   if (v) {
-    console.log("Submitted");
+    router.push("/account");
   }
 });
 </script>

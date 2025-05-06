@@ -1,5 +1,10 @@
 <script setup lang="ts">
 const { customer: activeCustomer } = storeToRefs(useCustomerStore());
+const { fetchCustomer } = useCustomerStore();
+
+if (!activeCustomer.value) {
+  await fetchCustomer();
+}
 </script>
 
 <template>
