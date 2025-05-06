@@ -6,8 +6,8 @@ definePageMeta({
 const route = useRoute();
 const router = useRouter();
 const token = route.query.token as string | undefined;
-const { verify } = useCustomerStore();
 
+const { verify } = useCustomerStore();
 const verifying = ref(true);
 const error = ref<string | null>(null);
 

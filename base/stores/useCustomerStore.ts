@@ -29,51 +29,39 @@ export const useCustomerStore = defineStore("customer", () => {
     }
   }
 
-  async function login(email: string, password: string, rememberMe = true) {
-    loading.value = true;
-    error.value = null;
-
+  async function login(
+    email: string,
+    password: string,
+    rememberMe = true,
+  ): Promise<LogInResult | undefined> {
     try {
-      const result: LogInResult = (
-        await GqlLogInUser({
-          emailAddress: email,
-          password,
-          rememberMe,
-        })
+      const result = (
+        await GqlLogInUser({ emailAddress: email, password, rememberMe })
       ).login;
 
       if ("id" in result) {
         await fetchCustomer();
-      } else {
-        error.value = result.message;
       }
+
+      return result;
     } catch (err) {
-      if (err instanceof Error) {
-        error.value = err.message;
-      }
-    } finally {
-      loading.value = false;
+      console.error("Login error:", err);
+      return undefined;
     }
   }
 
-  async function logout() {
-    loading.value = true;
-    error.value = null;
-
+  async function logout(): Promise<LogOutResult | undefined> {
     try {
-      const result: LogOutResult = (await GqlLogOutUser()).logout;
+      const result = (await GqlLogOutUser()).logout;
 
       if (result.success) {
         customer.value = null;
-      } else {
-        error.value = "Logout failed";
       }
+
+      return result;
     } catch (err) {
-      if (err instanceof Error) {
-        error.value = err.message;
-      }
-    } finally {
-      loading.value = false;
+      console.error("Logout error:", err);
+      return undefined;
     }
   }
 

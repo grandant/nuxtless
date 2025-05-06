@@ -1,14 +1,10 @@
-export async function useGqlSession() {
-  const { GQL_HOST: gqlHost } = useRuntimeConfig().public;
-
+export async function useGqlSession(locale: string, gqlHost: string) {
   if (!gqlHost) {
     throw new Error("GQL_HOST is not defined");
   }
 
   const authToken: Ref<string | null> = useState("authToken");
   const channelToken: Ref<string | null> = useState("channelToken");
-  const { locale } = useI18n();
-
   const headers: Ref<Record<string, string>> = useState("headers");
 
   if (authToken.value) {
@@ -19,8 +15,8 @@ export async function useGqlSession() {
     headers.value["vendure-token"] = channelToken.value;
   }
 
-  if (locale.value) {
-    headers.value["Accept-Language"] = locale.value;
+  if (locale) {
+    headers.value["Accept-Language"] = locale;
   }
 
   const query = `query ActiveOrder {
@@ -32,13 +28,14 @@ export async function useGqlSession() {
   `;
 
   try {
-    const res = await fetch(`${gqlHost}?languageCode=${locale.value}`, {
+    const res = await fetch(`${gqlHost}?languageCode=${locale}`, {
       method: "POST",
       credentials: "include",
       headers: headers.value,
       body: JSON.stringify({ query }),
     });
     authToken.value = res.headers.get("vendure-auth-token");
+    console.log(`from useGqlSession: ${authToken.value}`);
   } catch (error) {
     console.error("Failed to fetch session token:", error);
     return;

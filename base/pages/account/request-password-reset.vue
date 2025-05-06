@@ -4,13 +4,13 @@ const submitted = ref(false);
 
 <template>
   <main class="prose mx-auto p-4">
-    <h1>Reset Your Password</h1>
+    <h1>Request Password Reset</h1>
 
     <p v-if="submitted">
       If an account exists with that email, a reset link has been sent.
     </p>
 
-    <ResetPasswordRequestForm v-else @success="submitted = true" />
+    <AccountRequestPasswordResetForm v-else @success="submitted = true" />
   </main>
 </template>
 
