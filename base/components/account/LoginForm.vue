@@ -8,6 +8,7 @@ const emit = defineEmits<{
 
 const { GQL_HOST: gqlHost, channelToken } = useRuntimeConfig().public;
 const { locale } = useI18n();
+const toast = useToast();
 const orderStore = useOrderStore();
 
 const state = reactive({
@@ -28,9 +29,26 @@ async function onSubmit(event: FormSubmitEvent<LoginForm>) {
     },
   );
 
-  if (result) {
+  if (result && "identifier" in result) {
+    toast.add({
+      title: "Login Successful",
+      description: "You logged in into your account.",
+      color: "success",
+    });
     emit("success");
     await orderStore.fetchOrder();
+  } else if (result && "errorCode" in result) {
+    toast.add({
+      title: "Login Failed",
+      description: result.message,
+      color: "error",
+    });
+  } else {
+    toast.add({
+      title: "Something went wrong",
+      description: "Please try again later or contact support.",
+      color: "error",
+    });
   }
 }
 </script>

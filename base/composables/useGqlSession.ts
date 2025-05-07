@@ -1,3 +1,6 @@
+import type { LogInResult } from "~~/types/customer";
+import type { ActiveOrder } from "~~/types/order";
+
 export async function useGqlSession(
   locale: string,
   gqlHost: string | undefined,
@@ -73,7 +76,12 @@ export async function useGqlSession(
 
     useGqlHeaders(headers.value);
 
-    return "success";
+    const json = await res.json();
+    if (queryType === "login" && json.data?.login) {
+      return json.data.login as LogInResult;
+    } else if (queryType === "default" && json.data?.activeOrder) {
+      return json.data.activeOrder as ActiveOrder;
+    }
   } catch (error) {
     console.error("Failed to fetch session token:", error);
     return null;
