@@ -2,23 +2,23 @@
 
 All notable changes to this project will be documented here.
 
-## [Unreleased]
+## [0.3.0] - 2025-05-05
 
 ### Added
-- Account verification page (/account/verify)
-- Token-based verification via verifyCustomerAccount
-- Alias /verify → /account/verify for Vendure link support
-- Password reset request page (/account/request-reset)
-- ResetPasswordRequestForm component
+- Account verification page (`/account/verify`) with token-based activation
+- Password reset request page (`/account/request-reset`)
+- Fallback alias `/verify` → `/account/verify` to support Vendure email links
 
 ### Changed
-- Refactored verify(), register(), and reset logic to return raw API results
-- Page-level error handling replaces global error.value
-- Improved form validation and result messaging
+- Refactored `verify()`, `register()`, `requestPasswordReset()`, and `resetPassword()` to return raw results
+- Replaced global `error.value` handling with page/component-level logic
+- Toasts and alerts now handled locally in forms for better UX
+- Refined login redirection and session token handling
 
-### Planned
-- Resend verification form using Vendure’s refreshCustomerVerification()
-- Final password reset form (with token)
+### Fixed
+- Session token now persists correctly across login and refresh
+- Authenticated user info is fetched and stored reliably
+- Minor ESLint/TypeScript cleanup
 
 ## [0.2.0] - 2025-04-27
 
