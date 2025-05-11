@@ -1,4 +1,4 @@
-fragment OrderBaseFragment on Order {
+fragment OrderBase on Order {
   id
   code
   couponCodes
@@ -22,7 +22,7 @@ fragment OrderBaseFragment on Order {
   }
 }
 
-fragment OrderDetailFragment on Order {
+fragment OrderDetail on Order {
   id
   code
   couponCodes
@@ -32,6 +32,28 @@ fragment OrderDetailFragment on Order {
   subTotalWithTax
   shippingWithTax
   totalWithTax
+  customer {
+    id
+    firstName
+    lastName
+    emailAddress
+  }
+  shippingAddress {
+    fullName
+    streetLine1
+    streetLine2
+    city
+    postalCode
+    country
+  }
+  billingAddress {
+    fullName
+    streetLine1
+    streetLine2
+    city
+    postalCode
+    country
+  }
   discounts {
     description
     amountWithTax

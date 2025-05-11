@@ -1,16 +1,25 @@
 <script setup lang="ts">
-const { customer: activeCustomer } = storeToRefs(useCustomerStore());
+const { customer } = storeToRefs(useCustomerStore());
 const { fetchCustomer } = useCustomerStore();
+const authStore = useAuthStore();
 
-if (!activeCustomer.value) {
+if (!customer.value) {
   await fetchCustomer();
+}
+
+if (customer.value) {
+  authStore.setUser({
+    id: customer.value.id,
+    email: customer.value.emailAddress,
+  });
 }
 </script>
 
 <template>
-  <main class="prose mx-auto p-4">
+  <main class="mx-auto p-4">
     <h1>My Account</h1>
-    <p>Hello, {{ activeCustomer?.firstName || "Guest" }}!</p>
+    <p>Hello, {{ customer?.firstName || "Guest" }}!</p>
+    <p>{{ authStore.session?.user }}</p>
   </main>
 </template>
 

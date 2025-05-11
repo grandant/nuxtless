@@ -25,7 +25,7 @@ export type ApplyCouponResult = Awaited<
   ReturnType<typeof GqlApplyCouponCode>
 >["applyCouponCode"];
 
-export type RemoveCouponCode = Awaited<
+export type RemoveCouponCodeResult = Awaited<
   ReturnType<typeof GqlRemoveCouponCode>
 >["removeCouponCode"];
 
@@ -39,4 +39,28 @@ export type OrderMutationResult =
   | RemoveItemResult
   | AdjustItemResult
   | ApplyCouponResult
-  | RemoveCouponCode;
+  | RemoveCouponCodeResult;
+
+export type SetOrderShippingAddressResult = Awaited<
+  ReturnType<typeof GqlSetOrderShippingAddress>
+>["setOrderShippingAddress"];
+
+export type ShippingMethods = Awaited<
+  ReturnType<typeof GqlGetShippingMethods>
+>["eligibleShippingMethods"];
+
+export type SetShippingMethodResult = Awaited<
+  ReturnType<typeof GqlSetShippingMethod>
+>["setOrderShippingMethod"];
+
+export type PaymentMethods = Awaited<
+  ReturnType<typeof GqlGetPaymentMethods>
+>["eligiblePaymentMethods"];
+
+export type TransitionToStateResult = Awaited<
+  ReturnType<typeof GqlTransitionToState>
+>["transitionOrderToState"];
+
+export type AddPaymentToOrderResult = Awaited<
+  ReturnType<typeof GqlAddPaymentToOrder>
+>["addPaymentToOrder"];

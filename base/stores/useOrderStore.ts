@@ -1,13 +1,20 @@
-import type { ActiveOrder } from "~~/types/order";
+import type {
+  ActiveOrder,
+  ShippingMethods,
+  PaymentMethods,
+} from "~~/types/order";
 
 export const useOrderStore = defineStore("order", () => {
-  const order = ref<ActiveOrder>(null);
-  // TODO: Add logic for multiple coupon codes
-  const couponCode = computed(() => order.value?.couponCodes?.[0] ?? null);
   const loading = ref(false);
   const error = ref<string | null>(null);
 
-  async function fetchOrder(type: "base" | "detail" = "detail") {
+  const order = ref<ActiveOrder>(null);
+  // TODO: Add logic for multiple coupon codes
+  const couponCode = computed(() => order.value?.couponCodes?.[0] ?? null);
+  const shippingMethods = ref<ShippingMethods | null>(null);
+  const paymentMethods = ref<PaymentMethods | null>(null);
+
+  async function fetchOrder(type: "base" | "detail" = "base") {
     loading.value = true;
     error.value = null;
 
@@ -150,15 +157,147 @@ export const useOrderStore = defineStore("order", () => {
     }
   }
 
+  async function setOrderShippingAddress(input: {
+    firstName: string;
+    lastName: string;
+    emailAddress: string;
+    streetLine1: string;
+    streetLine2?: string;
+    city: string;
+    postalCode: string;
+    countryCode: string;
+    billingSameAsShipping: true;
+  }): Promise<void> {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const result = (await GqlSetOrderShippingAddress({ input }))
+        .setOrderShippingAddress;
+      if ("id" in result) order.value = result;
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message || "Failed to set address to error";
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function getShippingMethods(): Promise<void> {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const { eligibleShippingMethods: result } = await GqlGetShippingMethods();
+      shippingMethods.value = result ?? [];
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message || "Failed to fetch shipping methods";
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function setShippingMethod(shippingMethodId: string): Promise<void> {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const { setOrderShippingMethod: result } = await GqlSetShippingMethod({
+        id: shippingMethodId,
+      });
+
+      if ("id" in result) order.value = result;
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message || "Failed to set shipping method";
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function getPaymentMethods(): Promise<void> {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const { eligiblePaymentMethods: result } = await GqlGetPaymentMethods();
+      paymentMethods.value = result ?? [];
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message || "Failed to fetch payment methods";
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function transitionToState(state: string): Promise<void> {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const { transitionOrderToState: result } = await GqlTransitionToState({
+        state,
+      });
+
+      if (result && "id" in result) order.value = result;
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message || "Failed to transition order state";
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function addPaymentToOrder(input: {
+    method: string;
+    metadata: {
+      shouldDecline?: boolean;
+      shouldError?: boolean;
+      shouldErrorOnSettle?: boolean;
+    };
+  }): Promise<void> {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const { addPaymentToOrder: result } = await GqlAddPaymentToOrder({
+        input,
+      });
+
+      if (result && "id" in result) {
+        order.value = result;
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message || "Failed to add payment";
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
   return {
-    order,
     loading,
     error,
+    order,
+    shippingMethods,
     fetchOrder,
     addItemToOrder,
     removeItemFromOrder,
     adjustOrderLine,
     applyCouponCode,
     removeCouponCode,
+    setOrderShippingAddress,
+    getShippingMethods,
+    setShippingMethod,
+    getPaymentMethods,
+    transitionToState,
+    addPaymentToOrder,
   };
 });

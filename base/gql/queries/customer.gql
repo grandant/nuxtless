@@ -1,9 +1,30 @@
+# Queries
 query GetActiveCustomer {
   activeCustomer {
     ...CustomerBase
   }
 }
 
+query GetCustomerAddresses {
+  activeCustomer {
+    id
+    addresses {
+      id
+      fullName
+      streetLine1
+      streetLine2
+      city
+      postalCode
+      country {
+        code
+        name
+      }
+      phoneNumber
+    }
+  }
+}
+
+# Mutations
 mutation LogInUser(
   $emailAddress: String!
   $password: String!
@@ -67,6 +88,16 @@ mutation ResetPassword($token: String!, $password: String!) {
     ... on CurrentUser {
       ...CurrentUser
     }
+    ... on ErrorResult {
+      errorCode
+      message
+    }
+  }
+}
+
+mutation SetCustomerForOrder($input: CreateCustomerInput!) {
+  setCustomerForOrder(input: $input) {
+    ...OrderDetail
     ... on ErrorResult {
       errorCode
       message

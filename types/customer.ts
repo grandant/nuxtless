@@ -21,3 +21,11 @@ export type RequestPasswordResetResult = Awaited<
 export type ResetPasswordResult = Awaited<
   ReturnType<typeof GqlResetPassword>
 >["resetPassword"];
+
+export type GetCustomerAddressesResult = Awaited<
+  ReturnType<typeof GqlGetCustomerAddresses>
+>["activeCustomer"];
+
+export type SetCustomerForOrderResult = Awaited<
+  ReturnType<typeof GqlSetCustomerForOrder>
+>["setCustomerForOrder"];

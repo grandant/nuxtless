@@ -21,6 +21,12 @@ export const useAuthStore = defineStore(
       session.value = { token, tokenSource: source, user };
     }
 
+    function setUser(user: { id: string; email: string }) {
+      if (session.value?.token) {
+        session.value = { ...session.value, user };
+      }
+    }
+
     function clearSession() {
       session.value = null;
     }
@@ -30,6 +36,7 @@ export const useAuthStore = defineStore(
     return {
       session,
       setSession,
+      setUser,
       clearSession,
       isAuthenticated,
     };
