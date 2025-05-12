@@ -1,0 +1,13 @@
+query GetChannelCountries {
+  activeChannel {
+    defaultShippingZone {
+      id
+      name
+      members {
+        id
+        code
+        name
+      }
+    }
+  }
+}

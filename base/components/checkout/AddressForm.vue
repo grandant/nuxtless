@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { CheckoutForm } from "~~/base/validators/checkoutForm";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import { AddressForm } from "~~/base/validators/addressForm";
+
+const { triggerSubmit } = defineProps<{ triggerSubmit: boolean }>();
 
 const emit = defineEmits<{
   (e: "success"): void;
@@ -11,6 +13,27 @@ const orderStore = useOrderStore();
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const { setCustomerForOrder } = useCustomerStore();
 
+const { data: countriesData } = await useAsyncGql("GetChannelCountries");
+
+const countries = computed(
+  () =>
+    countriesData.value?.activeChannel?.defaultShippingZone?.members.map(
+      (c) => ({
+        label: c.name,
+        code: c.code,
+      }),
+    ) ?? [],
+);
+
+const addressForm = useTemplateRef("addressForm");
+
+watch(
+  () => triggerSubmit,
+  (val) => {
+    if (val) addressForm.value?.submit();
+  },
+);
+
 const state = reactive({
   firstName: "",
   lastName: "",
@@ -19,13 +42,13 @@ const state = reactive({
   streetLine2: "",
   city: "",
   postalCode: "",
-  countryCode: "",
+  countryCode: "BG",
   billingSameAsShipping: true,
 });
 
-async function onSubmit(event: FormSubmitEvent<CheckoutForm>) {
+async function onSubmit(event: FormSubmitEvent<AddressForm>) {
   try {
-    if (!isAuthenticated) {
+    if (!isAuthenticated.value) {
       const result = await setCustomerForOrder({
         firstName: event.data.firstName,
         lastName: event.data.lastName,
@@ -64,7 +87,6 @@ async function onSubmit(event: FormSubmitEvent<CheckoutForm>) {
     }
 
     emit("success");
-    await orderStore.fetchOrder("detail");
   } catch (error) {
     console.error("Checkout error:", error);
     toast.add({
@@ -78,7 +100,8 @@ async function onSubmit(event: FormSubmitEvent<CheckoutForm>) {
 
 <template>
   <UForm
-    :schema="CheckoutForm"
+    ref="addressForm"
+    :schema="AddressForm"
     :state="state"
     class="space-y-4"
     @submit="onSubmit"
@@ -99,7 +122,7 @@ async function onSubmit(event: FormSubmitEvent<CheckoutForm>) {
       <UInput v-model="state.streetLine1" type="text" />
     </UFormField>
 
-    <UFormField label="Street" name="streetLine1">
+    <UFormField label="Street" name="streetLine2">
       <UInput v-model="state.streetLine2" type="text" />
     </UFormField>
 
@@ -111,12 +134,14 @@ async function onSubmit(event: FormSubmitEvent<CheckoutForm>) {
       <UInput v-model="state.postalCode" type="text" />
     </UFormField>
 
-    <UFormField label="Country" name="countryCode">
-      <UInput v-model="state.countryCode" type="text" />
+    <UFormField label="Country" name="country">
+      <USelectMenu
+        v-model="state.countryCode"
+        value-key="code"
+        :items="countries"
+      />
     </UFormField>
-
-    <UButton type="submit">Pay</UButton>
   </UForm>
 </template>
 
-<style scoped></style>
+<style lang="css" scoped></style>

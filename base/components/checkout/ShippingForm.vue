@@ -1,23 +1,42 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui";
+import { ShippingForm } from "~~/base/validators/shippingForm";
+
+const { triggerSubmit } = defineProps<{ triggerSubmit: boolean }>();
 
 const emit = defineEmits<{
   (e: "success"): void;
 }>();
 
 const orderStore = useOrderStore();
+await orderStore.getShippingMethods();
+const { shippingMethods: shippingMethodsData } = storeToRefs(useOrderStore());
+
+const shippingMethods = computed(
+  () =>
+    shippingMethodsData.value?.map((m) => ({
+      label: m.name,
+      value: m.id,
+    })) ?? [],
+);
+
+const shippingForm = useTemplateRef("shippingForm");
+
+watch(
+  () => triggerSubmit,
+  (val) => {
+    if (val) shippingForm.value?.submit();
+  },
+);
+
 const state = reactive({
   shippingMethodId: "",
 });
 
-onMounted(async () => {
-  await orderStore.getShippingMethods();
-});
-
-async function onSubmit(event: FormSubmitEvent<typeof state>) {
+async function onSubmit(event: FormSubmitEvent<ShippingForm>) {
   if (!state.shippingMethodId) return;
 
-  await orderStore.setShippingMethod(event.shippingMethodId);
+  await orderStore.setShippingMethod(event.data.shippingMethodId);
 
   if (orderStore.error) {
     useToast().add({
@@ -33,20 +52,16 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
 </script>
 
 <template>
-  <UForm :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm
+    ref="shippingForm"
+    :schema="ShippingForm"
+    :state="state"
+    class="space-y-4"
+    @submit="onSubmit"
+  >
     <UFormField label="Shipping Method" name="shippingMethodId">
-      <USelect
-        v-model="state.shippingMethodId"
-        :options="
-          orderStore.shippingMethods?.map((m) => ({
-            label: `${m.name} - ${m.description}`,
-            value: m.id,
-          }))
-        "
-      />
+      <USelect v-model="state.shippingMethodId" :items="shippingMethods" />
     </UFormField>
-
-    <UButton type="submit">Continue</UButton>
   </UForm>
 </template>
 

@@ -34,13 +34,6 @@ export type OrderStatus =
   | { status: "partial"; quantityAvailable: number }
   | { status: "error"; message: string };
 
-export type OrderMutationResult =
-  | AddItemResult
-  | RemoveItemResult
-  | AdjustItemResult
-  | ApplyCouponResult
-  | RemoveCouponCodeResult;
-
 export type SetOrderShippingAddressResult = Awaited<
   ReturnType<typeof GqlSetOrderShippingAddress>
 >["setOrderShippingAddress"];
@@ -64,3 +57,14 @@ export type TransitionToStateResult = Awaited<
 export type AddPaymentToOrderResult = Awaited<
   ReturnType<typeof GqlAddPaymentToOrder>
 >["addPaymentToOrder"];
+
+export type OrderMutationResult =
+  | AddItemResult
+  | RemoveItemResult
+  | AdjustItemResult
+  | ApplyCouponResult
+  | RemoveCouponCodeResult
+  | SetOrderShippingAddressResult
+  | SetShippingMethodResult
+  | TransitionToStateResult
+  | AddPaymentToOrderResult;

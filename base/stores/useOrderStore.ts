@@ -158,12 +158,12 @@ export const useOrderStore = defineStore("order", () => {
   }
 
   async function setOrderShippingAddress(input: {
-    firstName: string;
-    lastName: string;
-    emailAddress: string;
+    firstName?: string;
+    lastName?: string;
+    emailAddress?: string;
     streetLine1: string;
     streetLine2?: string;
-    city: string;
+    city?: string;
     postalCode: string;
     countryCode: string;
     billingSameAsShipping: true;
@@ -287,6 +287,7 @@ export const useOrderStore = defineStore("order", () => {
     error,
     order,
     shippingMethods,
+    paymentMethods,
     fetchOrder,
     addItemToOrder,
     removeItemFromOrder,
