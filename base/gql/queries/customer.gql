@@ -94,13 +94,3 @@ mutation ResetPassword($token: String!, $password: String!) {
     }
   }
 }
-
-mutation SetCustomerForOrder($input: CreateCustomerInput!) {
-  setCustomerForOrder(input: $input) {
-    ...OrderDetail
-    ... on ErrorResult {
-      errorCode
-      message
-    }
-  }
-}

@@ -1,4 +1,3 @@
-// utils/watchShippingMethods.ts
 import { watchDebounced } from "@vueuse/core";
 import type { Ref } from "vue";
 
@@ -22,12 +21,9 @@ export function watchShippingMethods(state: {
             streetLine1,
             countryCode,
             postalCode,
-            billingSameAsShipping: true,
           });
 
           await orderStore.getShippingMethods();
-          console.log(orderStore.shippingMethods);
-          console.log(orderStore.error);
         })();
       }
     },

@@ -25,7 +25,3 @@ export type ResetPasswordResult = Awaited<
 export type GetCustomerAddressesResult = Awaited<
   ReturnType<typeof GqlGetCustomerAddresses>
 >["activeCustomer"];
-
-export type SetCustomerForOrderResult = Awaited<
-  ReturnType<typeof GqlSetCustomerForOrder>
->["setCustomerForOrder"];

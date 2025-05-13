@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath();
 const { order } = storeToRefs(useOrderStore());
 </script>
 
@@ -14,7 +15,9 @@ const { order } = storeToRefs(useOrderStore());
 
     <template #footer>
       <div class="p-4">
-        <UButton label="Checkout" block size="lg" color="primary" />
+        <UButton :to="localePath('/checkout')" block size="lg" color="primary">
+          Checkout
+        </UButton>
       </div>
     </template>
   </USlideover>

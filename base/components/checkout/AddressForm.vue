@@ -8,10 +8,8 @@ const emit = defineEmits<{
   (e: "success"): void;
 }>();
 
-const toast = useToast();
 const orderStore = useOrderStore();
 const { isAuthenticated } = storeToRefs(useAuthStore());
-const { setCustomerForOrder } = useCustomerStore();
 
 const { data: countriesData } = await useAsyncGql("GetChannelCountries");
 
@@ -47,54 +45,24 @@ const state = reactive({
 });
 
 async function onSubmit(event: FormSubmitEvent<AddressForm>) {
-  try {
-    if (!isAuthenticated.value) {
-      const result = await setCustomerForOrder({
-        firstName: event.data.firstName,
-        lastName: event.data.lastName,
-        emailAddress: event.data.emailAddress,
-      });
-
-      if (result && "errorCode" in result) {
-        toast.add({
-          title: "Checkout Failed",
-          description: result.message,
-          color: "error",
-        });
-        return;
-      }
-    }
-
-    await orderStore.setOrderShippingAddress({
+  if (!isAuthenticated.value) {
+    await orderStore.setCustomerForOrder({
       firstName: event.data.firstName,
       lastName: event.data.lastName,
       emailAddress: event.data.emailAddress,
-      streetLine1: event.data.streetLine1,
-      streetLine2: event.data.streetLine2,
-      city: event.data.city,
-      postalCode: event.data.postalCode,
-      countryCode: event.data.countryCode,
-      billingSameAsShipping: true,
-    });
-
-    if (orderStore.error) {
-      toast.add({
-        title: "Checkout Failed",
-        description: orderStore.error,
-        color: "error",
-      });
-      return;
-    }
-
-    emit("success");
-  } catch (error) {
-    console.error("Checkout error:", error);
-    toast.add({
-      title: "Checkout Failed",
-      description: "If the issue persists, please contact support.",
-      color: "error",
     });
   }
+
+  await orderStore.setOrderShippingAddress({
+    fullName: `${event.data.firstName} ${event.data.lastName}`,
+    streetLine1: event.data.streetLine1,
+    streetLine2: event.data.streetLine2,
+    city: event.data.city,
+    postalCode: event.data.postalCode,
+    countryCode: event.data.countryCode,
+  });
+
+  if (!orderStore.error) emit("success");
 }
 </script>
 

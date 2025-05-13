@@ -23,19 +23,29 @@ export function useOrderMutation(
       }
       return {
         status: "error",
-        message: "Incomplete InsufficientStockError response",
+        message: result.message ?? "Unexpected InsufficientStockError format",
       };
 
-    case "CouponCodeInvalidError":
-    case "CouponCodeExpiredError":
-    case "CouponCodeLimitError":
-    case "OrderInterceptorError":
-    case "OrderLimitError":
     case "OrderModificationError":
+    case "OrderLimitError":
     case "NegativeQuantityError":
+    case "OrderInterceptorError":
+    case "CouponCodeExpiredError":
+    case "CouponCodeInvalidError":
+    case "CouponCodeLimitError":
+    case "AlreadyLoggedInError":
+    case "EmailAddressConflictError":
+    case "GuestCheckoutError":
+    case "IneligibleShippingMethodError":
+    case "NoActiveOrderError":
+    case "OrderStateTransitionError":
+    case "OrderPaymentStateError":
+    case "IneligiblePaymentMethodError":
+    case "PaymentFailedError":
+    case "PaymentDeclinedError":
       return {
         status: "error",
-        message: result.message ?? "Unexpected Vendure error",
+        message: result.message ?? "Order mutation failed",
       };
 
     default:

@@ -9,6 +9,11 @@ type ActiveOrderDetail = Awaited<
 export type ActiveOrder = ActiveOrderBase | ActiveOrderDetail;
 export type OrderLine = NonNullable<ActiveOrder>["lines"][number];
 
+export type OrderStatus =
+  | { status: "success" }
+  | { status: "partial"; quantityAvailable: number }
+  | { status: "error"; message: string };
+
 export type AddItemResult = Awaited<
   ReturnType<typeof GqlAddItemToOrder>
 >["addItemToOrder"];
@@ -29,10 +34,9 @@ export type RemoveCouponCodeResult = Awaited<
   ReturnType<typeof GqlRemoveCouponCode>
 >["removeCouponCode"];
 
-export type OrderStatus =
-  | { status: "success" }
-  | { status: "partial"; quantityAvailable: number }
-  | { status: "error"; message: string };
+export type SetCustomerForOrderResult = Awaited<
+  ReturnType<typeof GqlSetCustomerForOrder>
+>["setCustomerForOrder"];
 
 export type SetOrderShippingAddressResult = Awaited<
   ReturnType<typeof GqlSetOrderShippingAddress>
@@ -64,6 +68,7 @@ export type OrderMutationResult =
   | AdjustItemResult
   | ApplyCouponResult
   | RemoveCouponCodeResult
+  | SetCustomerForOrderResult
   | SetOrderShippingAddressResult
   | SetShippingMethodResult
   | TransitionToStateResult

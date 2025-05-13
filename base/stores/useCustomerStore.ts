@@ -6,7 +6,6 @@ import type {
   VerifyResult,
   RequestPasswordResetResult,
   ResetPasswordResult,
-  SetCustomerForOrderResult,
 } from "~~/types/customer";
 
 export const useCustomerStore = defineStore("customer", () => {
@@ -131,21 +130,6 @@ export const useCustomerStore = defineStore("customer", () => {
     }
   }
 
-  async function setCustomerForOrder(input: {
-    emailAddress: string;
-    firstName: string;
-    lastName: string;
-  }): Promise<SetCustomerForOrderResult | undefined> {
-    try {
-      const result = (await GqlSetCustomerForOrder({ input }))
-        .setCustomerForOrder;
-      return result;
-    } catch (err) {
-      console.error("Set customer error:", err);
-      return undefined;
-    }
-  }
-
   return {
     customer,
     loading,
@@ -157,6 +141,5 @@ export const useCustomerStore = defineStore("customer", () => {
     verify,
     requestPasswordReset,
     resetPassword,
-    setCustomerForOrder,
   };
 });

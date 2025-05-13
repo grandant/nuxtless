@@ -29,6 +29,12 @@ query GetPaymentMethods {
   }
 }
 
+query GetOrderByCode($code: String!) {
+  orderByCode(code: $code) {
+    ...OrderDetail
+  }
+}
+
 # Mutations
 mutation AddItemToOrder($variantId: ID!, $quantity: Int!) {
   addItemToOrder(productVariantId: $variantId, quantity: $quantity) {
@@ -84,6 +90,17 @@ mutation RemoveCouponCode($couponCode: String!) {
   removeCouponCode(couponCode: $couponCode) {
     __typename
     ...OrderBase
+  }
+}
+
+mutation SetCustomerForOrder($input: CreateCustomerInput!) {
+  setCustomerForOrder(input: $input) {
+    __typename
+    ...OrderBase
+    ... on ErrorResult {
+      errorCode
+      message
+    }
   }
 }
 

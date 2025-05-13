@@ -43,16 +43,7 @@ async function onSubmit(event: FormSubmitEvent<PaymentForm>) {
     metadata: {},
   });
 
-  if (orderStore.error) {
-    useToast().add({
-      title: "Error",
-      description: orderStore.error,
-      color: "error",
-    });
-    return;
-  }
-
-  emit("success");
+  if (!orderStore.error) emit("success");
 }
 </script>
 

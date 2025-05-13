@@ -34,20 +34,13 @@ const state = reactive({
 });
 
 async function onSubmit(event: FormSubmitEvent<ShippingForm>) {
+  console.log("Submitting shipping address");
+
   if (!state.shippingMethodId) return;
 
   await orderStore.setShippingMethod(event.data.shippingMethodId);
 
-  if (orderStore.error) {
-    useToast().add({
-      title: "Error",
-      description: orderStore.error,
-      color: "error",
-    });
-    return;
-  }
-
-  emit("success");
+  if (!orderStore.error) emit("success");
 }
 </script>
 

@@ -7,6 +7,8 @@ import type {
 export const useOrderStore = defineStore("order", () => {
   const loading = ref(false);
   const error = ref<string | null>(null);
+  // Status is not wired up yet
+  const status = ref<string | null>(null);
 
   const order = ref<ActiveOrder>(null);
   // TODO: Add logic for multiple coupon codes
@@ -14,7 +16,7 @@ export const useOrderStore = defineStore("order", () => {
   const shippingMethods = ref<ShippingMethods | null>(null);
   const paymentMethods = ref<PaymentMethods | null>(null);
 
-  async function fetchOrder(type: "base" | "detail" = "base") {
+  async function fetchOrder(type: "base" | "detail" = "base"): Promise<void> {
     loading.value = true;
     error.value = null;
 
@@ -34,6 +36,7 @@ export const useOrderStore = defineStore("order", () => {
   }
 
   async function addItemToOrder(variantId: string, quantity: number) {
+    // TODO: Handle 'partial' status (e.g. show toast if quantity was adjusted)
     loading.value = true;
     error.value = null;
 
@@ -58,7 +61,7 @@ export const useOrderStore = defineStore("order", () => {
     }
   }
 
-  async function removeItemFromOrder(orderLineId: string) {
+  async function removeItemFromOrder(orderLineId: string): Promise<void> {
     loading.value = true;
     error.value = null;
 
@@ -82,7 +85,10 @@ export const useOrderStore = defineStore("order", () => {
     }
   }
 
-  async function adjustOrderLine(orderLineId: string, quantity: number) {
+  async function adjustOrderLine(
+    orderLineId: string,
+    quantity: number,
+  ): Promise<void> {
     loading.value = true;
     error.value = null;
 
@@ -107,7 +113,7 @@ export const useOrderStore = defineStore("order", () => {
     }
   }
 
-  async function applyCouponCode(couponCode: string) {
+  async function applyCouponCode(couponCode: string): Promise<void> {
     loading.value = true;
     error.value = null;
 
@@ -131,7 +137,7 @@ export const useOrderStore = defineStore("order", () => {
     }
   }
 
-  async function removeCouponCode() {
+  async function removeCouponCode(): Promise<void> {
     loading.value = true;
     error.value = null;
 
@@ -157,16 +163,38 @@ export const useOrderStore = defineStore("order", () => {
     }
   }
 
+  async function setCustomerForOrder(input: {
+    emailAddress: string;
+    firstName: string;
+    lastName: string;
+  }): Promise<void> {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const result = (await GqlSetCustomerForOrder({ input }))
+        .setCustomerForOrder;
+      const res = useOrderMutation(order, result);
+
+      if (res.status === "error") {
+        error.value = res.message;
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message || "Failed to set customer for order";
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
   async function setOrderShippingAddress(input: {
-    firstName?: string;
-    lastName?: string;
-    emailAddress?: string;
+    fullName?: string;
     streetLine1: string;
     streetLine2?: string;
     city?: string;
-    postalCode: string;
+    postalCode?: string;
     countryCode: string;
-    billingSameAsShipping: true;
   }): Promise<void> {
     loading.value = true;
     error.value = null;
@@ -174,10 +202,14 @@ export const useOrderStore = defineStore("order", () => {
     try {
       const result = (await GqlSetOrderShippingAddress({ input }))
         .setOrderShippingAddress;
-      if ("id" in result) order.value = result;
+      const res = useOrderMutation(order, result);
+
+      if (res.status === "error") {
+        error.value = res.message;
+      }
     } catch (err) {
       if (err instanceof Error) {
-        error.value = err.message || "Failed to set address to error";
+        error.value = err.message || "Failed to set shipping address";
       }
     } finally {
       loading.value = false;
@@ -209,7 +241,10 @@ export const useOrderStore = defineStore("order", () => {
         id: shippingMethodId,
       });
 
-      if ("id" in result) order.value = result;
+      const res = useOrderMutation(order, result);
+      if (res.status === "error") {
+        error.value = res.message;
+      }
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message || "Failed to set shipping method";
@@ -243,8 +278,10 @@ export const useOrderStore = defineStore("order", () => {
       const { transitionOrderToState: result } = await GqlTransitionToState({
         state,
       });
-
-      if (result && "id" in result) order.value = result;
+      const res = useOrderMutation(order, result);
+      if (res.status === "error") {
+        error.value = res.message;
+      }
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message || "Failed to transition order state";
@@ -269,9 +306,9 @@ export const useOrderStore = defineStore("order", () => {
       const { addPaymentToOrder: result } = await GqlAddPaymentToOrder({
         input,
       });
-
-      if (result && "id" in result) {
-        order.value = result;
+      const res = useOrderMutation(order, result);
+      if (res.status === "error") {
+        error.value = res.message;
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -285,6 +322,7 @@ export const useOrderStore = defineStore("order", () => {
   return {
     loading,
     error,
+    status,
     order,
     shippingMethods,
     paymentMethods,
@@ -294,6 +332,7 @@ export const useOrderStore = defineStore("order", () => {
     adjustOrderLine,
     applyCouponCode,
     removeCouponCode,
+    setCustomerForOrder,
     setOrderShippingAddress,
     getShippingMethods,
     setShippingMethod,

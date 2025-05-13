@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented here.
 
+## [0.4.0] - 2025-05-XX
+
+### Added
+- Completed checkout flow: address → shipping → payment → confirmation
+- Confirmation page with dynamic order data
+- Checkout guard to prevent partial/incomplete access
+- Type-safe integration of all checkout mutations
+
+### Fixed
+- Vendure admin now correctly reflects customer, shipping, and payment data
+- Minor logic errors across shipping/payment handling
+
 ## [0.3.0] - 2025-05-05
 
 ### Added
