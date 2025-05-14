@@ -9,13 +9,13 @@ await orderStore.fetchOrder();
 </script>
 
 <template>
-  <NuxtLayout>
-    <UApp>
+  <UApp>
+    <NuxtLayout>
       <UContainer>
         <NuxtPage />
       </UContainer>
-    </UApp>
-  </NuxtLayout>
+    </NuxtLayout>
+  </UApp>
 </template>
 
 <style lang="css" scoped></style>

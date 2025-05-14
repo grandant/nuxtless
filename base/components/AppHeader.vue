@@ -5,8 +5,9 @@
     <div class="container flex gap-6">
       <LogoElement />
       <HeaderDesktopMenu class="hidden md:flex" />
-      <HeaderMobileMenuTrigger />
+      <HeaderMobileMenu class="flex md:hidden" />
       <CartTrigger />
     </div>
+    <CartPanel />
   </header>
 </template>

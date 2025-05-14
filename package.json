@@ -37,6 +37,7 @@
     "@iconify-json/lucide": "1.2.42",
     "@vueuse/core": "13.1.0",
     "@vueuse/nuxt": "13.1.0",
+    "eslint-config-prettier": "^10.1.5",
     "prettier-plugin-tailwindcss": "0.6.11",
     "wrangler": "4.15.0"
   }

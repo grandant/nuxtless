@@ -22,6 +22,7 @@ export default defineNuxtConfig({
       apiBase: process.env.API_BASE,
       channelToken: process.env.CHANNEL_TOKEN,
       GQL_HOST: process.env.GQL_HOST,
+      unsplashApiKey: process.env.UNSPLASH_API_KEY,
       i18n: {
         baseUrl: process.env.I18_BASE_URL,
       },

@@ -1,10 +1,15 @@
 <script setup lang="ts">
 const localePath = useLocalePath();
 const { order } = storeToRefs(useOrderStore());
+const isCartOpen = useState<boolean>("isCartOpen", () => false);
 </script>
 
 <template>
-  <USlideover title="Your Cart" description="Cart Panel">
+  <USlideover
+    v-model:open="isCartOpen"
+    title="Your Cart"
+    description="Cart Panel"
+  >
     <template #body>
       <div class="space-y-4 p-4">
         <CartEmpty v-if="!order?.lines?.length" />
@@ -15,7 +20,13 @@ const { order } = storeToRefs(useOrderStore());
 
     <template #footer>
       <div class="p-4">
-        <UButton :to="localePath('/checkout')" block size="lg" color="primary">
+        <UButton
+          :to="localePath('/checkout')"
+          block
+          size="lg"
+          color="primary"
+          @click="isCartOpen = !isCartOpen"
+        >
           Checkout
         </UButton>
       </div>

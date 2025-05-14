@@ -2,6 +2,8 @@
 
 <template>
   <USlideover title="Menu" side="left" description="Mobile Menu">
+    <UButton label="Open" color="neutral" variant="subtle" />
+
     <template #body>
       <div>Home</div>
     </template>

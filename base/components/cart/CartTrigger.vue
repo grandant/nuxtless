@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { LazyCartPanel } from "#components";
-
-const overlay = useOverlay();
-
-const slideover = overlay.create(LazyCartPanel);
-const openCart = async () => await slideover.open();
+const isCartOpen = useState<boolean>("isCartOpen");
 </script>
 
 <template>
-  <UButton label="Cart" @click="openCart()" />
+  <UButton label="Cart" @click="isCartOpen = !isCartOpen" />
 </template>
 
 <style lang="css" scoped></style>
