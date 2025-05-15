@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data } = await useAsyncGql("GetMenuCollections");
+const nuxtApp = useNuxtApp();
 const { unsplashApiKey } = useRuntimeConfig().public;
 
 const { data: imgUrl } = await useFetch<{ urls: { raw: string } }>(
@@ -11,6 +11,9 @@ const { data: imgUrl } = await useFetch<{ urls: { raw: string } }>(
     query: {
       query: "cycling",
       orientation: "landscape",
+    },
+    getCachedData(key) {
+      return nuxtApp.payload.data[key] || nuxtApp.static.data[key];
     },
   },
 );
@@ -31,6 +34,7 @@ if (imgUrl.value?.urls?.raw) {
   <main>
     <div class="relative right-1/2 left-1/2 mr-[-50vw] ml-[-50vw] w-screen">
       <NuxtImg
+        format="webp"
         width="1600"
         height="640"
         class="h-[420px] w-full object-cover lg:h-[560px] xl:h-[540px]"
@@ -45,11 +49,11 @@ if (imgUrl.value?.urls?.raw) {
       />
     </div>
 
-    <div class="container grid grid-cols-4 gap-4">
-      <div v-for="collection in data.collections.items" :key="collection.id">
-        {{ collection }}
-      </div>
-    </div>
+    <!-- 2. Categories Section -->
+    <section aria-labelledby="home-categories-heading">
+      <h2 id="home-categories-heading" class="text-2xl">Shop by Category</h2>
+      <HomeCategories />
+    </section>
   </main>
 </template>
 

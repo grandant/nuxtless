@@ -11,6 +11,10 @@ fragment CollectionMenuFragment on Collection {
     id
     name
     slug
+    featuredAsset {
+      id
+      preview
+    }
   }
 }
 
