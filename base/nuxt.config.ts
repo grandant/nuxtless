@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "nuxt-graphql-client",
     "pinia-plugin-persistedstate/nuxt",
-    "vue3-carousel-nuxt",
   ],
 
   // Shared Runtime Configurations

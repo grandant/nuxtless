@@ -68,9 +68,6 @@ importers:
       vue:
         specifier: 3.5.13
         version: 3.5.13(typescript@5.8.3)
-      vue3-carousel-nuxt:
-        specifier: ^1.1.5
-        version: 1.1.5(magicast@0.3.5)(vue@3.5.13(typescript@5.8.3))
     devDependencies:
       '@iconify-json/lucide':
         specifier: 1.2.42
@@ -6552,14 +6549,6 @@ packages:
     resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}
     peerDependencies:
       vue: ^3.2.0
-
-  vue3-carousel-nuxt@1.1.5:
-    resolution: {integrity: sha512-Ee9gB1gA9WDPk+1Dxg5vb0N/xWkDwDmvAdwZJ2y+NV+yyBbKiyaZHTjpfWy57TuLeqKVWHyzv+RbDVn85l7mQw==}
-
-  vue3-carousel@0.13.0:
-    resolution: {integrity: sha512-vio91KI4mVMlCDbVhGzW9nIyYqxu0moqroPR/OrJeaCvAK3SJYxqvH36a4/t1oEJYJsTgh+IuNiNi6c+7DVKZg==}
-    peerDependencies:
-      vue: ^3.5.0
 
   vue@3.5.13:
     resolution: {integrity: sha512-wmeiSMxkZCSc+PM2w2VRsOYAZC8GdipNFRTsLSfodVqI9mbejKeXEGr8SckuLnrQPGe3oJN5c3K0vpoU9q/wCQ==}
@@ -14457,18 +14446,6 @@ snapshots:
   vue-router@4.5.1(vue@3.5.13(typescript@5.8.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.13(typescript@5.8.3)
-
-  vue3-carousel-nuxt@1.1.5(magicast@0.3.5)(vue@3.5.13(typescript@5.8.3)):
-    dependencies:
-      '@nuxt/kit': 3.17.3(magicast@0.3.5)
-      vue3-carousel: 0.13.0(vue@3.5.13(typescript@5.8.3))
-    transitivePeerDependencies:
-      - magicast
-      - vue
-
-  vue3-carousel@0.13.0(vue@3.5.13(typescript@5.8.3)):
-    dependencies:
       vue: 3.5.13(typescript@5.8.3)
 
   vue@3.5.13(typescript@5.8.3):

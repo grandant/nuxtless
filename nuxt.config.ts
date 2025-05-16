@@ -21,4 +21,8 @@ export default defineNuxtConfig({
   pinia: {
     storesDirs: ["./base/stores/**"],
   },
+
+  image: {
+    domains: ["localhost:3001"],
+  },
 });
