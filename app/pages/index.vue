@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import type { MenuCollections } from "~~/types/collection";
-
 const nuxtApp = useNuxtApp();
 const { unsplashApiKey } = useRuntimeConfig().public;
-
-const menuCollections = useState<MenuCollections>("menuCollections");
 
 const { data: imgUrl } = await useFetch<{ urls: { raw: string } }>(
   "https://api.unsplash.com/photos/random",
