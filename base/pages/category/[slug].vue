@@ -21,7 +21,7 @@ const products = collection.value.search?.items ?? [];
 
     <div class="container grid grid-cols-4 gap-4">
       <div v-for="product in products" :key="product.slug">
-        <ULink :to="`/products/${product.slug}`">
+        <ULink :to="`/product/${product.slug}`">
           {{ product }}
         </ULink>
       </div>

@@ -1,6 +1,7 @@
 fragment ProductBaseFragment on Product {
   id
   name
+  slug
   description
   featuredAsset {
     id

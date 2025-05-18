@@ -4,17 +4,17 @@ query GetProduct($id: ID!) {
   }
 }
 
+query GetProductDetail($slug: String!) {
+  product(slug: $slug) {
+    ...ProductDetailFragment
+  }
+}
+
 query GetProducts($take: Int = 12, $skip: Int = 0) {
   products(options: { take: $take, skip: $skip }) {
     items {
       ...ProductBaseFragment
     }
     totalItems
-  }
-}
-
-query GetProductDetail($slug: String!) {
-  product(slug: $slug) {
-    ...ProductDetailFragment
   }
 }

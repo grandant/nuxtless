@@ -1,7 +1,7 @@
 {
   "messages": {
     "layouts": {
-      "title": "Nuxt 3 + FastAPI Starter",
+      "title": "Nuxtless",
       "shortDescription": "We provide reliable and professional services tailored to our clients' needs.",
       "description": "For years, we have been dedicated to delivering high-quality services and products, adapted to the unique needs of each client with attention to every detail."
     },
