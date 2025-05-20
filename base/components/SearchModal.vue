@@ -1,8 +1,19 @@
 <script setup lang="ts">
-// import { useFocus } from "@vueuse/core";
+import { UInput } from "#components";
 
-// const inputRef = ref<HTMLElement | null>(null);
-// const { focused } = useFocus(inputRef.value?.inputRef, { initialValue: true });
+const localePath = useLocalePath();
+const open = ref(false);
+const inputElement = ref<InstanceType<typeof UInput> | null>(null);
+
+watch(open, (isOpen) => {
+  if (isOpen) {
+    nextTick(() => inputElement.value?.inputRef?.focus());
+  }
+});
+
+defineShortcuts({
+  meta_k: () => (open.value = !open.value),
+});
 
 const { term, results, pending, error } = useSimpleSearch();
 
@@ -13,32 +24,51 @@ watch(error, (err) => {
 
 <template>
   <UModal
+    v-model:open="open"
     title="Search products"
     description="Type for quick search or press enter for advanced search."
   >
-    <UButton label="Search" color="primary" variant="subtle" />
+    <UButton
+      label="Search"
+      color="primary"
+      variant="subtle"
+      icon="i-lucide-search"
+    />
 
     <template #body>
-      <div class="h-80">
-        <UInput
-          ref="inputRef"
-          v-model="term"
-          placeholder="Search products..."
-          aria-label="Search products"
-        />
-
+      <UInput
+        ref="inputElement"
+        v-model="term"
+        icon="i-lucide-search"
+        size="lg"
+        variant="ghost"
+        placeholder="Type to search..."
+        class="mb-4 w-full"
+        aria-label="Search products"
+      />
+      <div class="h-full sm:h-80">
         <p v-if="pending">Loading</p>
 
         <div v-else-if="error" role="alert">
-          <p>
+          <p class="text-red-500">
             Something went wrong. Please try again. If the issue persists,
             please contact support.
           </p>
         </div>
 
-        <ul v-else role="listbox">
+        <ul v-else class="grid gap-2" role="listbox">
           <li v-for="item in results" :key="item.slug" role="option">
-            {{ item.productName }}
+            <UButton
+              variant="outline"
+              :avatar="{
+                src: item.productAsset?.preview,
+                size: '3xl',
+              }"
+              :to="localePath(`/product/${item.slug}`)"
+              class="w-full"
+            >
+              {{ item.productName }}
+            </UButton>
           </li>
         </ul>
       </div>
