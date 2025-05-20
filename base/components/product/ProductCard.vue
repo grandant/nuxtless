@@ -9,6 +9,20 @@ if (!product) {
 
 const localePath = useLocalePath();
 
+const productStartPrice = computed(() => {
+  const variants = product.variants ?? [];
+  if (!variants.length) return "";
+
+  const prices = variants.map((v) => v.price);
+  const startPrice = Math.min(...prices);
+  const priceString = (startPrice / 100).toFixed(2);
+  const currencyCode = product.variants[0]?.currencyCode ?? "EUR";
+
+  return variants.length > 1
+    ? `From ${priceString} ${currencyCode}`
+    : `${priceString} ${currencyCode}`;
+});
+
 const imageSrc = computed(
   () => product?.featuredAsset?.preview || "/images/placeholder.webp",
 );
@@ -39,6 +53,7 @@ const imageSrc = computed(
             {{ product.name }}
           </ULink>
         </h3>
+        <span>{{ productStartPrice }}</span>
       </template>
     </UCard>
   </article>

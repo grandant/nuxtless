@@ -1,3 +1,21 @@
+fragment ProductVariantFragment on ProductVariant {
+  id
+  name
+  sku
+  stockLevel
+  currencyCode
+  price
+  priceWithTax
+  featuredAsset {
+    id
+    preview
+  }
+  assets {
+    id
+    preview
+  }
+}
+
 fragment ProductBaseFragment on Product {
   id
   name
@@ -6,6 +24,10 @@ fragment ProductBaseFragment on Product {
   featuredAsset {
     id
     preview
+  }
+  variants {
+    currencyCode
+    price
   }
 }
 
@@ -16,21 +38,7 @@ fragment ProductDetailFragment on Product {
     preview
   }
   variants {
-    id
-    name
-    sku
-    stockLevel
-    currencyCode
-    price
-    priceWithTax
-    featuredAsset {
-      id
-      preview
-    }
-    assets {
-      id
-      preview
-    }
+    ...ProductVariantFragment
   }
 }
 

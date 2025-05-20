@@ -18,3 +18,25 @@ query GetProducts($take: Int = 12, $skip: Int = 0) {
     totalItems
   }
 }
+
+query SearchProducts(
+  $term: String!
+  $skip: Int
+  $take: Int
+  $collectionSlug: String
+) {
+  search(
+    input: {
+      term: $term
+      groupByProduct: true
+      skip: $skip
+      take: $take
+      collectionSlug: $collectionSlug
+    }
+  ) {
+    totalItems
+    items {
+      ...ProductSearchFragment
+    }
+  }
+}

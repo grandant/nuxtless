@@ -6,6 +6,7 @@
       <LogoElement />
       <HeaderDesktopMenu class="hidden md:flex" />
       <HeaderMobileMenu class="flex md:hidden" />
+      <SearchModal />
       <CartTrigger />
     </div>
     <CartPanel />
