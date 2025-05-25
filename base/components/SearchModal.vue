@@ -27,12 +27,13 @@ watch(error, (err) => {
     v-model:open="open"
     title="Search products"
     description="Type for quick search or press enter for advanced search."
+    :ui="{ content: 'h-screen sm:h-[32rem]' }"
   >
     <UButton
-      label="Search"
       color="primary"
       variant="subtle"
       icon="i-lucide-search"
+      size="xl"
     />
 
     <template #body>
@@ -46,7 +47,7 @@ watch(error, (err) => {
         class="mb-4 w-full"
         aria-label="Search products"
       />
-      <div class="h-full sm:h-80">
+      <div>
         <p v-if="pending">Loading</p>
 
         <div v-else-if="error" role="alert">
@@ -66,12 +67,22 @@ watch(error, (err) => {
               }"
               :to="localePath(`/product/${item.slug}`)"
               class="w-full"
+              @click="open = !open"
             >
               {{ item.productName }}
             </UButton>
           </li>
         </ul>
       </div>
+    </template>
+
+    <template #footer>
+      <UButton
+        label="Close"
+        color="neutral"
+        variant="soft"
+        @click="open = false"
+      />
     </template>
   </UModal>
 </template>

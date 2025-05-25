@@ -19,7 +19,7 @@ const products = collection.value.search?.items ?? [];
   <div>
     <h1 class="text-2xl">{{ collectionData.collection?.name }}</h1>
 
-    <div class="container grid grid-cols-4 gap-4">
+    <div class="container grid grid-cols-2 gap-4">
       <div v-for="product in products" :key="product.slug">
         <ULink :to="`/product/${product.slug}`">
           {{ product }}

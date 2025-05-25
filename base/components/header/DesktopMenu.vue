@@ -1,22 +1,9 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
-import type { MenuCollections } from "~~/types/collection";
 
-const menuCollections = useState<MenuCollections>("menuCollections");
-const localePath = useLocalePath();
-
-const items = computed<NavigationMenuItem[]>(
-  () =>
-    menuCollections.value?.collections.items.map((collection) => ({
-      label: collection.name,
-      to: localePath(`/category/${collection.slug}`),
-      avatar: { src: collection.featuredAsset?.preview },
-      children: collection.children?.map((child) => ({
-        label: child.name,
-        to: localePath(`/category/${child.slug}`),
-      })),
-    })) ?? [],
-);
+defineProps<{
+  items: NavigationMenuItem[];
+}>();
 </script>
 
 <template>

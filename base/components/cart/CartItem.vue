@@ -34,7 +34,7 @@ const remove = () => {
         />
         <UButton
           icon="i-lucide-trash"
-          color="neutral"
+          color="error"
           size="xs"
           variant="soft"
           @click="remove"

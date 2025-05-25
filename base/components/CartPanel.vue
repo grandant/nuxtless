@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const localePath = useLocalePath();
 const { order } = storeToRefs(useOrderStore());
-const isCartOpen = useState<boolean>("isCartOpen", () => false);
+const isCartOpen = useState<boolean>("isCartOpen");
 </script>
 
 <template>

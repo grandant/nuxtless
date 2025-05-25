@@ -1,11 +1,35 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { NavigationMenuItem } from "@nuxt/ui";
+
+defineProps<{
+  items: NavigationMenuItem[];
+}>();
+
+const router = useRouter();
+const open = ref(false);
+
+router.afterEach(() => {
+  open.value = false;
+});
+</script>
 
 <template>
-  <USlideover title="Menu" side="left" description="Mobile Menu">
-    <UButton label="Open" color="neutral" variant="subtle" />
+  <USlideover
+    v-model:open="open"
+    title="Menu"
+    description="Mobile Menu"
+    side="left"
+  >
+    <UButton
+      icon="i-lucide-menu"
+      size="xl"
+      color="neutral"
+      variant="ghost"
+      :ui="{ base: `p-1`, leadingIcon: 'text-2xl' }"
+    />
 
     <template #body>
-      <div>Home</div>
+      <UNavigationMenu :items="items" orientation="vertical" highlight />
     </template>
 
     <template #footer>
