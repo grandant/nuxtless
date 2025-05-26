@@ -32,13 +32,13 @@ const features: ShopFeature[] = [
         <div class="grid grid-cols-[auto_1fr] items-center gap-4">
           <UIcon
             :name="feature.icon"
-            size="50"
+            size="40"
             role="img"
             class="text-primary"
             :aria-label="feature.title"
           />
           <div class="space-y-1">
-            <h3 class="text-xl font-bold">{{ feature.title }}</h3>
+            <h3 class="text-lg font-bold">{{ feature.title }}</h3>
             <p class="text-sm">{{ feature.description }}</p>
           </div>
         </div>

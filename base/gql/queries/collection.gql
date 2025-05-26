@@ -6,9 +6,9 @@ query GetMenuCollections {
   }
 }
 
-query GetPageCollection($slug: String!) {
+query GetCollection($slug: String!) {
   collection(slug: $slug) {
-    ...CollectionPageFragment
+    ...CollectionBaseFragment
   }
 }
 

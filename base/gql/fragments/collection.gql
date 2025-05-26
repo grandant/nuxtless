@@ -1,3 +1,14 @@
+fragment CollectionBaseFragment on Collection {
+  id
+  name
+  slug
+  description
+  featuredAsset {
+    id
+    preview
+  }
+}
+
 fragment CollectionMenuFragment on Collection {
   id
   name
@@ -15,16 +26,5 @@ fragment CollectionMenuFragment on Collection {
       id
       preview
     }
-  }
-}
-
-fragment CollectionPageFragment on Collection {
-  id
-  name
-  slug
-  description
-  featuredAsset {
-    id
-    preview
   }
 }
