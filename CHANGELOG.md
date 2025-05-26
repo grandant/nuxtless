@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented here.
 
-## [0.4.0] - 2025-05-XX
+## [0.4.0] - 2025-05-13
 
 ### Added
 - Completed checkout flow: address → shipping → payment → confirmation
