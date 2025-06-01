@@ -1,14 +1,23 @@
 <script setup lang="ts">
+import type { MenuCollections, ChildCollection } from "~~/types/collection";
+
 const route = useRoute();
 const slug = route.params.slug as string;
 
-const { current } = getCurrentCollections();
+const menuCollections = useState<MenuCollections>("menuCollections");
+const menuItems = menuCollections.value?.collections.items ?? [];
+
+const currentCollection =
+  menuItems.find((top) => top.slug === slug) ??
+  menuItems
+    .flatMap((top) => top.children ?? [])
+    .find((child) => child.slug === slug);
 
 const childCollections = computed(() =>
-  current && "children" in current && Array.isArray(current.children)
-    ? current.children
+  currentCollection && "children" in currentCollection
+    ? (currentCollection.children ?? [])
     : [],
-);
+) as ComputedRef<ChildCollection[]>;
 
 const { data: collectionProducts } = await useAsyncGql(
   "GetCollectionProducts",
@@ -24,8 +33,8 @@ const products = collectionProducts.value.search?.items ?? [];
 
 <template>
   <main>
-    <h1 class="pt-14 text-2xl font-semibold">{{ current?.name }}</h1>
-    <BaseBreadcrumbs class="pt-2 pb-14" />
+    <h1 class="pt-14 text-2xl font-semibold">{{ currentCollection?.name }}</h1>
+    <BreadcrumbTrail trail="category" class="pt-2 pb-14" />
 
     <section
       v-if="childCollections.length"

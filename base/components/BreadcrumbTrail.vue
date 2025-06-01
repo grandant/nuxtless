@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import type { BreadcrumbItem } from "@nuxt/ui";
+import type { ProductDetail } from "~~/types/product";
+
+const { product, trail } = withDefaults(
+  defineProps<{
+    product?: ProductDetail;
+    trail: "category" | "product";
+  }>(),
+  {
+    product: undefined,
+  },
+);
 
 const localePath = useLocalePath();
-const { parent, current } = getCurrentCollections();
 
-const breadcrumbs = computed(() =>
-  parent ? [parent, current] : current ? [current] : [],
-);
+const collections =
+  trail === "category" ? getCategoryTrail() : getProductTrail(product);
 
 const breadcrumbItems = computed<BreadcrumbItem[]>(() => [
   {
@@ -14,14 +23,7 @@ const breadcrumbItems = computed<BreadcrumbItem[]>(() => [
     icon: "i-lucide-home",
     to: localePath("/"),
   },
-  ...breadcrumbs.value
-    .filter(
-      (item): item is Exclude<typeof item, undefined> => item !== undefined,
-    )
-    .map((item) => ({
-      label: item.name,
-      to: localePath(`/category/${item.slug}`),
-    })),
+  ...collections,
 ]);
 </script>
 
