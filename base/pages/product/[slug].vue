@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { BreadcrumbTrail } from "#components";
-
 const route = useRoute();
 const slug = route.params.slug as string;
 const orderStore = useOrderStore();
@@ -10,7 +8,9 @@ const { data: productData } = await useAsyncGql("GetProductDetail", {
 });
 
 const product = productData.value.product;
+const { selectedVariant } = useProductVariants(product);
 
+// TODO: Should be refactored to a composable/component
 const addToCart = async () => {
   const variantId = product?.variants?.[0]?.id;
   if (variantId) {
@@ -21,7 +21,7 @@ const addToCart = async () => {
 
 <template>
   <main>
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2">
       <div>
         <h1 class="pt-14 text-2xl font-semibold">
           {{ product?.name }}
@@ -32,15 +32,38 @@ const addToCart = async () => {
           trail="product"
           class="pt-2 pb-14"
         />
-        <span>
-          {{ product?.description }}
-        </span>
+
+        <ProductDetails
+          :stock-level="selectedVariant?.stockLevel"
+          :sku="selectedVariant?.sku"
+        />
+
+        <ProductDescription
+          v-if="product?.description"
+          :description="product?.description"
+          :lines="2"
+        />
+
+        <hr />
+
+        <ProductVariants :product="product" />
+
+        <UButton label="Add to Cart" class="mt-4" @click="addToCart" />
+
+        <hr />
       </div>
+
       <div>
-        <h1 class="text-2xl">{{ product?.name }}</h1>
+        {{ product }}
       </div>
     </div>
-    <UButton label="Add to Cart" class="mt-4" @click="addToCart" />
+
+    <hr />
+
+    <ProductDescription
+      v-if="product?.description"
+      :description="product?.description"
+    />
   </main>
 </template>
 

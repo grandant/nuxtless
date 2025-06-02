@@ -2,15 +2,10 @@
 import type { BreadcrumbItem } from "@nuxt/ui";
 import type { ProductDetail } from "~~/types/product";
 
-const { product, trail } = withDefaults(
-  defineProps<{
-    product?: ProductDetail;
-    trail: "category" | "product";
-  }>(),
-  {
-    product: undefined,
-  },
-);
+const { product = undefined, trail } = defineProps<{
+  product?: ProductDetail;
+  trail: "category" | "product";
+}>();
 
 const localePath = useLocalePath();
 

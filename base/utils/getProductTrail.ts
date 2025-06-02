@@ -5,7 +5,6 @@ export function getProductTrail(product: ProductDetail): BreadcrumbItem[] {
   const collections = product?.collections ?? [];
   return collections
     .slice()
-    .reverse()
     .filter((c) => c.slug !== "__root_collection__")
     .map((c) => ({
       label: c.name,

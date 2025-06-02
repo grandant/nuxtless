@@ -6,6 +6,14 @@ fragment ProductVariantFragment on ProductVariant {
   currencyCode
   price
   priceWithTax
+  options {
+    id
+    name
+    group {
+      id
+      name
+    }
+  }
   featuredAsset {
     id
     preview
