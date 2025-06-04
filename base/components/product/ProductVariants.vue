@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import type { RadioGroupItem } from "@nuxt/ui";
-import type { ProductDetail } from "~~/types/product";
 
-const { product } = defineProps<{
-  product: ProductDetail;
-}>();
-
-const { optionGroups, selectedOptions } = useProductVariants(product);
+const { optionGroups, selectedOptions } = storeToRefs(useProductStore());
 
 const groupItems = computed(() => {
   const result: Record<string, RadioGroupItem[]> = {};

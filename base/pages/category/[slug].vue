@@ -36,6 +36,7 @@ const products = collectionProducts.value.search?.items ?? [];
     <h1 class="pt-14 text-2xl font-semibold">{{ currentCollection?.name }}</h1>
     <BreadcrumbTrail trail="category" class="pt-2 pb-14" />
 
+    <!-- Child Collections -->
     <section
       v-if="childCollections.length"
       class="pb-14"
@@ -56,6 +57,7 @@ const products = collectionProducts.value.search?.items ?? [];
       </div>
     </section>
 
+    <!-- Collection Products -->
     <section class="pb-14" aria-labelledby="category-products-heading">
       <h2 id="category-products-heading" class="sr-only">Products</h2>
       <div

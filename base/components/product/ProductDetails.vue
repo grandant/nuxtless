@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { UBadge } from "#components";
-
-const { stockLevel } = defineProps<{
-  stockLevel: string | undefined;
-  sku: string | undefined;
-}>();
+const { selectedVariant } = storeToRefs(useProductStore());
+const stockLevel = computed(() => selectedVariant.value?.stockLevel);
+const sku = computed(() => selectedVariant.value?.sku);
 
 const stockLevelMap = {
   IN_STOCK: { label: "In stock", color: "success" },
@@ -14,7 +11,7 @@ const stockLevelMap = {
 
 const stock = computed(
   () =>
-    stockLevelMap[stockLevel as keyof typeof stockLevelMap] ??
+    stockLevelMap[stockLevel.value as keyof typeof stockLevelMap] ??
     stockLevelMap.OUT_OF_STOCK,
 );
 </script>
@@ -22,12 +19,14 @@ const stock = computed(
 <template>
   <div class="flex flex-row gap-4">
     <div>
-      <UBadge :color="stock.color" variant="subtle">{{ stock.label }}</UBadge>
+      <UBadge :color="stock.color" variant="subtle" class="uppercase">
+        {{ stock.label }}
+      </UBadge>
     </div>
     <div>
-      <UBadge v-if="sku" color="neutral" variant="subtle">
-        SKU: {{ sku }}</UBadge
-      >
+      <UBadge v-if="sku" color="neutral" variant="subtle" class="uppercase">
+        SKU: {{ sku }}
+      </UBadge>
     </div>
   </div>
 </template>

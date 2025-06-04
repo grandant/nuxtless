@@ -2,13 +2,15 @@
 const route = useRoute();
 const slug = route.params.slug as string;
 const orderStore = useOrderStore();
+const productStore = useProductStore();
 
 const { data: productData } = await useAsyncGql("GetProductDetail", {
   slug,
 });
 
 const product = productData.value.product;
-const { selectedVariant } = useProductVariants(product);
+productStore.init(product);
+const { selectedVariant } = storeToRefs(productStore);
 
 // TODO: Should be refactored to a composable/component
 const addToCart = async () => {
@@ -33,33 +35,31 @@ const addToCart = async () => {
           class="pt-2 pb-14"
         />
 
+        <!-- Details (Stock, SKU) -->
         <ProductDetails
           :stock-level="selectedVariant?.stockLevel"
           :sku="selectedVariant?.sku"
         />
 
-        <ProductDescription
-          v-if="product?.description"
-          :description="product?.description"
-          :lines="2"
-        />
+        <!-- Short Description -->
+        <ProductDescription :lines="2" />
 
         <hr />
 
-        <ProductVariants :product="product" />
+        <!-- Variant Selection -->
+        <ProductVariants />
 
         <UButton label="Add to Cart" class="mt-4" @click="addToCart" />
 
         <hr />
       </div>
 
-      <div>
-        {{ product }}
-      </div>
+      <ProductGallery class="pt-14" />
     </div>
 
     <hr />
 
+    <!-- Full Description -->
     <ProductDescription
       v-if="product?.description"
       :description="product?.description"

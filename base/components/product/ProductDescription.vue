@@ -1,8 +1,10 @@
 <script setup lang="ts">
-const { description, lines = null } = defineProps<{
-  description: string;
+const { lines = null } = defineProps<{
   lines?: number | null;
 }>();
+
+const { product } = storeToRefs(useProductStore());
+const description = product.value?.description;
 </script>
 
 <template>
