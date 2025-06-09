@@ -1,12 +1,6 @@
 <script setup lang="ts">
-const items = [
-  "https://picsum.photos/640/640?random=1",
-  "https://picsum.photos/640/640?random=2",
-  "https://picsum.photos/640/640?random=3",
-  "https://picsum.photos/640/640?random=4",
-  "https://picsum.photos/640/640?random=5",
-  "https://picsum.photos/640/640?random=6",
-];
+const { product, selectedVariant, galleryAssets } =
+  storeToRefs(useProductStore());
 
 const carousel = useTemplateRef("carousel");
 const activeIndex = ref(0);
@@ -33,25 +27,44 @@ function select(index: number) {
     <UCarousel
       ref="carousel"
       v-slot="{ item }"
-      arrows
-      :items="items"
+      :items="galleryAssets"
       :prev="{ onClick: onClickPrev }"
       :next="{ onClick: onClickNext }"
-      class="mx-auto w-full max-w-xs"
+      class="mx-auto w-full"
       @select="onSelect"
     >
-      <img :src="item" width="320" height="320" class="rounded-lg" />
+      <NuxtImg
+        format="webp"
+        class="mx-auto h-[250px] rounded-lg object-contain sm:h-[350px] sm:object-cover"
+        :src="item.preview"
+        :alt="`${selectedVariant?.name || product?.name || 'Product image'} – Slide ${activeIndex + 1}`"
+        :loading="activeIndex === 0 ? 'eager' : 'lazy'"
+        :preload="activeIndex === 0"
+        sizes="90vw sm:30vw"
+        placeholder
+        placeholder-class="blur-xl"
+      />
     </UCarousel>
 
     <div class="mx-auto flex max-w-xs justify-between gap-1 pt-4">
       <div
-        v-for="(item, index) in items"
-        :key="index"
-        class="size-11 opacity-25 transition-opacity hover:opacity-100"
+        v-for="(item, index) in galleryAssets"
+        :key="item.id"
+        class="opacity-25 transition-opacity hover:opacity-100"
         :class="{ 'opacity-100': activeIndex === index }"
         @click="select(index)"
       >
-        <img :src="item" width="44" height="44" class="rounded-lg" />
+        <NuxtImg
+          format="webp"
+          class="w-[45px] rounded-lg object-cover"
+          :src="item.preview"
+          :alt="`${selectedVariant?.name || product?.name || 'Product image'} – Thumb ${index + 1}`"
+          loading="eager"
+          preload
+          sizes="45px"
+          placeholder
+          placeholder-class="blur-xl"
+        />
       </div>
     </div>
   </div>

@@ -23,41 +23,60 @@ const addToCart = async () => {
 
 <template>
   <main>
-    <div class="grid grid-cols-1 sm:grid-cols-2">
-      <div>
-        <h1 class="pt-14 text-2xl font-semibold">
+    <div class="grid grid-flow-col grid-cols-2 gap-4">
+      <div class="pt-14">
+        <h1 class="text-2xl font-semibold">
           {{ product?.name }}
         </h1>
+        <BreadcrumbTrail :product="product" trail="product" class="pt-2" />
+      </div>
+      <div class="row-span-2">
+        <ProductGallery class="pt-4" />
+      </div>
+      <div class="row-span-3 grid grid-rows-subgrid">
+        <div class="row-start-2 pt-4">
+          <ProductDetails
+            :stock-level="selectedVariant?.stockLevel"
+            :sku="selectedVariant?.sku"
+          />
+          <ProductDescription :lines="2" />
+        </div>
+      </div>
+    </div>
 
-        <BreadcrumbTrail
-          :product="product"
-          trail="product"
-          class="pt-2 pb-14"
-        />
+    <!-- <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
+      <div class="grid grid-rows-[auto_auto_auto] pt-14">
+        <div>
+          <h1 class="text-2xl font-semibold">
+            {{ product?.name }}
+          </h1>
 
-        <!-- Details (Stock, SKU) -->
-        <ProductDetails
-          :stock-level="selectedVariant?.stockLevel"
-          :sku="selectedVariant?.sku"
-        />
+          <BreadcrumbTrail :product="product" trail="product" class="pt-2" />
+        </div>
 
-        <!-- Short Description -->
-        <ProductDescription :lines="2" />
-
-        <hr />
-
-        <!-- Variant Selection -->
-        <ProductVariants />
-
-        <UButton label="Add to Cart" class="mt-4" @click="addToCart" />
+        <ProductGallery class="pt-4" />
 
         <hr />
       </div>
 
-      <ProductGallery class="pt-14" />
-    </div>
+      <div class="grid grid-rows-[auto_auto_auto_auto] pt-14">
+        <div class="row-span-2 row-start-2">
+          <ProductDetails
+            :stock-level="selectedVariant?.stockLevel"
+            :sku="selectedVariant?.sku"
+          />
+
+          <ProductDescription :lines="2" />
+        </div>
+
+        <hr class="row-start-3" />
+
+        <ProductVariants />
+      </div>
+    </div> -->
 
     <hr />
+    <UButton label="Add to Cart" class="mt-4" @click="addToCart" />
 
     <!-- Full Description -->
     <ProductDescription
