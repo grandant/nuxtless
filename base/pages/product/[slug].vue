@@ -23,60 +23,40 @@ const addToCart = async () => {
 
 <template>
   <main>
-    <div class="grid grid-flow-col grid-cols-2 gap-4">
-      <div class="pt-14">
+    <div
+      class="grid grid-flow-row grid-cols-1 gap-10 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-[auto_auto_auto_auto]"
+    >
+      <div class="mt-14">
         <h1 class="text-2xl font-semibold">
           {{ product?.name }}
         </h1>
-        <BreadcrumbTrail :product="product" trail="product" class="pt-2" />
+
+        <BreadcrumbTrail :product="product" trail="product" class="mt-2" />
       </div>
-      <div class="row-span-2">
-        <ProductGallery class="pt-4" />
-      </div>
-      <div class="row-span-3 grid grid-rows-subgrid">
-        <div class="row-start-2 pt-4">
+
+      <ProductGallery />
+
+      <div class="row-span-3 grid grid-rows-subgrid gap-4">
+        <div class="row-start-2 mt-2 flex flex-col">
           <ProductDetails
             :stock-level="selectedVariant?.stockLevel"
             :sku="selectedVariant?.sku"
           />
-          <ProductDescription :lines="2" />
+
+          <ProductDescription class="mt-8 line-clamp-2" />
+
+          <hr class="mt-8" />
+
+          <ProductVariants class="mt-8" />
+
+          <div class="mt-auto">
+            <UButton label="Add to Cart" @click="addToCart" />
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
-      <div class="grid grid-rows-[auto_auto_auto] pt-14">
-        <div>
-          <h1 class="text-2xl font-semibold">
-            {{ product?.name }}
-          </h1>
-
-          <BreadcrumbTrail :product="product" trail="product" class="pt-2" />
-        </div>
-
-        <ProductGallery class="pt-4" />
-
-        <hr />
-      </div>
-
-      <div class="grid grid-rows-[auto_auto_auto_auto] pt-14">
-        <div class="row-span-2 row-start-2">
-          <ProductDetails
-            :stock-level="selectedVariant?.stockLevel"
-            :sku="selectedVariant?.sku"
-          />
-
-          <ProductDescription :lines="2" />
-        </div>
-
-        <hr class="row-start-3" />
-
-        <ProductVariants />
-      </div>
-    </div> -->
-
-    <hr />
-    <UButton label="Add to Cart" class="mt-4" @click="addToCart" />
+    <hr class="mb-8" />
 
     <!-- Full Description -->
     <ProductDescription

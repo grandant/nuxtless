@@ -33,16 +33,16 @@ const products = collectionProducts.value.search?.items ?? [];
 
 <template>
   <main>
-    <h1 class="pt-14 text-2xl font-semibold">{{ currentCollection?.name }}</h1>
-    <BreadcrumbTrail trail="category" class="pt-2 pb-14" />
+    <h1 class="mt-14 text-2xl font-semibold">{{ currentCollection?.name }}</h1>
+    <BreadcrumbTrail trail="category" class="mt-2 mb-14" />
 
     <!-- Child Collections -->
     <section
       v-if="childCollections.length"
-      class="pb-14"
+      class="mb-14"
       aria-labelledby="child-collections-heading"
     >
-      <h2 id="child-collections-heading" class="pb-4 text-xl font-semibold">
+      <h2 id="child-collections-heading" class="mb-4 text-xl font-semibold">
         Collections
       </h2>
       <div
@@ -58,7 +58,7 @@ const products = collectionProducts.value.search?.items ?? [];
     </section>
 
     <!-- Collection Products -->
-    <section class="pb-14" aria-labelledby="category-products-heading">
+    <section class="mb-14" aria-labelledby="category-products-heading">
       <h2 id="category-products-heading" class="sr-only">Products</h2>
       <div
         class="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4"

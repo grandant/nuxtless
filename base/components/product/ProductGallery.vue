@@ -56,7 +56,7 @@ function select(index: number) {
       >
         <NuxtImg
           format="webp"
-          class="w-[45px] rounded-lg object-cover"
+          class="h-[45px] w-[45px] rounded-lg object-cover"
           :src="item.preview"
           :alt="`${selectedVariant?.name || product?.name || 'Product image'} – Thumb ${index + 1}`"
           loading="eager"

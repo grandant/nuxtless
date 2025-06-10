@@ -35,7 +35,7 @@ if (imgUrl.value?.urls?.raw) {
     <h1 class="sr-only">Nuxtless: Nuxt Level Headless E-commerce</h1>
 
     <!-- 1. Hero Banner -->
-    <section class="pb-14" aria-labelledby="home-hero-heading">
+    <section class="mb-14" aria-labelledby="home-hero-heading">
       <h2 id="home-hero-heading" class="sr-only">Welcome to Nuxtless</h2>
       <div class="relative right-1/2 left-1/2 mr-[-50vw] ml-[-50vw] w-screen">
         <NuxtImg
@@ -54,22 +54,22 @@ if (imgUrl.value?.urls?.raw) {
     </section>
 
     <!-- 2. Categories Section -->
-    <section class="pb-14" aria-labelledby="home-categories-heading">
-      <h2 id="home-categories-heading" class="pb-4 text-2xl font-semibold">
+    <section class="mb-14" aria-labelledby="home-categories-heading">
+      <h2 id="home-categories-heading" class="mb-4 text-2xl font-semibold">
         Shop by Category
       </h2>
       <HomeCategoryCarousel />
     </section>
 
     <!-- 3. Shop Features -->
-    <section class="pt-8 pb-14" aria-labelledby="home-features-heading">
+    <section class="mt-8 mb-14" aria-labelledby="home-features-heading">
       <h2 id="home-features-heading" class="sr-only">Why Shop With Us</h2>
       <HomeShopFeatures />
     </section>
 
     <!-- 4. Featured Products -->
-    <section class="pb-14" aria-labelledby="home-products-heading">
-      <h2 id="home-products-heading" class="pb-4 text-2xl font-semibold">
+    <section class="mb-14" aria-labelledby="home-products-heading">
+      <h2 id="home-products-heading" class="mb-4 text-2xl font-semibold">
         Featured Products
       </h2>
       <HomeFeaturedProducts />
