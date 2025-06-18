@@ -33,8 +33,10 @@ const products = collectionProducts.value.search?.items ?? [];
 
 <template>
   <main>
-    <h1 class="mt-14 text-2xl font-semibold">{{ currentCollection?.name }}</h1>
-    <BreadcrumbTrail trail="category" class="mt-2 mb-14" />
+    <header class="mt-14">
+      <h1 class="text-2xl font-semibold">{{ currentCollection?.name }}</h1>
+      <BreadcrumbTrail trail="category" class="mt-2 mb-14" />
+    </header>
 
     <!-- Child Collections -->
     <section

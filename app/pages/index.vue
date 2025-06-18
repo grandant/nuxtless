@@ -34,7 +34,7 @@ if (imgUrl.value?.urls?.raw) {
   <main>
     <h1 class="sr-only">Nuxtless: Nuxt Level Headless E-commerce</h1>
 
-    <!-- 1. Hero Banner -->
+    <!-- Hero Banner -->
     <section class="mb-14" aria-labelledby="home-hero-heading">
       <h2 id="home-hero-heading" class="sr-only">Welcome to Nuxtless</h2>
       <div class="relative right-1/2 left-1/2 mr-[-50vw] ml-[-50vw] w-screen">
@@ -53,7 +53,7 @@ if (imgUrl.value?.urls?.raw) {
       </div>
     </section>
 
-    <!-- 2. Categories Section -->
+    <!-- Categories Section -->
     <section class="mb-14" aria-labelledby="home-categories-heading">
       <h2 id="home-categories-heading" class="mb-4 text-2xl font-semibold">
         Shop by Category
@@ -61,13 +61,13 @@ if (imgUrl.value?.urls?.raw) {
       <HomeCategoryCarousel />
     </section>
 
-    <!-- 3. Shop Features -->
+    <!-- Shop Features -->
     <section class="mt-8 mb-14" aria-labelledby="home-features-heading">
       <h2 id="home-features-heading" class="sr-only">Why Shop With Us</h2>
       <HomeShopFeatures />
     </section>
 
-    <!-- 4. Featured Products -->
+    <!-- Featured Products -->
     <section class="mb-14" aria-labelledby="home-products-heading">
       <h2 id="home-products-heading" class="mb-4 text-2xl font-semibold">
         Featured Products
