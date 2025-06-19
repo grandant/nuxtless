@@ -25,6 +25,7 @@
     "graphql-request": "7.1.2",
     "nuxt": "3.17.3",
     "nuxt-graphql-client": "0.2.46",
+    "photoswipe": "^5.4.4",
     "pinia": "3.0.2",
     "pinia-plugin-persistedstate": "4.3.0",
     "tailwindcss": "4.1.6",

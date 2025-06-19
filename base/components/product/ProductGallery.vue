@@ -2,6 +2,8 @@
 const { product, selectedVariant, galleryAssets } =
   storeToRefs(useProductStore());
 
+const { openPhotoSwipe } = useProductLightbox();
+
 const carousel = useTemplateRef("carousel");
 const activeIndex = ref(0);
 
@@ -43,6 +45,7 @@ function select(index: number) {
         sizes="90vw sm:30vw"
         placeholder
         placeholder-class="blur-xl"
+        @click="() => openPhotoSwipe(activeIndex)"
       />
     </UCarousel>
 
