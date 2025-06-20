@@ -1,6 +1,10 @@
 import "photoswipe/style.css";
 
-export function useProductLightbox() {
+export function useProductLightbox({
+  select,
+}: {
+  select: (i: number) => void;
+}) {
   const { product, selectedVariant, galleryAssets } =
     storeToRefs(useProductStore());
 
@@ -38,6 +42,10 @@ export function useProductLightbox() {
       dataSource,
       index: startIndex,
       showHideAnimationType: "none",
+    });
+
+    pswp.on("close", () => {
+      select(pswp.currIndex);
     });
 
     pswp.init();

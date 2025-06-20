@@ -2,8 +2,6 @@
 const { product, selectedVariant, galleryAssets } =
   storeToRefs(useProductStore());
 
-const { openPhotoSwipe } = useProductLightbox();
-
 const carousel = useTemplateRef("carousel");
 const activeIndex = ref(0);
 
@@ -22,6 +20,8 @@ function select(index: number) {
 
   carousel.value?.emblaApi?.scrollTo(index);
 }
+
+const { openPhotoSwipe } = useProductLightbox({ select });
 </script>
 
 <template>
