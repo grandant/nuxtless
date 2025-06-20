@@ -4,11 +4,13 @@ export function useProductLightbox() {
   const { product, selectedVariant, galleryAssets } =
     storeToRefs(useProductStore());
 
-  async function createDataSource(
-    galleryAssets: Array<{ id: string; preview: string }>,
-    altBase: string,
-  ) {
-    const promises = galleryAssets.map(async (item, idx) => {
+  async function createDataSource() {
+    const altBase =
+      selectedVariant.value?.name || product.value?.name || "Product image";
+
+    const assets = galleryAssets.value;
+
+    const promises = assets.map(async (item, idx) => {
       const img = new window.Image();
       img.src = item.preview;
       await new Promise((resolve) => {
@@ -30,15 +32,14 @@ export function useProductLightbox() {
 
   const openPhotoSwipe = async (startIndex = 0) => {
     const PhotoSwipe = (await import("photoswipe")).default;
-    const altBase =
-      selectedVariant.value?.name || product.value?.name || "Product image";
-    const dataSource = await createDataSource(galleryAssets.value, altBase);
+    const dataSource = await createDataSource();
 
     const pswp = new PhotoSwipe({
       dataSource,
       index: startIndex,
-      showHideAnimationType: "fade",
+      showHideAnimationType: "none",
     });
+
     pswp.init();
   };
 
