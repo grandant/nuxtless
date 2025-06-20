@@ -62,7 +62,7 @@ if (imgUrl.value?.urls?.raw) {
     </section>
 
     <!-- Shop Features -->
-    <section class="mt-8 mb-14" aria-labelledby="home-features-heading">
+    <section class="mt-20 mb-14" aria-labelledby="home-features-heading">
       <h2 id="home-features-heading" class="sr-only">Why Shop With Us</h2>
       <HomeShopFeatures />
     </section>

@@ -11,14 +11,6 @@ const { data: productData } = await useAsyncGql("GetProductDetail", {
 const product = productData.value.product;
 productStore.init(product);
 const { selectedVariant } = storeToRefs(productStore);
-
-// TODO: Should be refactored to a composable/component
-const addToCart = async () => {
-  const variantId = product?.variants?.[0]?.id;
-  if (variantId) {
-    await orderStore.addItemToOrder(variantId, 1);
-  }
-};
 </script>
 
 <template>
@@ -70,7 +62,7 @@ const addToCart = async () => {
             <h2 id="product-add-to-cart-heading" class="sr-only">
               Add to Cart
             </h2>
-            <UButton label="Add to Cart" @click="addToCart" />
+            <CartAddButton :variant-id="selectedVariant?.id" />
           </section>
         </div>
       </div>
