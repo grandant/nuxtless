@@ -37,7 +37,7 @@ const { openPhotoSwipe } = useProductLightbox({ select });
     >
       <NuxtImg
         format="webp"
-        class="mx-auto h-[250px] rounded-lg object-contain sm:h-[350px] sm:object-cover"
+        class="mx-auto h-[250px] cursor-pointer rounded-lg object-contain transition-transform hover:opacity-90 sm:h-[350px] sm:object-cover"
         :src="item.preview"
         :alt="`${selectedVariant?.name || product?.name || 'Product image'} – Slide ${activeIndex + 1}`"
         :loading="activeIndex === 0 ? 'eager' : 'lazy'"
@@ -45,6 +45,8 @@ const { openPhotoSwipe } = useProductLightbox({ select });
         sizes="90vw sm:30vw"
         placeholder
         placeholder-class="blur-xl"
+        role="button"
+        tabindex="0"
         @click="() => openPhotoSwipe(activeIndex)"
       />
     </UCarousel>

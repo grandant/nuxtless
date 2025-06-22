@@ -27,7 +27,7 @@ async function addToCart() {
 </script>
 
 <template>
-  <div class="flex w-md gap-4">
+  <div class="flex w-full gap-4 lg:w-md">
     <UInputNumber v-model="quantity" size="xl" :min="1" :max="10" />
     <UButton
       label="Add to Cart"

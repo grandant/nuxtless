@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const route = useRoute();
 const slug = route.params.slug as string;
-const orderStore = useOrderStore();
 const productStore = useProductStore();
 
 const { data: productData } = await useAsyncGql("GetProductDetail", {
@@ -11,6 +10,10 @@ const { data: productData } = await useAsyncGql("GetProductDetail", {
 const product = productData.value.product;
 productStore.init(product);
 const { selectedVariant } = storeToRefs(productStore);
+
+const hasVariants = computed(
+  () => product?.variants && product.variants.length > 1,
+);
 </script>
 
 <template>
@@ -30,7 +33,7 @@ const { selectedVariant } = storeToRefs(productStore);
       </section>
 
       <div class="row-span-3 grid grid-rows-subgrid gap-4">
-        <div class="row-start-2 mt-2 flex flex-col">
+        <div class="row-start-2 flex flex-col sm:mt-2">
           <!-- Product Details -->
           <section aria-labelledby="product-details-heading">
             <h2 id="product-details-heading" class="sr-only">
@@ -48,15 +51,15 @@ const { selectedVariant } = storeToRefs(productStore);
           <hr class="mt-8" />
 
           <!-- Product Variants -->
-          <section aria-labelledby="product-variants-heading">
+          <section class="mt-8" aria-labelledby="product-variants-heading">
             <h2 id="product-variants-heading" class="sr-only">
               Product Variants
             </h2>
-            <ProductVariants class="mt-8" />
+            <ProductVariants />
           </section>
 
           <section
-            class="mt-auto"
+            :class="[hasVariants ? 'mt-10 sm:mt-12' : 'mt-0']"
             aria-labelledby="product-add-to-cart-heading"
           >
             <h2 id="product-add-to-cart-heading" class="sr-only">
@@ -68,7 +71,7 @@ const { selectedVariant } = storeToRefs(productStore);
       </div>
     </div>
 
-    <hr class="mb-8" />
+    <hr class="mt-4 mb-8 sm:mt-0" />
 
     <!-- Full Description -->
     <section aria-labelledby="product-description-heading">

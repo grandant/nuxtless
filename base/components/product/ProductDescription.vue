@@ -4,9 +4,8 @@ const description = product.value?.description;
 </script>
 
 <template>
-  <p class="prose">
-    {{ description }}
-  </p>
+  <!-- eslint-disable-next-line vue/no-v-html -->
+  <div class="prose" v-html="description" />
 </template>
 
 <style lang="css" scoped></style>
