@@ -22,6 +22,10 @@ export const useProductStore = defineStore("product", () => {
     }));
   });
 
+  const hasVariants = computed(
+    () => product.value?.variants && product.value.variants.length > 1,
+  );
+
   const selectedVariant = computed(() => {
     return product.value?.variants.find((variant) =>
       variant.options.every(
@@ -29,6 +33,8 @@ export const useProductStore = defineStore("product", () => {
       ),
     );
   });
+
+  const stockLevel = computed(() => selectedVariant.value?.stockLevel);
 
   const galleryAssets = computed(() => {
     const variantAssets = selectedVariant.value?.assets ?? [];
@@ -51,7 +57,9 @@ export const useProductStore = defineStore("product", () => {
     product,
     selectedOptions,
     optionGroups,
+    hasVariants,
     selectedVariant,
+    stockLevel,
     galleryAssets,
     init,
     setOption,

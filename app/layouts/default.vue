@@ -27,7 +27,7 @@ const title = computed(() => t(route.meta.title || "messages.layouts.title"));
         </template>
       </Head>
       <Body>
-        <div class="flex min-h-svh flex-col">
+        <div class="flex min-h-svh flex-col pb-18 sm:pb-0">
           <AppHeader class="sticky top-0" />
           <main class="flex-1">
             <slot />

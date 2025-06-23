@@ -32,7 +32,7 @@ const items = computed<NavigationMenuItem[]>(
 
 <template>
   <header
-    class="z-1 border-b bg-gray-50/80 py-2 backdrop-blur dark:bg-gray-800/80"
+    class="z-10 border-b bg-gray-50/80 py-2 backdrop-blur dark:bg-gray-800/80"
   >
     <div class="container flex justify-between">
       <div class="flex gap-4 sm:gap-6">

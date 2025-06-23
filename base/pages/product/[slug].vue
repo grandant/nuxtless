@@ -9,11 +9,7 @@ const { data: productData } = await useAsyncGql("GetProductDetail", {
 
 const product = productData.value.product;
 productStore.init(product);
-const { selectedVariant } = storeToRefs(productStore);
-
-const hasVariants = computed(
-  () => product?.variants && product.variants.length > 1,
-);
+const { hasVariants, selectedVariant, stockLevel } = storeToRefs(productStore);
 </script>
 
 <template>
@@ -59,7 +55,7 @@ const hasVariants = computed(
           </section>
 
           <section
-            :class="[hasVariants ? 'mt-10 sm:mt-12' : 'mt-0']"
+            :class="[hasVariants ? 'mt-0 sm:mt-12' : 'mt-0']"
             aria-labelledby="product-add-to-cart-heading"
           >
             <h2 id="product-add-to-cart-heading" class="sr-only">

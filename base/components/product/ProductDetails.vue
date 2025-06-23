@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const { selectedVariant } = storeToRefs(useProductStore());
-const stockLevel = computed(() => selectedVariant.value?.stockLevel);
+const { selectedVariant, stockLevel } = storeToRefs(useProductStore());
 const sku = computed(() => selectedVariant.value?.sku);
 
 const stockLevelMap = {
