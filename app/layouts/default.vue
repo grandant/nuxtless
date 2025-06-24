@@ -3,6 +3,7 @@ const route = useRoute();
 const { t } = useI18n();
 const head = useLocaleHead();
 const title = computed(() => t(route.meta.title || "messages.layouts.title"));
+const isPdp = computed(() => route.path.startsWith("/product/"));
 </script>
 
 <template>
@@ -27,7 +28,10 @@ const title = computed(() => t(route.meta.title || "messages.layouts.title"));
         </template>
       </Head>
       <Body>
-        <div class="flex min-h-svh flex-col pb-18 sm:pb-0">
+        <div
+          :class="{ 'pb-18 sm:pb-0': isPdp }"
+          class="flex min-h-svh flex-col"
+        >
           <AppHeader class="sticky top-0" />
           <main class="flex-1">
             <slot />

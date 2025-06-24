@@ -9,7 +9,7 @@ const { data: productData } = await useAsyncGql("GetProductDetail", {
 
 const product = productData.value.product;
 productStore.init(product);
-const { hasVariants, selectedVariant, stockLevel } = storeToRefs(productStore);
+const { hasVariants, selectedVariant } = storeToRefs(productStore);
 </script>
 
 <template>
@@ -18,7 +18,9 @@ const { hasVariants, selectedVariant, stockLevel } = storeToRefs(productStore);
       class="grid grid-flow-row grid-cols-1 gap-10 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-[auto_auto_auto_auto]"
     >
       <header class="mt-14">
-        <h1 class="text-2xl font-semibold">{{ product?.name }}</h1>
+        <h1 class="text-2xl font-semibold">
+          {{ selectedVariant?.name ?? product?.name }}
+        </h1>
         <BreadcrumbTrail :product="product" trail="product" class="mt-2" />
       </header>
 

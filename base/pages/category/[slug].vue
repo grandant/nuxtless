@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { usePagination } from "#imports";
 import type { MenuCollections, ChildCollection } from "~~/types/collection";
 
 const route = useRoute();
@@ -19,16 +20,23 @@ const childCollections = computed(() =>
     : [],
 ) as ComputedRef<ChildCollection[]>;
 
+const { take, page, skip, to } = usePagination(12);
+
 const { data: collectionProducts } = await useAsyncGql(
   "GetCollectionProducts",
   {
     slug,
-    skip: 0,
-    take: 12,
+    skip: skip,
+    take: take,
   },
 );
 
-const products = collectionProducts.value.search?.items ?? [];
+const products = computed(() => collectionProducts.value?.search?.items ?? []);
+const total = computed(() => collectionProducts.value?.search?.totalItems ?? 0);
+
+watch(page, () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
 </script>
 
 <template>
@@ -60,7 +68,7 @@ const products = collectionProducts.value.search?.items ?? [];
     </section>
 
     <!-- Collection Products -->
-    <section class="mb-14" aria-labelledby="category-products-heading">
+    <section class="mb-8" aria-labelledby="category-products-heading">
       <h2 id="category-products-heading" class="sr-only">Products</h2>
       <div
         class="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4"
@@ -73,6 +81,20 @@ const products = collectionProducts.value.search?.items ?? [];
         />
       </div>
     </section>
+
+    <nav
+      v-if="total > take"
+      class="mb-14 flex justify-center"
+      role="navigation"
+      aria-label="Pagination Navigation"
+    >
+      <UPagination
+        :page="page"
+        :total="total"
+        :items-per-page="take"
+        :to="to"
+      />
+    </nav>
   </main>
 </template>
 
