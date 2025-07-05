@@ -29,12 +29,7 @@ watch(error, (err) => {
     description="Type for quick search or press enter for advanced search."
     :ui="{ content: 'h-screen sm:h-[32rem]' }"
   >
-    <UButton
-      color="primary"
-      variant="subtle"
-      icon="i-lucide-search"
-      size="xl"
-    />
+    <UButton variant="outline" icon="i-lucide-search" size="xl" />
 
     <template #body>
       <UInput

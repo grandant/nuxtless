@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { selectedVariant, stockLevel } = storeToRefs(useProductStore());
+const { refreshStock } = useProductStore();
+
 const sku = computed(() => selectedVariant.value?.sku);
 
 const stockLevelMap = {
@@ -12,6 +14,14 @@ const stock = computed(
   () =>
     stockLevelMap[stockLevel.value as keyof typeof stockLevelMap] ??
     stockLevelMap.OUT_OF_STOCK,
+);
+
+watch(
+  () => selectedVariant.value?.id,
+  () => {
+    refreshStock();
+  },
+  { immediate: true },
 );
 </script>
 

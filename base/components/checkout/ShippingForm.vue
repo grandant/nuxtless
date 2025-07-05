@@ -34,8 +34,6 @@ const state = reactive({
 });
 
 async function onSubmit(event: FormSubmitEvent<ShippingForm>) {
-  console.log("Submitting shipping address");
-
   if (!state.shippingMethodId) return;
 
   await orderStore.setShippingMethod(event.data.shippingMethodId);

@@ -68,7 +68,7 @@ async function onSubmit(event: FormSubmitEvent<LoginForm>) {
       <UInput v-model="state.password" type="password" />
     </UFormField>
 
-    <UButton type="submit"> Login </UButton>
+    <UButton loading-auto type="submit"> Login </UButton>
   </UForm>
 </template>
 

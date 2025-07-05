@@ -13,12 +13,17 @@ export const useCustomerStore = defineStore("customer", () => {
   const loading = ref(false);
   const error = ref<string | null>(null);
 
-  async function fetchCustomer() {
+  async function fetchCustomer(
+    type: "base" | "detail" = "base",
+  ): Promise<void> {
     loading.value = true;
     error.value = null;
 
     try {
-      const { activeCustomer } = await GqlGetActiveCustomer();
+      const { activeCustomer } = await (type === "detail"
+        ? GqlGetActiveCustomerDetail()
+        : GqlGetActiveCustomer());
+
       customer.value = activeCustomer ?? null;
     } catch (err) {
       if (err instanceof Error) {

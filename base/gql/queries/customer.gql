@@ -5,6 +5,12 @@ query GetActiveCustomer {
   }
 }
 
+query GetActiveCustomerDetail {
+  activeCustomer {
+    ...CustomerDetail
+  }
+}
+
 query GetCustomerAddresses {
   activeCustomer {
     id

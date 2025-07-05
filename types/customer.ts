@@ -1,7 +1,12 @@
-export type ActiveCustomer = Awaited<
+type ActiveCustomerBase = Awaited<
   ReturnType<typeof GqlGetActiveCustomer>
 >["activeCustomer"];
 
+export type ActiveCustomerDetail = Awaited<
+  ReturnType<typeof GqlGetActiveCustomerDetail>
+>["activeCustomer"];
+
+export type ActiveCustomer = ActiveCustomerBase | ActiveCustomerDetail;
 export type LogInResult = Awaited<ReturnType<typeof GqlLogInUser>>["login"];
 
 export type LogOutResult = Awaited<ReturnType<typeof GqlLogOutUser>>["logout"];

@@ -10,6 +10,16 @@ query GetProductDetail($slug: String!) {
   }
 }
 
+query GetProductVariantStock($productId: ID!, $variantId: String!) {
+  product(id: $productId) {
+    variantList(options: { filter: { id: { eq: $variantId } } }) {
+      items {
+        stockLevel
+      }
+    }
+  }
+}
+
 query GetProducts($take: Int = 12, $skip: Int = 0) {
   products(options: { take: $take, skip: $skip }) {
     items {

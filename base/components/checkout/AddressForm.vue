@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui";
+import type { ActiveCustomerDetail } from "~~/types/customer";
+
 import { AddressForm } from "~~/base/validators/addressForm";
 
 const { triggerSubmit } = defineProps<{ triggerSubmit: boolean }>();
@@ -8,8 +10,18 @@ const emit = defineEmits<{
   (e: "success"): void;
 }>();
 
-const orderStore = useOrderStore();
 const { isAuthenticated } = storeToRefs(useAuthStore());
+const orderStore = useOrderStore();
+const { customer } = storeToRefs(useCustomerStore());
+const { fetchCustomer } = useCustomerStore();
+const isMounted = ref(false);
+
+if (!customer.value || !("phoneNumber" in customer.value)) {
+  await fetchCustomer("detail");
+}
+
+// Safe: We fetch with "detail" above. Customer.value should always be ActiveCustomerDetail.
+const activeCustomer = computed(() => customer.value as ActiveCustomerDetail);
 
 const { data: countriesData } = await useAsyncGql("GetChannelCountries");
 
@@ -25,13 +37,6 @@ const countries = computed(
 
 const addressForm = useTemplateRef("addressForm");
 
-watch(
-  () => triggerSubmit,
-  (val) => {
-    if (val) addressForm.value?.submit();
-  },
-);
-
 const state = reactive({
   firstName: "",
   lastName: "",
@@ -43,6 +48,29 @@ const state = reactive({
   countryCode: "BG",
   billingSameAsShipping: true,
 });
+
+watch(
+  [isAuthenticated, activeCustomer, isMounted],
+  ([auth, customer, mounted]) => {
+    if (auth && customer && mounted) {
+      state.firstName = customer.firstName || "";
+      state.lastName = customer.lastName || "";
+      state.emailAddress = customer.emailAddress || "";
+      state.streetLine1 = customer.addresses?.[0]?.streetLine1 || "";
+      state.city = customer.addresses?.[0]?.city || "";
+      state.postalCode = customer.addresses?.[0]?.postalCode || "";
+      state.countryCode = customer.addresses?.[0]?.country?.code || "BG";
+    }
+  },
+  { once: true },
+);
+
+watch(
+  () => triggerSubmit,
+  (val) => {
+    if (val) addressForm.value?.submit();
+  },
+);
 
 async function onSubmit(event: FormSubmitEvent<AddressForm>) {
   if (!isAuthenticated.value) {
@@ -64,6 +92,10 @@ async function onSubmit(event: FormSubmitEvent<AddressForm>) {
 
   if (!orderStore.error) emit("success");
 }
+
+onMounted(() => {
+  isMounted.value = true;
+});
 </script>
 
 <template>
@@ -71,6 +103,7 @@ async function onSubmit(event: FormSubmitEvent<AddressForm>) {
     ref="addressForm"
     :schema="AddressForm"
     :state="state"
+    :disabled="!isMounted"
     class="space-y-4"
     @submit="onSubmit"
   >
@@ -82,8 +115,12 @@ async function onSubmit(event: FormSubmitEvent<AddressForm>) {
       <UInput v-model="state.lastName" type="text" />
     </UFormField>
 
-    <UFormField v-if="!isAuthenticated" label="Email" name="emailAddress">
-      <UInput v-model="state.emailAddress" type="email" />
+    <UFormField label="Email" name="emailAddress">
+      <UInput
+        v-model="state.emailAddress"
+        :disabled="isAuthenticated && isMounted"
+        type="email"
+      />
     </UFormField>
 
     <UFormField label="Street" name="streetLine1">

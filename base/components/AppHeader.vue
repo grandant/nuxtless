@@ -40,11 +40,14 @@ const items = computed<NavigationMenuItem[]>(
         <LogoElement />
         <HeaderDesktopMenu :items="items" class="hidden md:flex" />
       </div>
-      <div class="flex items-center gap-4 sm:gap-6">
+      <div class="flex items-center gap-2 sm:gap-4">
         <SearchModal />
+        <AccountMenu />
         <CartTrigger />
       </div>
     </div>
     <CartPanel />
   </header>
 </template>
+
+<style lang="css" scoped></style>

@@ -34,7 +34,10 @@ export const useProductStore = defineStore("product", () => {
     );
   });
 
-  const stockLevel = computed(() => selectedVariant.value?.stockLevel);
+  const liveStock = ref<string | null>(null);
+  const stockLevel = computed(
+    () => liveStock.value ?? selectedVariant.value?.stockLevel,
+  );
 
   const galleryAssets = computed(() => {
     const variantAssets = selectedVariant.value?.assets ?? [];
@@ -53,6 +56,23 @@ export const useProductStore = defineStore("product", () => {
     selectedOptions[group] = value;
   }
 
+  async function refreshStock() {
+    const productId = product.value?.id;
+    const variantId = selectedVariant.value?.id;
+
+    if (!productId || !variantId) {
+      liveStock.value = null;
+      return;
+    }
+
+    const { product: variantStock } = await GqlGetProductVariantStock({
+      productId,
+      variantId,
+    });
+
+    liveStock.value = variantStock?.variantList.items?.[0]?.stockLevel ?? null;
+  }
+
   return {
     product,
     selectedOptions,
@@ -63,5 +83,6 @@ export const useProductStore = defineStore("product", () => {
     galleryAssets,
     init,
     setOption,
+    refreshStock,
   };
 });

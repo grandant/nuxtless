@@ -33,9 +33,9 @@ const isPdp = computed(() => route.path.startsWith("/product/"));
           class="flex min-h-svh flex-col"
         >
           <AppHeader class="sticky top-0" />
-          <main class="flex-1">
+          <div class="flex-1">
             <slot />
-          </main>
+          </div>
           <AppFooter />
         </div>
       </Body>
