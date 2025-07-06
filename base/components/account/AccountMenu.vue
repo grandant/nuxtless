@@ -4,7 +4,6 @@ import type { DropdownMenuItem } from "@nuxt/ui";
 const { GQL_HOST: gqlHost, channelToken } = useRuntimeConfig().public;
 const { locale } = useI18n();
 const localePath = useLocalePath();
-await useGqlSession(locale.value, gqlHost, channelToken, "default");
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const { setUser, clearSession } = useAuthStore();
 const { fetchCustomer, logout } = useCustomerStore();

@@ -51,7 +51,7 @@ importers:
         specifier: 0.2.46
         version: 0.2.46(@parcel/watcher@2.5.1)(@types/node@22.15.17)(crossws@0.3.5)(graphql-tag@2.12.6(graphql@16.11.0))(magicast@0.3.5)(typescript@5.8.3)
       photoswipe:
-        specifier: ^5.4.4
+        specifier: 5.4.4
         version: 5.4.4
       pinia:
         specifier: 3.0.2
@@ -76,7 +76,7 @@ importers:
         specifier: 1.2.42
         version: 1.2.42
       '@tailwindcss/typography':
-        specifier: ^0.5.16
+        specifier: 0.5.16
         version: 0.5.16(tailwindcss@4.1.6)
       '@vueuse/core':
         specifier: 13.1.0
@@ -85,7 +85,7 @@ importers:
         specifier: 13.1.0
         version: 13.1.0(magicast@0.3.5)(nuxt@3.17.3(@parcel/watcher@2.5.1)(@types/node@22.15.17)(db0@0.3.2)(eslint@9.26.0(jiti@2.4.2))(ioredis@5.6.1)(lightningcss@1.29.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.40.2)(terser@5.39.1)(typescript@5.8.3)(vite@6.3.5(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.1)(yaml@2.7.1))(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
       eslint-config-prettier:
-        specifier: ^10.1.5
+        specifier: 10.1.5
         version: 10.1.5(eslint@9.26.0(jiti@2.4.2))
       prettier-plugin-tailwindcss:
         specifier: 0.6.11

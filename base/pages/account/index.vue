@@ -31,7 +31,10 @@ onBeforeMount(() => {
 <template>
   <main>
     <header class="my-14">
-      <AccountHeader :active-customer="activeCustomer" />
+      <h1 class="text-2xl font-semibold">My Account</h1>
+      <ULink :to="localePath('/account')" class="mt-2">
+        {{ activeCustomer?.emailAddress }}
+      </ULink>
     </header>
 
     <section aria-labelledby="profile-info" class="mb-14 flex flex-col gap-4">
