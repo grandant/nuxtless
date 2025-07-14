@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SortOrder } from "#gql/default";
+import { SortOrder } from "~~/types/default";
 
 const localePath = useLocalePath();
 const { customer } = storeToRefs(useCustomerStore());
