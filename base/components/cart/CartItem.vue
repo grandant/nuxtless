@@ -4,6 +4,7 @@ import type { OrderLine } from "~~/types/order";
 const props = defineProps<{ line: OrderLine }>();
 
 const orderStore = useOrderStore();
+const { selectedVariant } = storeToRefs(useProductStore());
 
 const remove = () => {
   orderStore.removeItemFromOrder(props.line.id);
@@ -24,7 +25,8 @@ const remove = () => {
       </div>
       <div class="text-xs">Quantity: {{ line.quantity }}</div>
       <div class="mt-1 text-sm font-semibold">
-        {{ line.linePriceWithTax / 100 }} CURRENCY
+        {{ (line.linePriceWithTax / line.quantity / 100).toFixed(2) }}
+        {{ selectedVariant?.currencyCode }}
       </div>
 
       <div class="mt-2 flex gap-2">

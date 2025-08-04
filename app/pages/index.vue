@@ -37,7 +37,7 @@ if (imgUrl.value?.urls?.raw) {
     <!-- Hero Banner -->
     <section class="mb-14" aria-labelledby="home-hero-heading">
       <h2 id="home-hero-heading" class="sr-only">Welcome to Nuxtless</h2>
-      <div class="relative right-1/2 left-1/2 mr-[-50vw] ml-[-50vw] w-screen">
+      <div class="">
         <NuxtImg
           format="webp"
           class="h-[420px] w-full object-cover lg:h-[560px] xl:h-[540px]"
@@ -54,26 +54,28 @@ if (imgUrl.value?.urls?.raw) {
     </section>
 
     <!-- Categories Section -->
-    <section class="mb-14" aria-labelledby="home-categories-heading">
-      <h2 id="home-categories-heading" class="mb-4 text-2xl font-semibold">
-        Shop by Category
-      </h2>
-      <HomeCategoryCarousel />
-    </section>
+    <div class="container">
+      <section class="mb-14" aria-labelledby="home-categories-heading">
+        <h2 id="home-categories-heading" class="mb-4 text-2xl font-semibold">
+          Shop by Category
+        </h2>
+        <HomeCategoryCarousel />
+      </section>
 
-    <!-- Shop Features -->
-    <section class="mt-20 mb-14" aria-labelledby="home-features-heading">
-      <h2 id="home-features-heading" class="sr-only">Why Shop With Us</h2>
-      <HomeShopFeatures />
-    </section>
+      <!-- Shop Features -->
+      <section class="mt-20 mb-14" aria-labelledby="home-features-heading">
+        <h2 id="home-features-heading" class="sr-only">Why Shop With Us</h2>
+        <HomeShopFeatures />
+      </section>
 
-    <!-- Featured Products -->
-    <section class="mb-14" aria-labelledby="home-products-heading">
-      <h2 id="home-products-heading" class="mb-4 text-2xl font-semibold">
-        Featured Products
-      </h2>
-      <HomeFeaturedProducts />
-    </section>
+      <!-- Featured Products -->
+      <section class="mb-14" aria-labelledby="home-products-heading">
+        <h2 id="home-products-heading" class="mb-4 text-2xl font-semibold">
+          Featured Products
+        </h2>
+        <HomeFeaturedProducts />
+      </section>
+    </div>
   </main>
 </template>
 

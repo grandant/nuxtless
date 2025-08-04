@@ -13,14 +13,29 @@ const { hasVariants, selectedVariant } = storeToRefs(productStore);
 </script>
 
 <template>
-  <main>
+  <main class="container">
     <div
       class="grid grid-flow-row grid-cols-1 gap-10 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-[auto_auto_auto_auto]"
     >
       <header class="mt-14">
-        <h1 class="text-2xl font-semibold">
-          {{ selectedVariant?.name ?? product?.name }}
-        </h1>
+        <div class="flex gap-4">
+          <h1 class="text-2xl font-semibold">
+            {{ selectedVariant?.name ?? product?.name }}
+          </h1>
+        </div>
+        <UBadge color="info">
+          <div class="flex flex-row gap-2 text-sm font-bold">
+            <span>
+              {{ (selectedVariant?.priceWithTax / 100).toFixed(2) }}
+              {{ selectedVariant?.currencyCode }}
+            </span>
+            /
+            <span>
+              {{ (selectedVariant?.priceWithTax / 100).toFixed(2) }}
+              {{ selectedVariant?.currencyCode }}
+            </span>
+          </div>
+        </UBadge>
         <BreadcrumbTrail :product="product" trail="product" class="mt-2" />
       </header>
 

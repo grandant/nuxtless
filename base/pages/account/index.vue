@@ -29,7 +29,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <main>
+  <main class="container">
     <header class="my-14">
       <h1 class="text-2xl font-semibold">My Account</h1>
       <ULink :to="localePath('/account')" class="mt-2">

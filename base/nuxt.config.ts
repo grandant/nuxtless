@@ -19,9 +19,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiKey: "my-specific-api-key",
     public: {
+      GQL_HOST: process.env.GQL_HOST,
       apiBase: process.env.API_BASE,
       channelToken: process.env.CHANNEL_TOKEN,
-      GQL_HOST: process.env.GQL_HOST,
+      payloadBase: process.env.PAYLOAD_BASE,
       unsplashApiKey: process.env.UNSPLASH_API_KEY,
       i18n: {
         baseUrl: process.env.I18_BASE_URL,
@@ -38,6 +39,11 @@ export default defineNuxtConfig({
     head: {
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     },
+  },
+
+  // Global NuxtImage  Configuration
+  image: {
+    domains: ["localhost:3000"],
   },
 
   // Global GraphQL Client Configuration

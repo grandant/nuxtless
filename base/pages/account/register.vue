@@ -3,7 +3,7 @@ const localePath = useLocalePath();
 </script>
 
 <template>
-  <main class="">
+  <main class="container">
     <h1 class="">Register an account</h1>
     <p class="">
       Already have an account?

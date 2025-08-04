@@ -60,15 +60,27 @@ async function onSubmit(event: FormSubmitEvent<LoginForm>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField label="Email" name="email">
-      <UInput v-model="state.email" type="email" />
+    <UFormField label="Email" name="email" size="xl">
+      <UInput
+        v-model="state.email"
+        type="email"
+        placeholder="Enter your email"
+        class="w-full"
+      />
     </UFormField>
 
-    <UFormField label="Password" name="password">
-      <UInput v-model="state.password" type="password" />
+    <UFormField label="Password" name="password" size="xl">
+      <UInput
+        v-model="state.password"
+        type="password"
+        placeholder="Enter your password"
+        class="w-full"
+      />
     </UFormField>
 
-    <UButton loading-auto type="submit"> Login </UButton>
+    <UButton size="xl" loading-auto class="w-full justify-center" type="submit">
+      Login
+    </UButton>
   </UForm>
 </template>
 

@@ -2,32 +2,36 @@
 const localePath = useLocalePath();
 const { order } = storeToRefs(useOrderStore());
 const isCartOpen = useState<boolean>("isCartOpen");
+const total = computed(() => order?.value?.totalWithTax ?? 0);
 </script>
 
 <template>
   <USlideover
     v-model:open="isCartOpen"
     title="Your Cart"
-    description="Cart Panel"
+    description="Items currently in your cart"
   >
     <template #body>
       <div class="space-y-4 p-4">
         <CartEmpty v-if="!order?.lines?.length" />
         <CartItem v-for="line in order?.lines" :key="line.id" :line="line" />
-        <CartTotals v-if="order?.lines?.length" />
       </div>
     </template>
 
     <template #footer>
-      <div class="p-4">
+      <div class="w-full px-4">
         <UButton
           :to="localePath('/checkout')"
-          block
-          size="lg"
+          size="xl"
           color="primary"
+          :disabled="(order?.lines.length ?? 0) < 1"
+          class="w-full justify-center"
           @click="isCartOpen = !isCartOpen"
         >
-          Checkout
+          <span>Checkout</span>
+          <span v-if="(order?.lines.length ?? 0) > 0">
+            {{ (total / 100).toFixed(2) }} {{ order?.currencyCode }}
+          </span>
         </UButton>
       </div>
     </template>

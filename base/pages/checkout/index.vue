@@ -61,7 +61,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <main class="mx-auto p-4">
+  <main class="container">
     <h1>Checkout</h1>
 
     <CheckoutAddressForm

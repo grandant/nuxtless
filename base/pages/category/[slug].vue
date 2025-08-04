@@ -40,7 +40,7 @@ watch(page, () => {
 </script>
 
 <template>
-  <main>
+  <main class="container">
     <header class="mt-14">
       <h1 class="text-2xl font-semibold">{{ currentCollection?.name }}</h1>
       <BreadcrumbTrail trail="category" class="mt-2 mb-14" />
