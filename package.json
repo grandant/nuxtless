@@ -11,7 +11,11 @@
     "postinstall": "if [ \"$SKIP_PREPARE\" != \"1\" ]; then nuxt prepare; fi"
   },
   "dependencies": {
+    "@lexical/code": "^0.33.1",
     "@lexical/html": "^0.33.1",
+    "@lexical/link": "^0.33.1",
+    "@lexical/list": "^0.33.1",
+    "@lexical/rich-text": "^0.33.1",
     "@nuxt/eslint": "1.3.1",
     "@nuxt/fonts": "0.11.4",
     "@nuxt/icon": "1.12.0",
@@ -24,6 +28,7 @@
     "@tailwindcss/vite": "4.1.6",
     "eslint": "9.26.0",
     "graphql-request": "7.1.2",
+    "lexical": "^0.33.1",
     "nuxt": "3.17.6",
     "nuxt-graphql-client": "0.2.46",
     "photoswipe": "5.4.4",
