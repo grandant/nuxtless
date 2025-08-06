@@ -1,0 +1,3 @@
+schema: http://localhost:3001/shop-api
+documents: "./base/gql/{fragments,queries}/**/*.gql"
+extensions: {}

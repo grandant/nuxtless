@@ -14,9 +14,7 @@ useState("menuCollections", () => menuCollections.value);
 <template>
   <UApp>
     <NuxtLayout>
-      <!-- <UContainer> -->
       <NuxtPage />
-      <!-- </UContainer> -->
     </NuxtLayout>
   </UApp>
 </template>

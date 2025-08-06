@@ -49,11 +49,13 @@ export default defineNuxtConfig({
   // Global GraphQL Client Configuration
   "graphql-client": {
     codegen: {
-      disableOnBuild: true,
+      disableOnBuild: false,
       onlyOperationTypes: false,
     },
+    documentPaths: ["../base/gql/queries", "../base/gql/fragments"],
     clients: {
       default: {
+        schema: "../graphql.schema.json",
         host: process.env.GQL_HOST || "http://localhost:3001/shop-api",
         token: {
           type: "Bearer",

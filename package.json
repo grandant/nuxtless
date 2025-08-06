@@ -31,15 +31,21 @@
     "tailwindcss": "4.1.6",
     "typescript": "5.8.3",
     "valibot": "1.1.0",
-    "vue": "3.5.17"
+    "vue": "3.5.18"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
   "devDependencies": {
+    "@graphql-cli/introspect": "^2.1.0",
+    "@graphql-inspector/cli": "^5.0.8",
+    "@graphql-inspector/graphql-cli-common": "^2.9.0",
     "@iconify-json/lucide": "1.2.42",
     "@tailwindcss/typography": "0.5.16",
     "@vueuse/core": "13.5.0",
     "@vueuse/nuxt": "13.5.0",
     "eslint-config-prettier": "10.1.5",
+    "graphql": "^16",
+    "graphql-cli": "^4.1.0",
+    "graphql-config": "^5",
     "prettier-plugin-tailwindcss": "0.6.11",
     "wrangler": "4.24.3"
   }
