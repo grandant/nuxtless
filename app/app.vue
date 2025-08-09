@@ -12,6 +12,7 @@ useState("menuCollections", () => menuCollections.value);
 </script>
 
 <template>
+<NuxtLoadingIndicator />
   <UApp>
     <NuxtLayout>
       <NuxtPage />

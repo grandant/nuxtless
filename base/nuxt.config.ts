@@ -43,7 +43,11 @@ export default defineNuxtConfig({
 
   // Global NuxtImage  Configuration
   image: {
-    domains: ["localhost:3000"],
+    domains: ["localhost", "cdn.unstack.dev"],
+    provider: "cloudflare",
+    cloudflare: {
+      baseURL: "https://cdn.unstack.dev",
+    },
   },
 
   // Global GraphQL Client Configuration
