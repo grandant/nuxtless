@@ -36,11 +36,18 @@ async function onSubmit(event: FormSubmitEvent<RequestPasswordResetForm>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField label="Email Address" name="emailAddress">
-      <UInput v-model="state.emailAddress" type="email" />
+    <UFormField label="Email Address" name="emailAddress" size="xl">
+      <UInput
+        v-model="state.emailAddress"
+        type="email"
+        placeholder="Enter your password"
+        class="w-full"
+      />
     </UFormField>
 
-    <UButton type="submit">Send Reset Link</UButton>
+    <UButton size="xl" loading-auto class="w-full justify-center" type="submit">
+      Send Reset Link
+    </UButton>
   </UForm>
 </template>
 

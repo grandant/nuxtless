@@ -6,10 +6,6 @@ const route = useRoute();
 const router = useRouter();
 const token = route.query.token as string;
 
-if (!token) {
-  router.replace("/account/request-password-reset");
-}
-
 const { resetPassword } = useCustomerStore();
 const toast = useToast();
 
@@ -60,15 +56,27 @@ async function onSubmit(event: FormSubmitEvent<ResetPasswordForm>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField label="Password" name="password">
-      <UInput v-model="state.password" type="password" />
+    <UFormField label="Password" name="password" size="xl">
+      <UInput
+        v-model="state.password"
+        type="password"
+        placeholder="Enter your password"
+        class="w-full"
+      />
     </UFormField>
 
-    <UFormField label="Confirm Password" name="confirmPassword">
-      <UInput v-model="state.confirmPassword" type="password" />
+    <UFormField label="Confirm Password" name="confirmPassword" size="xl">
+      <UInput
+        v-model="state.confirmPassword"
+        type="password"
+        placeholder="Enter your password"
+        class="w-full"
+      />
     </UFormField>
 
-    <UButton type="submit">Reset Password</UButton>
+    <UButton size="xl" loading-auto class="w-full justify-center" type="submit">
+      Reset Password
+    </UButton>
   </UForm>
 </template>
 

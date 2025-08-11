@@ -6,6 +6,7 @@ const { customer } = storeToRefs(useCustomerStore());
 const { fetchCustomer } = useCustomerStore();
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const { setUser } = useAuthStore();
+const loading = ref(true);
 
 if (!customer.value || !("phoneNumber" in customer.value)) {
   await fetchCustomer("detail");
@@ -21,15 +22,19 @@ if (customer.value) {
 // Safe: We fetch with "detail" above. Customer.value should always be ActiveCustomerDetail.
 const activeCustomer = computed(() => customer.value as ActiveCustomerDetail);
 
-onBeforeMount(() => {
+onMounted(() => {
   if (!isAuthenticated.value) {
-    navigateTo(localePath("/account/login"));
+    navigateTo(localePath("/account/login"), { replace: true });
+    return;
   }
+
+  loading.value = false;
 });
 </script>
 
 <template>
-  <main class="container">
+  <BaseLoader v-if="loading && !isAuthenticated" width="sm:w-xs md:w-sm" />
+  <main v-else class="container">
     <header class="my-14">
       <h1 class="text-2xl font-semibold">My Account</h1>
       <ULink :to="localePath('/account')" class="mt-2">

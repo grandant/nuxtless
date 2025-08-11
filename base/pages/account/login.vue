@@ -1,39 +1,53 @@
 <script setup lang="ts">
+definePageMeta({
+  alias: ["/login"],
+});
+
 const router = useRouter();
 const localePath = useLocalePath();
+const { isAuthenticated } = storeToRefs(useAuthStore());
+const loading = ref(true);
 const submitted = ref(false);
 
 watch(submitted, (v) => {
   if (v) {
-    router.push("/account");
+    router.push(localePath("/account"));
   }
+});
+
+onMounted(() => {
+  if (isAuthenticated.value) {
+    navigateTo(localePath("/account"), { replace: true });
+    return;
+  }
+
+  loading.value = false;
 });
 </script>
 
 <template>
-  <main class="container mt-14">
-    <section class="flex flex-col items-center gap-8">
-      <div class="flex flex-col items-center">
-        <LogoElement :width="46" />
-        <h1 class="text-2xl font-bold">Sign in to your account</h1>
-        <p class="">
-          Don’t have an account?
-          <ULink :to="localePath('/account/register')" class="underline">
-            Register here.
-          </ULink>
-        </p>
-      </div>
-
-      <div class="mx-auto flex w-full flex-col sm:w-xs md:w-sm">
-        <AccountLoginForm @success="submitted = true" />
-        <ULink
-          :to="localePath('/account/request-password-reset')"
-          class="mt-4 self-center"
-        >
-          Forgotten Password?
+  <BaseLoader v-if="loading" width="sm:w-xs md:w-sm" />
+  <main v-else class="container mt-14">
+    <header
+      class="mb-8 flex flex-col items-center"
+      aria-labelledby="login-heading"
+    >
+      <LogoElement :width="46" aria-hidden="true" focusable="false" />
+      <h1 id="login-heading" class="text-2xl font-bold">
+        Sign in to your account
+      </h1>
+      <p>
+        Don’t have an account?
+        <ULink :to="localePath('/account/register')" class="underline">
+          Register here.
         </ULink>
-      </div>
-    </section>
+      </p>
+    </header>
+
+    <AccountLoginForm
+      class="mx-auto mb-14 flex w-full flex-col sm:w-xs md:w-sm"
+      @success="submitted = true"
+    />
   </main>
 </template>
 

@@ -8,6 +8,7 @@ const emit = defineEmits<{
 
 const { GQL_HOST: gqlHost, channelToken } = useRuntimeConfig().public;
 const { locale } = useI18n();
+const localePath = useLocalePath();
 const toast = useToast();
 const orderStore = useOrderStore();
 
@@ -81,6 +82,12 @@ async function onSubmit(event: FormSubmitEvent<LoginForm>) {
     <UButton size="xl" loading-auto class="w-full justify-center" type="submit">
       Login
     </UButton>
+    <ULink
+      :to="localePath('/account/request-password-reset')"
+      class="block text-center underline"
+    >
+      Forgotten Password?
+    </ULink>
   </UForm>
 </template>
 

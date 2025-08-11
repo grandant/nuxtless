@@ -6,6 +6,7 @@ const localePath = useLocalePath();
 const { customer } = storeToRefs(useCustomerStore());
 const { fetchCustomer } = useCustomerStore();
 const { isAuthenticated } = storeToRefs(useAuthStore());
+const loading = ref(true);
 
 if (!customer.value) {
   await fetchCustomer();
@@ -39,13 +40,17 @@ const tableData = computed(() =>
 
 onMounted(() => {
   if (!isAuthenticated.value) {
-    navigateTo(localePath("/account/login"));
+    navigateTo(localePath("/account/login"), { replace: true });
+    return;
   }
+
+  loading.value = false;
 });
 </script>
 
 <template>
-  <main class="container">
+  <BaseLoader v-if="loading && !isAuthenticated" width="sm:w-xs md:w-sm" />
+  <main v-else class="container">
     <header class="my-14">
       <h1 class="text-2xl font-semibold">My Orders</h1>
       <ULink :to="localePath('/account')" class="mt-2">
