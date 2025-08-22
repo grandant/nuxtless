@@ -43,7 +43,7 @@ async function addToCart() {
     <UButton
       label="Add to Cart"
       :loading="loading"
-      :disabled="loading || disabled || !hasStock"
+      :disabled="disabled || !hasStock"
       size="xl"
       class="w-full justify-center"
       @click="addToCart"

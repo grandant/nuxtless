@@ -7,7 +7,6 @@ const localePath = useLocalePath();
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const { setUser, clearSession } = useAuthStore();
 const { fetchCustomer, logout } = useCustomerStore();
-const { fetchOrder } = useOrderStore();
 const { order } = storeToRefs(useOrderStore());
 const { customer } = storeToRefs(useCustomerStore());
 

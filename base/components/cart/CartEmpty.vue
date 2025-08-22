@@ -1,10 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const localePath = useLocalePath();
+const isCartOpen = useState<boolean>("isCartOpen");
+</script>
 
 <template>
-  <div class="py-10 text-center text-gray-500 dark:text-gray-400">
-    <div class="mb-2 text-4xl">🛒</div>
+  <div class="text-center">
+    <UIcon name="i-lucide-shopping-cart" class="text-4xl" />
     <p class="text-lg font-medium">Your cart is empty</p>
     <p class="text-sm">Start shopping to fill it up</p>
+    <UButton
+      :to="localePath('/')"
+      class="mt-6 px-7"
+      @click="isCartOpen = false"
+    >
+      Browse Products
+    </UButton>
   </div>
 </template>
 

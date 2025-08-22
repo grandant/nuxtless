@@ -10,16 +10,11 @@ interface OptionItem {
 const { optionGroups, selectedOptions } = storeToRefs(useProductStore());
 
 const groupItems = computed<Record<string, OptionItem[]>>(() => {
-  const result: Record<string, OptionItem[]> = {};
-
-  for (const group of optionGroups.value) {
-    result[group.name] = group.values.map((value) => ({
-      label: value,
-      value,
-    }));
+  const res: Record<string, OptionItem[]> = {};
+  for (const g of optionGroups.value) {
+    res[g.id] = g.values.map((o) => ({ label: o.name, value: o.id }));
   }
-
-  return result;
+  return res;
 });
 </script>
 
@@ -27,7 +22,7 @@ const groupItems = computed<Record<string, OptionItem[]>>(() => {
   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:gap-8">
     <div
       v-for="group in optionGroups"
-      :key="group.name"
+      :key="group.id"
       :class="group.values.length > 4 ? 'order-first sm:col-span-2' : ''"
     >
       <fieldset v-if="group.values">
@@ -37,30 +32,30 @@ const groupItems = computed<Record<string, OptionItem[]>>(() => {
 
         <URadioGroup
           v-if="group.values.length < 4"
-          v-model="selectedOptions[group.name]"
+          v-model="selectedOptions[group.id]"
           indicator="hidden"
           orientation="vertical"
           variant="table"
-          :items="groupItems[group.name] as RadioGroupItem[]"
+          :items="groupItems[group.id] as RadioGroupItem[]"
           class="block xl:hidden"
         />
 
         <URadioGroup
           v-if="group.values.length < 4"
-          v-model="selectedOptions[group.name]"
+          v-model="selectedOptions[group.id]"
           indicator="hidden"
           orientation="horizontal"
           variant="table"
-          :items="groupItems[group.name] as RadioGroupItem[]"
+          :items="groupItems[group.id] as RadioGroupItem[]"
           class="hidden xl:block"
         />
 
         <USelect
           v-else
-          v-model="selectedOptions[group.name]"
+          v-model="selectedOptions[group.id]"
           variant="outline"
           :highlight="true"
-          :items="groupItems[group.name] as SelectItem[]"
+          :items="groupItems[group.id] as SelectItem[]"
           class="w-full xl:w-auto xl:min-w-sm"
         />
       </fieldset>

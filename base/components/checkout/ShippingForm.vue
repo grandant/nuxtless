@@ -22,16 +22,26 @@ const shippingMethods = computed(
 
 const shippingForm = useTemplateRef("shippingForm");
 
+const state = reactive({
+  shippingMethodId: "",
+});
+
 watch(
   () => triggerSubmit,
   (val) => {
     if (val) shippingForm.value?.submit();
   },
+  { immediate: false },
 );
 
-const state = reactive({
-  shippingMethodId: "",
-});
+watch(
+  () => state.shippingMethodId,
+  async (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      await orderStore.setShippingMethod(state?.shippingMethodId ?? "");
+    }
+  },
+);
 
 async function onSubmit(event: FormSubmitEvent<ShippingForm>) {
   if (!state.shippingMethodId) return;
@@ -47,11 +57,29 @@ async function onSubmit(event: FormSubmitEvent<ShippingForm>) {
     ref="shippingForm"
     :schema="ShippingForm"
     :state="state"
-    class="space-y-4"
+    class="mt-4 space-y-4"
     @submit="onSubmit"
   >
-    <UFormField label="Shipping Method" name="shippingMethodId">
-      <USelect v-model="state.shippingMethodId" :items="shippingMethods" />
+    <UFormField label="Shipping Method" class="text-md" name="shippingMethodId">
+      <URadioGroup
+        v-model="state.shippingMethodId"
+        indicator="hidden"
+        variant="table"
+        orientation="vertical"
+        size="xl"
+        :items="shippingMethods"
+        :ui="{ item: 'w-full' }"
+        class="block lg:hidden"
+      />
+      <URadioGroup
+        v-model="state.shippingMethodId"
+        indicator="hidden"
+        variant="table"
+        orientation="horizontal"
+        :items="shippingMethods"
+        :ui="{ item: 'w-full' }"
+        class="hidden lg:block"
+      />
     </UFormField>
   </UForm>
 </template>

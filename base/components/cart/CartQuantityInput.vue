@@ -1,24 +1,27 @@
 <script setup lang="ts">
-const props = defineProps<{
+const { quantity, size = "sm" } = defineProps<{
   quantity: number;
+  size?: "sm" | "xs" | "md" | "lg" | "xl" | undefined;
 }>();
 
 const emit = defineEmits<{
   (e: "update", value: number): void;
 }>();
 
-const increase = () => emit("update", props.quantity + 1);
-const decrease = () => {
-  if (props.quantity > 1) emit("update", props.quantity - 1);
-};
+const input = computed({
+  get: () => quantity,
+  // UInputNumber emits on blur.
+  // Only emit if the value actually changed.
+  set: (val: number) => {
+    if (val !== quantity) {
+      emit("update", val);
+    }
+  },
+});
 </script>
 
 <template>
-  <div class="flex items-center gap-2">
-    <UButton size="xs" @click="decrease">−</UButton>
-    <span class="min-w-[2ch] text-center text-sm">{{ quantity }}</span>
-    <UButton size="xs" @click="increase">+</UButton>
-  </div>
+  <UInputNumber v-model="input" :size="size" :min="1" :max="10" />
 </template>
 
 <style lang="css" scoped></style>

@@ -108,7 +108,7 @@ mutation RemoveCouponCode($couponCode: String!) {
 mutation SetCustomerForOrder($input: CreateCustomerInput!) {
   setCustomerForOrder(input: $input) {
     __typename
-    ...OrderBase
+    ...OrderDetail
     ... on ErrorResult {
       errorCode
       message
@@ -119,7 +119,7 @@ mutation SetCustomerForOrder($input: CreateCustomerInput!) {
 mutation SetOrderShippingAddress($input: CreateAddressInput!) {
   setOrderShippingAddress(input: $input) {
     __typename
-    ...OrderBase
+    ...OrderDetail
     ... on ErrorResult {
       errorCode
       message
@@ -130,7 +130,7 @@ mutation SetOrderShippingAddress($input: CreateAddressInput!) {
 mutation SetShippingMethod($id: [ID!]!) {
   setOrderShippingMethod(shippingMethodId: $id) {
     __typename
-    ...OrderBase
+    ...OrderDetail
     ... on ErrorResult {
       errorCode
       message
@@ -141,7 +141,7 @@ mutation SetShippingMethod($id: [ID!]!) {
 mutation TransitionToState($state: String!) {
   transitionOrderToState(state: $state) {
     __typename
-    ...OrderBase
+    ...OrderDetail
     ... on OrderStateTransitionError {
       errorCode
       message
@@ -155,7 +155,7 @@ mutation TransitionToState($state: String!) {
 mutation AddPaymentToOrder($input: PaymentInput!) {
   addPaymentToOrder(input: $input) {
     __typename
-    ...OrderBase
+    ...OrderDetail
     ... on ErrorResult {
       errorCode
       message

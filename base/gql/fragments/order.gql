@@ -29,9 +29,10 @@ fragment OrderDetail on Order {
   state
   currencyCode
   totalQuantity
-  subTotalWithTax
+  subTotal
   shippingWithTax
   totalWithTax
+  orderPlacedAt
   customer {
     id
     firstName
@@ -73,10 +74,19 @@ fragment OrderDetail on Order {
       preview
     }
   }
+  payments {
+    method
+  }
   shippingLines {
     shippingMethod {
-      description
+      name
     }
-    priceWithTax
+  }
+  taxSummary {
+    description
+    taxTotal
+  }
+  customFields {
+    paymentProvider
   }
 }

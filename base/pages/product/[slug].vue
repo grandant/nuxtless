@@ -3,12 +3,20 @@ const route = useRoute();
 const slug = route.params.slug as string;
 const productStore = useProductStore();
 
-const { data: productData } = await useAsyncGql("GetProductDetail", {
+const { data } = await useAsyncGql("GetProductDetail", {
   slug,
 });
 
-const product = productData.value.product;
-productStore.init(product);
+const product = computed(() => data.value.product);
+
+watch(
+  product,
+  (p) => {
+    if (p) productStore.init(p);
+  },
+  { immediate: true, flush: "post" },
+);
+
 const { hasVariants, selectedVariant } = storeToRefs(productStore);
 </script>
 

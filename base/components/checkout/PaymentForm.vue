@@ -20,6 +20,10 @@ const paymentMethods = computed(
     })) ?? [],
 );
 
+const state = reactive({
+  code: "", // paymentMethods.value[0]?.value,
+});
+
 const paymentForm = useTemplateRef("paymentForm");
 
 watch(
@@ -29,9 +33,17 @@ watch(
   },
 );
 
-const state = reactive({
-  code: "",
-});
+watch(
+  () => state.code,
+  async (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      await orderStore.addPaymentToOrder({
+        method: state?.code,
+        metadata: {},
+      });
+    }
+  },
+);
 
 async function onSubmit(event: FormSubmitEvent<PaymentForm>) {
   if (!state.code) return;
@@ -52,18 +64,27 @@ async function onSubmit(event: FormSubmitEvent<PaymentForm>) {
     ref="paymentForm"
     :schema="PaymentForm"
     :state="state"
-    class="space-y-4"
+    class="mt-4 space-y-4"
     @submit="onSubmit"
   >
-    <UFormField label="Payment Method" name="code">
-      <USelect
+    <UFormField label="Payment Method" class="text-md" name="code">
+      <URadioGroup
         v-model="state.code"
-        :items="
-          paymentMethods?.map((m) => ({
-            label: `${m.label}`,
-            value: m.value,
-          }))
-        "
+        indicator="hidden"
+        variant="table"
+        orientation="vertical"
+        :items="paymentMethods"
+        :ui="{ item: 'w-full' }"
+        class="block lg:hidden"
+      />
+      <URadioGroup
+        v-model="state.code"
+        indicator="hidden"
+        variant="table"
+        orientation="horizontal"
+        :items="paymentMethods"
+        :ui="{ item: 'w-full' }"
+        class="hidden lg:block"
       />
     </UFormField>
   </UForm>

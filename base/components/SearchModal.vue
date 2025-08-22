@@ -3,7 +3,7 @@ import { UInput } from "#components";
 
 const localePath = useLocalePath();
 const open = ref(false);
-const inputElement = ref<InstanceType<typeof UInput> | null>(null);
+const inputElement = useTemplateRef("inputElement");
 
 watch(open, (isOpen) => {
   if (isOpen) {

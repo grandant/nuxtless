@@ -2,7 +2,7 @@ type ActiveOrderBase = Awaited<
   ReturnType<typeof GqlGetActiveOrder>
 >["activeOrder"];
 
-type ActiveOrderDetail = Awaited<
+export type ActiveOrderDetail = Awaited<
   ReturnType<typeof GqlGetActiveOrderDetail>
 >["activeOrder"];
 
