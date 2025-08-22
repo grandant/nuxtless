@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented here.
 
+## [0.5.0] - 2025-08-25
+
+### Added
+- Unified loading states in cart and checkout components with `orderStore.loading`
+- New `syncOrderShippingAddress` util for updating shipping address in Vendure
+- `OrderSummary` component for improved checkout UX
+- Order confirmation page polished (replaced raw JSON with proper UI)
+- Checkout page polish with improved flow and visuals
+
+### Fixed
+- Stale data issue on the PDP page
+
+### Changed
+- Polished product detail page (PDP) for MVP readiness
+- Minor refinements to existing GQL queries, UI elements, and `orderStore`
+
 ## [0.4.0] - 2025-05-13
 
 ### Added
