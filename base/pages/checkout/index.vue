@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { ActiveOrderDetail } from "~~/types/order";
+import type { CheckoutState } from "~~/types/general";
 
 const router = useRouter();
 const toast = useToast();
 const orderStore = useOrderStore();
 const { order } = storeToRefs(orderStore);
-const loading = ref(true);
+const isMounted = ref(false);
 
 if (!order.value || !("shippingWithTax" in order.value)) {
   await orderStore.fetchOrder("detail");
@@ -17,48 +18,51 @@ const activeOrder = computed(() => order.value as ActiveOrderDetail);
 watch(activeOrder, async (newOrder, oldOrder) => {
   if (newOrder?.totalWithTax !== oldOrder?.totalWithTax) {
     await orderStore.fetchOrder("detail");
-    await orderStore.getShippingMethods();
   }
 });
 
-const isSubmitted = reactive({
+const addressForm = useTemplateRef("addressForm");
+const shippingForm = useTemplateRef("shippingForm");
+const paymentForm = useTemplateRef("paymentForm");
+
+useState<CheckoutState>("checkoutState", () => ({
+  addressForm: {
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    streetLine1: "",
+    streetLine2: "",
+    city: "",
+    cityId: undefined,
+    postalCode: "",
+    countryCode: "BG",
+    billingSameAsShipping: true,
+  },
+  shippingForm: {
+    shippingMethodId: "",
+    courierOfficeId: undefined,
+  },
+  paymentForm: {
+    code: "",
+  },
+}));
+
+const isSubmitted = shallowReactive({
   address: false,
   shipping: false,
   payment: false,
 });
 
-const triggerSubmit = reactive({
-  address: false,
-  shipping: false,
-  payment: false,
-});
-
-async function submitStep(step: keyof typeof triggerSubmit): Promise<boolean> {
-  triggerSubmit[step] = true;
-
-  await Promise.race([
-    until(() => isSubmitted[step]).toBe(true),
-    until(() => !!orderStore.error).toBe(true),
-  ]);
-
-  if (orderStore.error) {
-    toast.add({
-      title: "Checkout Failed",
-      description: orderStore.error,
-      color: "error",
-    });
-
-    triggerSubmit[step] = false;
-    return false;
-  }
-
-  return !orderStore.error;
-}
+// watchEffect(() => {
+//   console.log(orderStore.error);
+//   console.log(isSubmitted);
+// });
 
 async function onSubmit() {
-  if (!(await submitStep("address"))) return;
-  if (!(await submitStep("shipping"))) return;
-  if (!(await submitStep("payment"))) return;
+  await addressForm.value?.submitAddress();
+  await shippingForm.value?.submitShipping();
+  if (!(isSubmitted.address && isSubmitted.shipping)) return;
+  await paymentForm.value?.submitPayment();
 
   if (isSubmitted.address && isSubmitted.shipping && isSubmitted.payment) {
     isSubmitted.address = false;
@@ -79,12 +83,13 @@ async function onSubmit() {
 }
 
 onMounted(() => {
-  loading.value = false;
+  isMounted.value = true;
+  useCheckout(); // recalc shipping under certain condtitions
 });
 </script>
 
 <template>
-  <BaseLoader v-if="loading" width="sm:w-xs md:w-sm" />
+  <BaseLoader v-if="!isMounted" width="sm:w-xs md:w-sm" />
   <main
     v-else
     class="container my-14 flex flex-col md:flex-row"
@@ -117,15 +122,10 @@ onMounted(() => {
 
           <CheckoutAddressForm
             ref="addressForm"
+            v-model="isSubmitted.address"
             aria-labelledby="address-heading"
             aria-describedby="address-errors"
             novalidate
-            :trigger-submit="triggerSubmit.address"
-            @success="
-              isSubmitted.address = true;
-              triggerSubmit.address = false;
-            "
-            @error="triggerSubmit.address = false"
           />
         </section>
 
@@ -137,15 +137,10 @@ onMounted(() => {
 
           <CheckoutShippingForm
             ref="shippingForm"
+            v-model="isSubmitted.shipping"
             aria-labelledby="shipping-heading"
             aria-describedby="shipping-errors"
             novalidate
-            :trigger-submit="triggerSubmit.shipping"
-            @success="
-              isSubmitted.shipping = true;
-              triggerSubmit.shipping = false;
-            "
-            @error="triggerSubmit.shipping = false"
           />
         </section>
 
@@ -157,15 +152,10 @@ onMounted(() => {
 
           <CheckoutPaymentForm
             ref="paymentForm"
+            v-model="isSubmitted.payment"
             aria-labelledby="payment-heading"
             aria-describedby="payment-errors"
             novalidate
-            :trigger-submit="triggerSubmit.payment"
-            @success="
-              isSubmitted.payment = true;
-              triggerSubmit.payment = false;
-            "
-            @error="triggerSubmit.payment = false"
           />
         </section>
       </div>
@@ -178,10 +168,7 @@ onMounted(() => {
         <h2 id="order-summary-heading" class="mb-4 text-2xl font-semibold">
           Order summary
         </h2>
-        <CheckoutOrderSummary
-          :active-order="activeOrder"
-          :on-submit="onSubmit"
-        />
+        <CheckoutOrderSummary :on-submit="onSubmit" />
       </aside>
     </div>
   </main>

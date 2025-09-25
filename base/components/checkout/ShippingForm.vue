@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from "@nuxt/ui";
-import { ShippingForm } from "~~/base/validators/shippingForm";
+import { ShippingForm } from "../../validators/shippingForm";
 
-const { triggerSubmit } = defineProps<{ triggerSubmit: boolean }>();
+import type { CheckoutState } from "~~/types/general";
 
-const emit = defineEmits<{
-  (e: "success"): void;
-}>();
+const isSubmitted = defineModel<boolean>({ default: false });
+
+const shippingForm = useTemplateRef("shippingForm");
+const submitShipping = () => shippingForm.value?.submit();
+defineExpose({ submitShipping });
 
 const orderStore = useOrderStore();
 await orderStore.getShippingMethods();
@@ -20,35 +21,20 @@ const shippingMethods = computed(
     })) ?? [],
 );
 
-const shippingForm = useTemplateRef("shippingForm");
+const checkoutState = useState<CheckoutState>("checkoutState");
+const state = checkoutState.value.shippingForm as ShippingForm;
+state.shippingMethodId = shippingMethods.value[0]?.value ?? "";
+await orderStore.setShippingMethod(shippingMethods.value[0]?.value ?? "");
 
-const state = reactive({
-  shippingMethodId: "",
-});
-
-watch(
-  () => triggerSubmit,
-  (val) => {
-    if (val) shippingForm.value?.submit();
-  },
-  { immediate: false },
-);
-
-watch(
-  () => state.shippingMethodId,
-  async (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-      await orderStore.setShippingMethod(state?.shippingMethodId ?? "");
-    }
-  },
-);
-
-async function onSubmit(event: FormSubmitEvent<ShippingForm>) {
+async function onSubmit() {
   if (!state.shippingMethodId) return;
 
-  await orderStore.setShippingMethod(event.data.shippingMethodId);
+  await orderStore.setShippingMethod(state.shippingMethodId);
+  if (!orderStore.error) isSubmitted.value = true;
+}
 
-  if (!orderStore.error) emit("success");
+async function onError() {
+  isSubmitted.value = false;
 }
 </script>
 
@@ -59,6 +45,7 @@ async function onSubmit(event: FormSubmitEvent<ShippingForm>) {
     :state="state"
     class="mt-4 space-y-4"
     @submit="onSubmit"
+    @error="onError"
   >
     <UFormField label="Shipping Method" class="text-md" name="shippingMethodId">
       <URadioGroup
@@ -69,6 +56,7 @@ async function onSubmit(event: FormSubmitEvent<ShippingForm>) {
         size="xl"
         :items="shippingMethods"
         :ui="{ item: 'w-full' }"
+        :disabled="orderStore.loading"
         class="block lg:hidden"
       />
       <URadioGroup
@@ -78,6 +66,7 @@ async function onSubmit(event: FormSubmitEvent<ShippingForm>) {
         orientation="horizontal"
         :items="shippingMethods"
         :ui="{ item: 'w-full' }"
+        :disabled="orderStore.loading"
         class="hidden lg:block"
       />
     </UFormField>

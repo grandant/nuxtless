@@ -162,3 +162,14 @@ mutation AddPaymentToOrder($input: PaymentInput!) {
     }
   }
 }
+
+mutation SetOrderCustomFields($input: UpdateOrderInput!) {
+  setOrderCustomFields(input: $input) {
+    __typename
+    ...OrderDetail
+    ... on ErrorResult {
+      errorCode
+      message
+    }
+  }
+}

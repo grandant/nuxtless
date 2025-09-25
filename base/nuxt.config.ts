@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxt/icon",
     "@nuxt/image",
+    "@nuxt/scripts",
     "@nuxt/test-utils",
     "@nuxt/ui",
     "@pinia/nuxt",
@@ -23,6 +24,7 @@ export default defineNuxtConfig({
       apiBase: process.env.API_BASE,
       channelToken: process.env.CHANNEL_TOKEN,
       payloadBase: process.env.PAYLOAD_BASE,
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
       unsplashApiKey: process.env.UNSPLASH_API_KEY,
       i18n: {
         baseUrl: process.env.I18_BASE_URL,
@@ -44,10 +46,17 @@ export default defineNuxtConfig({
   // Global NuxtImage  Configuration
   image: {
     domains: ["localhost", "cdn.unstack.dev"],
-    // provider: "cloudflare",
-    // cloudflare: {
-    //   baseURL: "https://cdn.unstack.dev",
-    // },
+    provider: process.env.NUXT_IMAGE_PROVIDER,
+    cloudflare: {
+      baseURL: "https://cdn.unstack.dev",
+    },
+  },
+
+  // NuxtScripts Registry
+  scripts: {
+    registry: {
+      stripe: true,
+    },
   },
 
   // Global GraphQL Client Configuration

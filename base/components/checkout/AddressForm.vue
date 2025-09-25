@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { AddressForm } from "../../validators/addressForm";
+
 import type { FormSubmitEvent } from "@nuxt/ui";
 import type { ActiveCustomerDetail } from "~~/types/customer";
+import type { CheckoutState } from "~~/types/general";
 
-import { AddressForm } from "~~/base/validators/addressForm";
+const isSubmitted = defineModel<boolean>({ default: false });
 
-const { triggerSubmit } = defineProps<{ triggerSubmit: boolean }>();
-
-const emit = defineEmits<{
-  (e: "success"): void;
-}>();
+const addressForm = useTemplateRef("addressForm");
+const submitAddress = () => addressForm.value?.submit();
+defineExpose({ submitAddress });
 
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const orderStore = useOrderStore();
@@ -23,6 +24,9 @@ if (!customer.value || !("phoneNumber" in customer.value)) {
 // Safe: We fetch with "detail" above. Customer.value should always be ActiveCustomerDetail.
 const activeCustomer = computed(() => customer.value as ActiveCustomerDetail);
 
+const checkoutState = useState<CheckoutState>("checkoutState");
+const state = checkoutState.value.addressForm;
+
 const { data: countriesData } = await useAsyncGql("GetChannelCountries");
 
 const countries = computed(
@@ -35,45 +39,6 @@ const countries = computed(
     ) ?? [],
 );
 
-const addressForm = useTemplateRef("addressForm");
-
-const state = reactive({
-  firstName: "",
-  lastName: "",
-  emailAddress: "",
-  streetLine1: "",
-  streetLine2: "",
-  city: "",
-  postalCode: "",
-  countryCode: "BG",
-  billingSameAsShipping: true,
-});
-
-watch(
-  [isAuthenticated, activeCustomer, isMounted],
-  ([auth, customer, mounted]) => {
-    if (auth && customer && mounted) {
-      state.firstName = customer.firstName || "";
-      state.lastName = customer.lastName || "";
-      state.emailAddress = customer.emailAddress || "";
-      state.streetLine1 = customer.addresses?.[0]?.streetLine1 || "";
-      state.city = customer.addresses?.[0]?.city || "";
-      state.postalCode = customer.addresses?.[0]?.postalCode || "";
-      state.countryCode = customer.addresses?.[0]?.country?.code || "BG";
-
-      syncOrderShippingAddress(state);
-    }
-  },
-  { once: true },
-);
-
-watch(
-  () => triggerSubmit,
-  (val) => {
-    if (val) addressForm.value?.submit();
-  },
-);
-
 async function onSubmit(event: FormSubmitEvent<AddressForm>) {
   if (!isAuthenticated.value) {
     await orderStore.setCustomerForOrder({
@@ -83,13 +48,34 @@ async function onSubmit(event: FormSubmitEvent<AddressForm>) {
     });
   }
 
-  syncOrderShippingAddress(state);
+  await orderStore.setOrderShippingAddress({
+    fullName: `${state.firstName} ${state.lastName}`,
+    streetLine1: state.streetLine1,
+    city: state.city,
+    postalCode: state.postalCode,
+    countryCode: state.countryCode,
+  });
 
-  if (!orderStore.error) emit("success");
+  if (!orderStore.error) isSubmitted.value = true;
+}
+
+async function onError() {
+  isSubmitted.value = false;
 }
 
 onMounted(() => {
   isMounted.value = true;
+
+  if (isAuthenticated.value && activeCustomer.value) {
+    const c = activeCustomer.value;
+    state.firstName = c.firstName ?? "";
+    state.lastName = c.lastName ?? "";
+    state.emailAddress = c.emailAddress ?? "";
+    state.streetLine1 = c.addresses?.[0]?.streetLine1 ?? "";
+    state.city = c.addresses?.[0]?.city ?? "";
+    state.postalCode = c.addresses?.[0]?.postalCode ?? "";
+    state.countryCode = c.addresses?.[0]?.country?.code ?? "BG";
+  }
 });
 </script>
 
@@ -101,6 +87,7 @@ onMounted(() => {
     :disabled="!isMounted"
     class="grid grid-cols-2 gap-4"
     @submit="onSubmit"
+    @error="onError"
   >
     <UFormField
       label="First Name"
@@ -138,13 +125,7 @@ onMounted(() => {
     </UFormField>
 
     <div class="col-span-2 flex flex-col gap-4 lg:flex-row">
-      <UFormField
-        label="City"
-        name="city"
-        class="w-full lg:w-1/3"
-        size="xl"
-        @change="syncOrderShippingAddress(state)"
-      >
+      <UFormField label="City" name="city" class="w-full lg:w-1/3" size="xl">
         <UInput v-model="state.city" class="w-full" type="text" />
       </UFormField>
 
@@ -153,7 +134,6 @@ onMounted(() => {
         class="w-full lg:w-1/3"
         name="postalCode"
         size="xl"
-        @change="syncOrderShippingAddress(state)"
       >
         <UInput v-model="state.postalCode" class="w-full" type="text" />
       </UFormField>

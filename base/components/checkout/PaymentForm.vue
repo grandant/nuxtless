@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from "@nuxt/ui";
 import { PaymentForm } from "~~/base/validators/paymentForm";
 
-const props = defineProps<{ triggerSubmit: boolean }>();
+import type { CheckoutState } from "~~/types/general";
 
-const emit = defineEmits<{
-  (e: "success"): void;
-}>();
+const isSubmitted = defineModel<boolean>({ default: false });
+
+const paymentForm = useTemplateRef("paymentForm");
+const submitPayment = () => paymentForm.value?.submit();
+defineExpose({ submitPayment });
 
 const orderStore = useOrderStore();
 await orderStore.getPaymentMethods();
@@ -20,42 +21,30 @@ const paymentMethods = computed(
     })) ?? [],
 );
 
-const state = reactive({
-  code: "", // paymentMethods.value[0]?.value,
-});
+const checkoutState = useState<CheckoutState>("checkoutState");
+const state = checkoutState.value.paymentForm;
+const addressForm = useTemplateRef("stripeElement");
 
-const paymentForm = useTemplateRef("paymentForm");
-
-watch(
-  () => props.triggerSubmit,
-  (val) => {
-    if (val) paymentForm.value?.submit();
-  },
-);
-
-watch(
-  () => state.code,
-  async (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-      await orderStore.addPaymentToOrder({
-        method: state?.code,
-        metadata: {},
-      });
-    }
-  },
-);
-
-async function onSubmit(event: FormSubmitEvent<PaymentForm>) {
+async function onSubmit() {
   if (!state.code) return;
 
-  await orderStore.transitionToState("ArrangingPayment");
+  // Note: consider a switch or a composable if more methods are added later
+  if (state.code === "cod-payment") {
+    await orderStore.transitionToState("ArrangingPayment");
+    await orderStore.addPaymentToOrder({ method: state.code, metadata: {} });
+  } else if (state.code === "stripe-payment") {
+    orderStore.loading = true;
+    await addressForm.value?.submitStripePayment();
+    orderStore.loading = false;
+  }
 
-  await orderStore.addPaymentToOrder({
-    method: event.data.code,
-    metadata: {},
-  });
+  if (!orderStore.error) {
+    isSubmitted.value = true;
+  }
+}
 
-  if (!orderStore.error) emit("success");
+async function onError() {
+  isSubmitted.value = false;
 }
 </script>
 
@@ -66,6 +55,7 @@ async function onSubmit(event: FormSubmitEvent<PaymentForm>) {
     :state="state"
     class="mt-4 space-y-4"
     @submit="onSubmit"
+    @error="onError"
   >
     <UFormField label="Payment Method" class="text-md" name="code">
       <URadioGroup
@@ -87,6 +77,11 @@ async function onSubmit(event: FormSubmitEvent<PaymentForm>) {
         class="hidden lg:block"
       />
     </UFormField>
+
+    <CheckoutStripeElement
+      v-if="state.code === 'stripe-payment'"
+      ref="stripeElement"
+    />
   </UForm>
 </template>
 

@@ -4,6 +4,7 @@ import type { TableColumn, TableRow } from "@nuxt/ui";
 
 const route = useRoute();
 const code = route.params.code as string;
+const isStripe = computed(() => !!route.query.payment_intent);
 
 type OrderLine = {
   name: string;
@@ -12,9 +13,40 @@ type OrderLine = {
   total: number;
 };
 
-const { data: orderData } = await useAsyncGql("GetOrderByCode", { code });
+const { data: orderData, refresh } = await useAsyncGql("GetOrderByCode", {
+  code,
+});
 
 const order = computed(() => orderData.value?.orderByCode ?? null);
+
+async function pollOrder(maxAttempts = 20, interval = 2000) {
+  let attempts = 0;
+  while (attempts < maxAttempts) {
+    await refresh();
+    const state = order.value?.state;
+    const finalStates = [
+      "PaymentSettled",
+      "PaymentAuthorized",
+      "ArrangingFulfillment",
+      "Cancelled",
+    ];
+    if (!state) {
+      console.warn("Order state missing during polling");
+      continue;
+    }
+    if (finalStates.includes(state)) {
+      break;
+    }
+    attempts++;
+    await new Promise((res) => setTimeout(res, interval));
+  }
+}
+
+onMounted(() => {
+  if (isStripe.value) {
+    pollOrder();
+  }
+});
 
 const tableData = computed(() =>
   (order.value?.lines ?? []).map((line) => ({
@@ -79,6 +111,7 @@ function printReceipt() {
 </script>
 
 <template>
+  <!-- <BaseLoader v-if="!order" width="sm:w-xs md:w-sm" /> -->
   <main class="container mt-14">
     <!-- 1. Heading -->
     <header class="mb-14">

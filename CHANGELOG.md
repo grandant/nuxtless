@@ -1,6 +1,21 @@
 # Changelog
 
 All notable changes to this project will be documented here.
+This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
+
+## [0.6.0] - 2025-09-25
+### Added
+- **Stripe** integration via NuxtScripts (`useStripe` composable, StripeElement).
+- Checkout confirmation page with **polling** until final order state.
+- Centralized **useCheckout** composable for unified state and mutations.
+
+### Changed
+- Optimized checkout process with guarded watchers and reduced redundant API calls.
+- Improved loading/error handling for Stripe errors (release loading state properly).
+- Polished confirmation page with semantic HTML, accessibility, and print-friendly styles.
+
+### Breaking Changes
+- Checkout flow refactored; old form watchers and payment handling replaced by new composables.
 
 ## [0.5.0] - 2025-08-25
 

@@ -11,3 +11,7 @@ query GetChannelCountries {
     }
   }
 }
+
+mutation CreateStripePaymentIntent {
+  createStripePaymentIntent
+}

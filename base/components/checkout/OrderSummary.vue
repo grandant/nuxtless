@@ -1,22 +1,25 @@
 <script setup lang="ts">
 import type { ActiveOrderDetail } from "~~/types/order";
 
-const { activeOrder, onSubmit } = defineProps<{
-  activeOrder: ActiveOrderDetail;
-  onSubmit: () => Promise<void> | void;
-}>();
+const { onSubmit } = defineProps<{ onSubmit: () => Promise<void> | void }>();
 
-const { loading } = storeToRefs(useOrderStore());
-const subTotal = computed(() => (activeOrder?.subTotal / 100).toFixed(2));
-const orderTotal = computed(() => (activeOrder?.totalWithTax / 100).toFixed(2));
+const orderStore = useOrderStore();
+const { order, loading } = storeToRefs(orderStore);
+const activeOrder = order as Ref<ActiveOrderDetail>;
+
+const subTotal = computed(() => (activeOrder.value?.subTotal / 100).toFixed(2));
+
+const orderTotal = computed(() =>
+  (activeOrder.value?.totalWithTax / 100).toFixed(2),
+);
 
 const orderTaxTotal = computed(() => {
-  const taxTotal = activeOrder?.taxSummary?.[0]?.taxTotal;
+  const taxTotal = activeOrder.value?.taxSummary?.[0]?.taxTotal;
   return taxTotal != null ? (taxTotal / 100).toFixed(2) : null;
 });
 
 const shippingWithTax = computed(() =>
-  (activeOrder?.shippingWithTax / 100).toFixed(2),
+  (activeOrder.value?.shippingWithTax / 100).toFixed(2),
 );
 </script>
 

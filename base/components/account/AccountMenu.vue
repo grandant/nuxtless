@@ -7,8 +7,8 @@ const localePath = useLocalePath();
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const { setUser, clearSession } = useAuthStore();
 const { fetchCustomer, logout } = useCustomerStore();
-const { order } = storeToRefs(useOrderStore());
 const { customer } = storeToRefs(useCustomerStore());
+const { fetchOrder } = useOrderStore();
 
 if (!customer.value) {
   await fetchCustomer();
@@ -46,11 +46,11 @@ const items = computed<DropdownMenuItem[][]>(() => [
       kbds: ["shift", "meta", "q"],
       color: "error",
       onSelect: async () => {
-        order.value = null;
         await navigateTo(localePath("/"), { replace: true });
         clearSession();
         await logout();
         await useGqlSession(locale.value, gqlHost, channelToken, "default");
+        await fetchOrder();
       },
     },
   ],
