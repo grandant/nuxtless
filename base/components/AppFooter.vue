@@ -6,7 +6,11 @@
   >
     <div class="container mx-auto flex flex-col items-center gap-2 text-center">
       <p>
-        <LogoElement />
+        <LogoElement
+          logo-light="/logo-full.svg"
+          logo-dark="/logo-full.svg"
+          :width="75"
+        />
       </p>
     </div>
     <hr class="m-4" />

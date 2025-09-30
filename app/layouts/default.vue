@@ -2,7 +2,7 @@
 const route = useRoute();
 const { t } = useI18n();
 const head = useLocaleHead();
-const title = computed(() => t(route.meta.title || "messages.layouts.title"));
+const title = computed(() => t(route.meta.title || "messages.site.title"));
 const isPdp = computed(() => route.path.startsWith("/product/"));
 </script>
 

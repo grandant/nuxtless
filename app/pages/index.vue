@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const nuxtApp = useNuxtApp();
 const { unsplashApiKey } = useRuntimeConfig().public;
+// const { t } = useI18n();
 
 const { data: imgUrl } = await useFetch<{ urls: { raw: string } }>(
   "https://api.unsplash.com/photos/random",

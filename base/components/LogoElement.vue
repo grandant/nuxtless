@@ -1,15 +1,17 @@
 <script setup lang="ts">
 const {
-  logoLight = "/favicon.ico",
-  logoDark = "/favicon.ico",
+  logoLight = "/logo-top.svg",
+  logoDark = "/logo-top.svg",
   width = 32,
 } = defineProps<{
   logoLight?: string;
   logoDark?: string;
+  isFull?: boolean;
   width?: number;
 }>();
 
 const colorMode = useColorMode();
+const localePath = useLocalePath();
 const logoUrl = ref(logoLight);
 
 onMounted(() => {
@@ -25,12 +27,13 @@ watch(
 </script>
 
 <template>
-  <NuxtLinkLocale
-    to="/"
+  <ULink
+    :to="localePath('/')"
     class="inline-flex items-center gap-2 text-lg font-bold transition-opacity hover:opacity-80"
+    aria-label="Home"
   >
-    <img :src="logoUrl" alt="Logo" :width="width" />
-  </NuxtLinkLocale>
+    <NuxtImg :src="logoUrl" alt="Site Logo" :width="width" />
+  </ULink>
 </template>
 
 <style lang="css" scoped></style>

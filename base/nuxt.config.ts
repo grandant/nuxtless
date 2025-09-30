@@ -10,9 +10,14 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "@nuxt/test-utils",
     "@nuxt/ui",
+    "@nuxtjs/robots",
+    "@nuxtjs/sitemap",
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "nuxt-graphql-client",
+    "nuxt-link-checker",
+    "nuxt-og-image",
+    "nuxt-schema-org",
     "pinia-plugin-persistedstate/nuxt",
   ],
 
@@ -39,7 +44,7 @@ export default defineNuxtConfig({
   // App-Wide Settings
   app: {
     head: {
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+      link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
     },
   },
 
@@ -50,6 +55,12 @@ export default defineNuxtConfig({
     cloudflare: {
       baseURL: "https://cdn.unstack.dev",
     },
+  },
+
+  // ColorMode Settings (currently defaults)
+  colorMode: {
+    preference: "system",
+    fallback: "light",
   },
 
   // NuxtScripts Registry

@@ -83,6 +83,7 @@ onMounted(() => {
     icon="i-lucide-user"
     variant="outline"
     :loading="!isMounted"
+    aria-label="Login"
   />
 </template>
 

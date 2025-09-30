@@ -3,6 +3,20 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
+## [0.7.0] - 2025-09-30
+### SEO Enhancements
+- Added robots rules:
+  - Disallow: `/account`, `/checkout`, `/confirmation`, `/cart`, `/search`
+  - Block non-SEO bots
+  - Staging set as non-indexable
+- Integrated sitemap module (config pending Vendure products/collections + CMS pages)
+- Implemented Schema.org coverage:
+  - **Global**: `Organization`
+  - **PDP**: `Product`, `Offer`, `BreadcrumbList`
+  - **Category**: `CollectionPage`, `ItemList`, `BreadcrumbList`
+- Wired OG image generation via `defineOgImageComponent` (home, PDPs, categories)
+- Enabled LinkChecker with baseline clean run (rules enforced project-wide)
+
 ## [0.6.0] - 2025-09-25
 ### Added
 - **Stripe** integration via NuxtScripts (`useStripe` composable, StripeElement).

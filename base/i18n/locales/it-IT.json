@@ -1,7 +1,8 @@
 {
   "messages": {
-    "layouts": {
+    "site": {
       "title": "Nuxtless",
+      "tagline": "Nuxt Level Headless E-commerce",
       "shortDescription": "Offriamo servizi affidabili e professionali su misura per le esigenze dei nostri clienti.",
       "description": "Da anni ci dedichiamo a fornire servizi e prodotti di alta qualità, adattati alle esigenze uniche di ciascun cliente con attenzione a ogni dettaglio."
     },

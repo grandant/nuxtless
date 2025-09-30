@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const route = useRoute();
 const slug = route.params.slug as string;
+const { t, locale } = useI18n();
 const productStore = useProductStore();
 
 const { data } = await useAsyncGql("GetProductDetail", {
@@ -18,6 +19,70 @@ watch(
 );
 
 const { hasVariants, selectedVariant } = storeToRefs(productStore);
+
+// OgImage
+defineOgImageComponent("Frame", {
+  title: t("messages.site.title"),
+  description: `${product.value?.name}: ${product.value?.description}`,
+  // image: product.value?.featuredAsset?.preview,
+  // logo: "/logo.png",
+});
+
+// SchemaOrg
+if (product.value && selectedVariant.value) {
+  const images = product.value.assets?.map((a) => a.preview) ?? [];
+
+  useSchemaOrg([
+    defineProduct({
+      name: selectedVariant.value.name,
+      description: product.value.description,
+      sku: selectedVariant.value.sku,
+      // brand: {
+      //   "@type": "Brand",
+      //   name: product.value.facetValues.brand,
+      // },
+      image: images,
+      inLanguage: locale.value,
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `https://nuxtless.unstack.dev/${locale.value}/products/${product.value.slug}`,
+      },
+
+      // Offers
+      offers: {
+        "@type": "Offer",
+        url: `https://nuxtless.unstack.dev/${locale.value}/products/${product.value.slug}`,
+        price: (selectedVariant.value.priceWithTax ?? 0) / 100,
+        priceCurrency: selectedVariant.value.currencyCode ?? "EUR",
+        availability:
+          selectedVariant.value.stockLevel === "IN_STOCK"
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
+        itemCondition: "https://schema.org/NewCondition",
+        seller: {
+          "@type": "Organization",
+          name: t("messages.site.title"),
+        },
+      },
+    }),
+    defineBreadcrumb({
+      itemListElement: [
+        ...getProductTrail(product.value).map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.label,
+          item: `https://nuxtless.unstack.dev/${locale.value}${c.to}`,
+        })),
+        {
+          "@type": "ListItem",
+          position: (getProductTrail(product.value).length ?? 0) + 1,
+          name: product.value.name,
+          item: `https://nuxtless.unstack.dev/${locale.value}/products/${product.value.slug}`,
+        },
+      ],
+    }),
+  ]);
+}
 </script>
 
 <template>

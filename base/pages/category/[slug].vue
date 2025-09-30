@@ -4,6 +4,7 @@ import type { MenuCollections, ChildCollection } from "~~/types/collection";
 
 const route = useRoute();
 const slug = route.params.slug as string;
+const { t, locale } = useI18n();
 
 const menuCollections = useState<MenuCollections>("menuCollections");
 const menuItems = menuCollections.value?.collections.items ?? [];
@@ -37,6 +38,44 @@ const total = computed(() => collectionProducts.value?.search?.totalItems ?? 0);
 watch(page, () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+// OgImage
+defineOgImageComponent("Frame", {
+  title: t("messages.site.title"),
+  description: currentCollection?.name,
+  // image: currentCollection?.featuredAsset?.preview,
+  // logo: "/logo.png",
+});
+
+// SchemaOrg
+if (currentCollection) {
+  useSchemaOrg([
+    defineWebPage({
+      "@type": "CollectionPage",
+      name: currentCollection.name,
+      // description: currentCollection.description,
+      inLanguage: locale.value,
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: products.value.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: p.productName,
+          url: `https://nuxtless.unstack.dev/${locale.value}/products/${p.slug}`,
+        })),
+      },
+    }),
+
+    defineBreadcrumb({
+      itemListElement: getCategoryTrail().map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: c.label,
+        item: `https://nuxtless.unstack.dev/${locale.value}${c.to}`,
+      })),
+    }),
+  ]);
+}
 </script>
 
 <template>

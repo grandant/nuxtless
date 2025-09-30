@@ -25,6 +25,7 @@ watch(
 
 onMounted(() => {
   onLoaded(async ({ Stripe }) => {
+    // @ts-expect-error Stripe global callable at runtime
     stripe.value = Stripe(stripePublicKey);
 
     if (state.code === "stripe-payment") {
