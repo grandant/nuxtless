@@ -3,6 +3,16 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
+## [0.8.0] - 2025-09-30
+### Framework & UI
+- Migrated to Nuxt 4
+- Upgraded to Nuxt UI 4
+- Updated Tailwind + @tailwindcss/vite to 4.1.13
+
+### Assets
+- Added custom logos
+- Added project favicon
+
 ## [0.7.0] - 2025-09-30
 ### SEO Enhancements
 - Added robots rules:

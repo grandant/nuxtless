@@ -3,12 +3,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { shopIdentity } from "./schema/identity";
 
 export default defineNuxtConfig({
-  compatibilityDate: "2024-11-01",
+  compatibilityDate: "2025-09-30",
   devtools: { enabled: import.meta.env.DEV },
-
-  future: {
-    compatibilityVersion: 4,
-  },
 
   extends: ["./base"],
   css: ["~/assets/css/main.css"],
