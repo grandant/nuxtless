@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n();
 const localePath = useLocalePath();
 const orderStore = useOrderStore();
 const { order, loading } = storeToRefs(orderStore);
@@ -16,8 +17,8 @@ async function clearOrder() {
 <template>
   <USlideover
     v-model:open="isCartOpen"
-    title="Your Cart"
-    description="Items currently in your cart"
+    :title="t('messages.shop.yourCart')"
+    :description="t('messages.shop.cartDescription')"
   >
     <template #body>
       <CartEmpty v-if="!order?.lines?.length" class="my-14" />
@@ -35,7 +36,7 @@ async function clearOrder() {
           class="w-full justify-center"
           @click="isCartOpen = !isCartOpen"
         >
-          <span>Checkout</span>
+          <span>{{ t("messages.shop.checkout") }}</span>
           <span v-if="(order?.lines.length ?? 0) > 0">
             {{ (total / 100).toFixed(2) }} {{ order?.currencyCode }}
           </span>

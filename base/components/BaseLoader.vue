@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { message = "Please wait...", width = "w-full" } = defineProps<{
+const { t } = useI18n();
+
+const { message = undefined, width = "w-full" } = defineProps<{
   message?: string;
   width?: string;
 }>();
@@ -12,8 +14,8 @@ const { message = "Please wait...", width = "w-full" } = defineProps<{
     aria-live="polite"
   >
     <UProgress :animation="'swing'" :class="width" />
-    <span v-if="message" class="">
-      {{ message }}
+    <span>
+      {{ message ?? t("messages.general.loading") }}
     </span>
   </div>
 </template>

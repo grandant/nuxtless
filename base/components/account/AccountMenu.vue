@@ -2,7 +2,7 @@
 import type { DropdownMenuItem } from "@nuxt/ui";
 
 const { GQL_HOST: gqlHost, channelToken } = useRuntimeConfig().public;
-const { locale } = useI18n();
+const { t, locale } = useI18n();
 const localePath = useLocalePath();
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const { setUser, clearSession } = useAuthStore();
@@ -32,16 +32,20 @@ const items = computed<DropdownMenuItem[][]>(() => [
     },
   ],
   [
-    { label: "Profile", icon: "i-lucide-user", to: localePath("/account") },
     {
-      label: "My Orders",
+      label: t("messages.account.profile"),
+      icon: "i-lucide-user",
+      to: localePath("/account"),
+    },
+    {
+      label: t("messages.account.orders"),
       icon: "i-lucide-list",
       to: localePath("/account/orders"),
     },
   ],
   [
     {
-      label: "Logout",
+      label: t("messages.account.logout"),
       icon: "i-lucide-log-out",
       kbds: ["shift", "meta", "q"],
       color: "error",

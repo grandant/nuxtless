@@ -20,6 +20,12 @@ watch(
 
 const { hasVariants, selectedVariant } = storeToRefs(productStore);
 
+const formatPrice = (amount: number) =>
+  new Intl.NumberFormat(locale.value, {
+    style: "currency",
+    currency: selectedVariant.value?.currencyCode || "EUR",
+  }).format(amount / 100);
+
 // OgImage
 defineOgImageComponent("Frame", {
   title: t("messages.site.title"),
@@ -99,13 +105,7 @@ if (product.value && selectedVariant.value) {
         <UBadge color="info">
           <div class="flex flex-row gap-2 text-sm font-bold">
             <span>
-              {{ (selectedVariant?.priceWithTax / 100).toFixed(2) }}
-              {{ selectedVariant?.currencyCode }}
-            </span>
-            /
-            <span>
-              {{ (selectedVariant?.priceWithTax / 100).toFixed(2) }}
-              {{ selectedVariant?.currencyCode }}
+              {{ formatPrice(selectedVariant?.priceWithTax) }}
             </span>
           </div>
         </UBadge>
@@ -173,7 +173,7 @@ if (product.value && selectedVariant.value) {
     <!-- Featured Products -->
     <section class="mt-14 mb-14" aria-labelledby="related-products-heading">
       <h2 id="related-products-heading" class="mb-4 text-2xl font-semibold">
-        You Might Also Like
+        {{ t("messages.shop.popularProducts") }}
       </h2>
       <HomeFeaturedProducts />
     </section>

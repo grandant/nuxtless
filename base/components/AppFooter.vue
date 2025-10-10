@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { t } = useI18n();
+</script>
 
 <template>
   <footer
@@ -13,9 +15,9 @@
         />
       </p>
     </div>
-    <hr class="m-4" />
+    <hr class="mt-4 mb-6" />
     <div class="flex justify-center">
-      <p class="opacity-80">Built with ❤️ on Unstack</p>
+      <p class="opacity-80">{{ t("messages.general.footer.unstack") }}</p>
     </div>
   </footer>
 </template>

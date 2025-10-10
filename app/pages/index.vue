@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const nuxtApp = useNuxtApp();
 const { unsplashApiKey } = useRuntimeConfig().public;
-// const { t } = useI18n();
+const { t } = useI18n();
 
 const { data: imgUrl } = await useFetch<{ urls: { raw: string } }>(
   "https://api.unsplash.com/photos/random",
@@ -33,11 +33,13 @@ if (imgUrl.value?.urls?.raw) {
 
 <template>
   <main>
-    <h1 class="sr-only">Nuxtless: Nuxt Level Headless E-commerce</h1>
+    <h1 class="sr-only">{{ t("messages.site.tagline") }}</h1>
 
     <!-- Hero Banner -->
     <section class="mb-14" aria-labelledby="home-hero-heading">
-      <h2 id="home-hero-heading" class="sr-only">Welcome to Nuxtless</h2>
+      <h2 id="home-hero-heading" class="sr-only">
+        {{ t("messages.pages.index.welcome") }} {{ t("messages.site.title") }}
+      </h2>
       <div class="">
         <NuxtImg
           format="webp"
@@ -58,7 +60,7 @@ if (imgUrl.value?.urls?.raw) {
     <div class="container">
       <section class="mb-14" aria-labelledby="home-categories-heading">
         <h2 id="home-categories-heading" class="mb-4 text-2xl font-semibold">
-          Shop by Category
+          {{ t("messages.shop.shopByCategory") }}
         </h2>
         <HomeCategoryCarousel />
       </section>
@@ -72,7 +74,7 @@ if (imgUrl.value?.urls?.raw) {
       <!-- Featured Products -->
       <section class="mb-14" aria-labelledby="home-products-heading">
         <h2 id="home-products-heading" class="mb-4 text-2xl font-semibold">
-          Featured Products
+          {{ t("messages.shop.popularProducts") }}
         </h2>
         <HomeFeaturedProducts />
       </section>

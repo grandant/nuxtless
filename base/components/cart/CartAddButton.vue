@@ -3,6 +3,7 @@ const { disabled } = defineProps<{
   disabled?: boolean;
 }>();
 
+const { t } = useI18n();
 const toast = useToast();
 const { loading, error } = storeToRefs(useOrderStore());
 const { addItemToOrder } = useOrderStore();
@@ -41,7 +42,7 @@ async function addToCart() {
   >
     <UInputNumber v-model="quantity" size="xl" :min="1" :max="10" />
     <UButton
-      label="Add to Cart"
+      :label="t('messages.shop.addToCart')"
       :loading="loading"
       :disabled="disabled || !hasStock"
       size="xl"

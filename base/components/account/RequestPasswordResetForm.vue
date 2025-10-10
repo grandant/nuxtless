@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { RequestPasswordResetForm } from "~~/base/validators/requestPasswordResetForm";
+
 import type { FormSubmitEvent } from "@nuxt/ui";
 
 const emit = defineEmits<{
   (e: "success"): void;
 }>();
 
+const { t } = useI18n();
 const { requestPasswordReset } = useCustomerStore();
 const toast = useToast();
 
@@ -20,9 +22,11 @@ async function onSubmit(event: FormSubmitEvent<RequestPasswordResetForm>) {
     emit("success");
   } else {
     toast.add({
-      title: "Reset Failed",
+      title: t("messages.error.resetFail"),
       description:
-        result && "message" in result ? result.message : "Something went wrong",
+        result && "message" in result
+          ? result.message
+          : t("messages.error.general"),
       color: "error",
     });
   }
@@ -36,17 +40,21 @@ async function onSubmit(event: FormSubmitEvent<RequestPasswordResetForm>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField label="Email Address" name="emailAddress" size="xl">
+    <UFormField
+      :label="t('messages.account.email')"
+      name="emailAddress"
+      size="xl"
+    >
       <UInput
         v-model="state.emailAddress"
         type="email"
-        placeholder="Enter your password"
+        :placeholder="t('messages.account.emailPlaceholder')"
         class="w-full"
       />
     </UFormField>
 
     <UButton size="xl" loading-auto class="w-full justify-center" type="submit">
-      Send Reset Link
+      {{ t("messages.account.sendPasswordResetEmail") }}
     </UButton>
   </UForm>
 </template>

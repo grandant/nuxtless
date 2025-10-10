@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AddressForm } from "../../validators/addressForm";
+import { AddressForm } from "~~/base/validators/addressForm";
 
 import type { FormSubmitEvent } from "@nuxt/ui";
 import type { ActiveCustomerDetail } from "~~/types/customer";
@@ -7,6 +7,7 @@ import type { CheckoutState } from "~~/types/general";
 
 const isSubmitted = defineModel<boolean>({ default: false });
 
+const { t } = useI18n();
 const addressForm = useTemplateRef("addressForm");
 const submitAddress = () => addressForm.value?.submit();
 defineExpose({ submitAddress });
@@ -90,7 +91,7 @@ onMounted(() => {
     @error="onError"
   >
     <UFormField
-      label="First Name"
+      :label="t('messages.billing.firstName')"
       class="col-span-2 lg:col-span-1"
       name="firstName"
       size="xl"
@@ -99,7 +100,7 @@ onMounted(() => {
     </UFormField>
 
     <UFormField
-      label="Last Name"
+      :label="t('messages.billing.lastName')"
       class="col-span-2 lg:col-span-1"
       name="lastName"
       size="xl"
@@ -107,7 +108,12 @@ onMounted(() => {
       <UInput v-model="state.lastName" class="w-full" type="text" />
     </UFormField>
 
-    <UFormField label="Email" class="col-span-2" name="emailAddress" size="xl">
+    <UFormField
+      :label="t('messages.billing.email')"
+      class="col-span-2"
+      name="emailAddress"
+      size="xl"
+    >
       <UInput
         v-model="state.emailAddress"
         :disabled="isAuthenticated && isMounted"
@@ -116,21 +122,36 @@ onMounted(() => {
       />
     </UFormField>
 
-    <UFormField label="Street" class="col-span-2" name="streetLine1" size="xl">
+    <UFormField
+      :label="t('messages.billing.address1')"
+      class="col-span-2"
+      name="streetLine1"
+      size="xl"
+    >
       <UInput v-model="state.streetLine1" class="w-full" type="text" />
     </UFormField>
 
-    <UFormField label="Street" class="col-span-2" name="streetLine2" size="xl">
+    <UFormField
+      :label="t('messages.billing.address2')"
+      class="col-span-2"
+      name="streetLine2"
+      size="xl"
+    >
       <UInput v-model="state.streetLine2" class="w-full" type="text" />
     </UFormField>
 
     <div class="col-span-2 flex flex-col gap-4 lg:flex-row">
-      <UFormField label="City" name="city" class="w-full lg:w-1/3" size="xl">
+      <UFormField
+        :label="t('messages.billing.city')"
+        name="city"
+        class="w-full lg:w-1/3"
+        size="xl"
+      >
         <UInput v-model="state.city" class="w-full" type="text" />
       </UFormField>
 
       <UFormField
-        label="Postal Code"
+        :label="t('messages.billing.zip')"
         class="w-full lg:w-1/3"
         name="postalCode"
         size="xl"
@@ -139,7 +160,7 @@ onMounted(() => {
       </UFormField>
 
       <UFormField
-        label="Country"
+        :label="t('messages.billing.country')"
         name="country"
         class="w-full lg:w-1/3"
         size="xl"

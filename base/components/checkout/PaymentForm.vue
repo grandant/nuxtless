@@ -5,6 +5,7 @@ import type { CheckoutState } from "~~/types/general";
 
 const isSubmitted = defineModel<boolean>({ default: false });
 
+const { t } = useI18n();
 const paymentForm = useTemplateRef("paymentForm");
 const submitPayment = () => paymentForm.value?.submit();
 defineExpose({ submitPayment });
@@ -57,7 +58,11 @@ async function onError() {
     @submit="onSubmit"
     @error="onError"
   >
-    <UFormField label="Payment Method" class="text-md" name="code">
+    <UFormField
+      :label="t('messages.general.paymentMethod')"
+      class="text-md"
+      name="code"
+    >
       <URadioGroup
         v-model="state.code"
         indicator="hidden"

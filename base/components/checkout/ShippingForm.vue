@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ShippingForm } from "../../validators/shippingForm";
+import { ShippingForm } from "~~/base/validators/shippingForm";
 
 import type { CheckoutState } from "~~/types/general";
 
 const isSubmitted = defineModel<boolean>({ default: false });
 
+const { t } = useI18n();
 const shippingForm = useTemplateRef("shippingForm");
 const submitShipping = () => shippingForm.value?.submit();
 defineExpose({ submitShipping });
@@ -47,7 +48,11 @@ async function onError() {
     @submit="onSubmit"
     @error="onError"
   >
-    <UFormField label="Shipping Method" class="text-md" name="shippingMethodId">
+    <UFormField
+      :label="t('messages.general.shippingSelect')"
+      class="text-md"
+      name="shippingMethodId"
+    >
       <URadioGroup
         v-model="state.shippingMethodId"
         indicator="hidden"

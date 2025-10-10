@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { UInput } from "#components";
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 const open = ref(false);
 const inputElement = useTemplateRef("inputElement");
@@ -23,10 +24,10 @@ watch(error, (err) => {
 </script>
 
 <template>
+  <!-- description="Type for quick search or press enter for advanced search." -->
   <UModal
     v-model:open="open"
-    title="Search products"
-    description="Type for quick search or press enter for advanced search."
+    :title="t('messages.shop.searchProducts')"
     :ui="{ content: 'h-screen sm:h-[32rem]' }"
   >
     <UButton variant="outline" icon="i-lucide-search" size="xl" />
@@ -47,9 +48,13 @@ watch(error, (err) => {
 
         <div v-else-if="error" role="alert">
           <p class="text-red-500">
-            Something went wrong. Please try again. If the issue persists,
-            please contact support.
+            {{ t("messages.error.general") }}.
+            {{ t("messages.general.generalMessage") }}
           </p>
+        </div>
+
+        <div v-else-if="results.length === 0" role="alert">
+          <p>{{ t("messages.shop.noProductsFound.title") }}.</p>
         </div>
 
         <ul v-else class="grid gap-2" role="listbox">
@@ -73,9 +78,10 @@ watch(error, (err) => {
 
     <template #footer>
       <UButton
-        label="Close"
+        :label="t('messages.shop.close')"
         color="neutral"
         variant="soft"
+        class="px-7"
         @click="open = false"
       />
     </template>

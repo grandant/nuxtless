@@ -36,10 +36,10 @@ withDefaults(
         style="display: block; line-clamp: 2; text-overflow: ellipsis"
       >
         <Icon v-if="icon" :name="icon" />
-        {{ title }}
+        <span> {{ title }} </span>
       </h1>
       <p
-        class="max-w-3xl text-2xl"
+        class="max-w-3xl text-3xl"
         style="display: block; line-clamp: 3; text-overflow: ellipsis"
       >
         {{ description }}

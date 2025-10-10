@@ -5,6 +5,7 @@ const { line } = defineProps<{
   line: OrderLine;
 }>();
 
+const { t } = useI18n();
 const orderStore = useOrderStore();
 const { loading } = storeToRefs(orderStore);
 const { selectedVariant } = storeToRefs(useProductStore());
@@ -31,7 +32,9 @@ const remove = () => {
       <div class="text-sm font-medium">
         {{ line.productVariant.name }}
       </div>
-      <div class="text-xs">Quantity: {{ line.quantity }}</div>
+      <div class="text-xs">
+        {{ t("messages.shop.quantity") }}: {{ line.quantity }}
+      </div>
       <div class="mt-1 text-sm font-semibold">
         {{ (line.linePriceWithTax / line.quantity / 100).toFixed(2) }}
         {{ selectedVariant?.currencyCode }}

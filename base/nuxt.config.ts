@@ -31,9 +31,6 @@ export default defineNuxtConfig({
       payloadBase: process.env.PAYLOAD_BASE,
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
       unsplashApiKey: process.env.UNSPLASH_API_KEY,
-      i18n: {
-        baseUrl: process.env.I18_BASE_URL,
-      },
     },
   },
 
@@ -93,6 +90,7 @@ export default defineNuxtConfig({
 
   // Global i18n Configuration
   i18n: {
+    baseUrl: process.env.I18_BASE_URL,
     locales: [
       {
         code: "bg",

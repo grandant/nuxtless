@@ -36,9 +36,9 @@ const items = computed<NavigationMenuItem[]>(
   >
     <div class="container flex justify-between">
       <div class="flex gap-4 sm:gap-6">
-        <HeaderMobileMenu :items="items" class="flex md:hidden" />
+        <HeaderMobileMenu :items="items" class="flex lg:hidden" />
         <LogoElement />
-        <HeaderDesktopMenu :items="items" class="hidden md:flex" />
+        <HeaderDesktopMenu :items="items" class="hidden lg:flex" />
       </div>
       <div class="flex items-center gap-2 sm:gap-4">
         <SearchModal />

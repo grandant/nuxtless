@@ -5,6 +5,7 @@ definePageMeta({
 
 const route = useRoute();
 const token = route.query.token as string | undefined;
+const { t } = useI18n();
 const localePath = useLocalePath();
 const toast = useToast();
 
@@ -51,14 +52,20 @@ onMounted(async () => {
       class="mb-8 flex flex-col items-center"
       aria-labelledby="verify-heading"
     >
-      <LogoElement :width="46" aria-hidden="true" focusable="false" />
+      <LogoElement
+        logo-light="/logo-full.svg"
+        logo-dark="/logo-full.svg"
+        :width="100"
+        aria-hidden="true"
+        focusable="false"
+        class="mb-4"
+      />
       <h1 id="verify-heading" class="text-2xl font-bold">
-        Account Verification
+        {{ t("messages.pages.account.accountVerify") }}
       </h1>
       <p>
-        Back to
         <ULink :to="localePath('/account/login')" class="underline">
-          Login
+          {{ t("messages.account.backToLogin") }}
         </ULink>
       </p>
     </header>

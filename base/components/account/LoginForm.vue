@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LoginForm } from "~~/base/validators/loginForm";
+
 import type { FormSubmitEvent } from "@nuxt/ui";
 
 const emit = defineEmits<{
@@ -7,7 +8,7 @@ const emit = defineEmits<{
 }>();
 
 const { GQL_HOST: gqlHost, channelToken } = useRuntimeConfig().public;
-const { locale } = useI18n();
+const { t, locale } = useI18n();
 const localePath = useLocalePath();
 const toast = useToast();
 const orderStore = useOrderStore();
@@ -32,22 +33,22 @@ async function onSubmit(event: FormSubmitEvent<LoginForm>) {
 
   if (result && "identifier" in result) {
     toast.add({
-      title: "Login Successful",
-      description: "You logged in into your account.",
+      title: t("messages.account.loginSuccess"),
+      description: t("messages.account.successMessage"),
       color: "success",
     });
     emit("success");
     await orderStore.fetchOrder();
   } else if (result && "errorCode" in result) {
     toast.add({
-      title: "Login Failed",
-      description: result.message,
+      title: t("messages.account.loginFail"),
+      description: t("messages.account.failMessage"),
       color: "error",
     });
   } else {
     toast.add({
-      title: "Something went wrong",
-      description: "Please try again later or contact support.",
+      title: t("messages.error.general"),
+      description: t("messages.error.generalMessage"),
       color: "error",
     });
   }
@@ -61,32 +62,36 @@ async function onSubmit(event: FormSubmitEvent<LoginForm>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField label="Email" name="email" size="xl">
+    <UFormField :label="t('messages.account.email')" name="email" size="xl">
       <UInput
         v-model="state.email"
         type="email"
-        placeholder="Enter your email"
+        :placeholder="t('messages.account.emailPlaceholder')"
         class="w-full"
       />
     </UFormField>
 
-    <UFormField label="Password" name="password" size="xl">
+    <UFormField
+      :label="t('messages.account.password')"
+      name="password"
+      size="xl"
+    >
       <UInput
         v-model="state.password"
         type="password"
-        placeholder="Enter your password"
+        :placeholder="t('messages.account.passwordPlaceholder')"
         class="w-full"
       />
     </UFormField>
 
     <UButton size="xl" loading-auto class="w-full justify-center" type="submit">
-      Login
+      {{ t("messages.account.login") }}
     </UButton>
     <ULink
       :to="localePath('/account/request-password-reset')"
       class="block text-center underline"
     >
-      Forgotten Password?
+      {{ t("messages.account.forgotPassword") }}
     </ULink>
   </UForm>
 </template>

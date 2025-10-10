@@ -1,13 +1,14 @@
 <script setup lang="ts">
+const { t } = useI18n();
 const { selectedVariant, stockLevel } = storeToRefs(useProductStore());
 const { refreshStock } = useProductStore();
 
 const sku = computed(() => selectedVariant.value?.sku);
 
 const stockLevelMap = {
-  IN_STOCK: { label: "In stock", color: "success" },
-  LOW_STOCK: { label: "Low stock", color: "warning" },
-  OUT_OF_STOCK: { label: "Out of stock", color: "error" },
+  IN_STOCK: { label: t("messages.shop.inStock"), color: "success" },
+  LOW_STOCK: { label: t("messages.shop.lowStock"), color: "warning" },
+  OUT_OF_STOCK: { label: t("messages.shop.outOfStock"), color: "error" },
 } as const;
 
 const stock = computed(

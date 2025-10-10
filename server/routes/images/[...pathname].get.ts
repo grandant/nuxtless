@@ -5,5 +5,5 @@ export default eventHandler(async (event) => {
   setHeader(event, "Content-Security-Policy", "default-src 'none';");
 
   // Serve the image blob from the specified path
-  return hubBlob().serve(event, pathname);
+  return hubBlob().serve(event, pathname as string);
 });

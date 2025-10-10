@@ -3,6 +3,7 @@ definePageMeta({
   alias: ["/register"],
 });
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const loading = ref(true);
@@ -24,14 +25,21 @@ onMounted(() => {
       class="mb-8 flex flex-col items-center"
       aria-labelledby="register-heading"
     >
-      <LogoElement :width="46" aria-hidden="true" focusable="false" />
+      <LogoElement
+        logo-light="/logo-full.svg"
+        logo-dark="/logo-full.svg"
+        :width="100"
+        aria-hidden="true"
+        focusable="false"
+        class="mb-4"
+      />
       <h1 id="register-heading" class="text-2xl font-bold">
-        Register an account
+        {{ t("messages.account.accountRegister") }}
       </h1>
       <p>
-        Already have an account?
+        {{ t("messages.account.hasAccount") }}
         <ULink :to="localePath('/account/login')" class="underline">
-          Login here.
+          {{ t("messages.account.loginToAccount") }}.
         </ULink>
       </p>
     </header>

@@ -1,9 +1,9 @@
-export default eventHandler(async (event) => {
-  const { limit, cursor, prefix } = await getQuery(event);
+export default eventHandler((event) => {
+  const { limit, cursor, prefix } = getQuery(event);
 
   return hubBlob().list({
-    limit: limit ? Number.parseInt(limit) : 10,
-    cursor: cursor ? cursor : undefined,
-    prefix: prefix ? prefix : undefined,
+    limit: limit ? parseInt(limit as string, 10) : 10,
+    cursor: typeof cursor === "string" ? cursor : undefined,
+    prefix: typeof prefix === "string" ? prefix : undefined,
   });
 });

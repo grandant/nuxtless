@@ -1,7 +1,9 @@
 <script setup lang="ts" size="xl">
 import { RegisterForm } from "~~/base/validators/registerForm";
+
 import type { FormSubmitEvent } from "@nuxt/ui";
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 const toast = useToast();
 const { register } = useCustomerStore();
@@ -25,20 +27,20 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
   if (result && "success" in result && result.success) {
     await navigateTo(localePath("/account/login"), { replace: true });
     toast.add({
-      title: "Registration Successful",
-      description: "Please check your email to verify your account.",
+      title: t("messages.account.registerSuccess"),
+      description: t("messages.account.registerSuccessMessage"),
       color: "success",
     });
   } else if (result && "message" in result) {
     toast.add({
-      title: "Registration Failed",
+      title: t("messages.account.registerFail"),
       description: result.message,
       color: "error",
     });
   } else {
     toast.add({
-      title: "Registration Failed",
-      description: "An unexpected error occurred.",
+      title: t("messages.error.general"),
+      description: t("messages.error.generalMessage"),
       color: "error",
     });
   }
@@ -52,53 +54,69 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField label="First Name" name="firstName" size="xl">
+    <UFormField
+      :label="t('messages.account.firstName')"
+      name="firstName"
+      size="xl"
+    >
       <UInput
         v-model="state.firstName"
         type="text"
-        placeholder="Enter your email"
+        :placeholder="t('messages.account.firstNamePlaceholder')"
         class="w-full"
       />
     </UFormField>
 
-    <UFormField label="Last Name" name="lastName" size="xl">
+    <UFormField
+      :label="t('messages.account.lastName')"
+      name="lastName"
+      size="xl"
+    >
       <UInput
         v-model="state.lastName"
         type="text"
-        placeholder="Enter your email"
+        :placeholder="t('messages.account.lastNamePlaceholder')"
         class="w-full"
       />
     </UFormField>
 
-    <UFormField label="Email" name="email" size="xl">
+    <UFormField :label="t('messages.account.email')" name="email" size="xl">
       <UInput
         v-model="state.email"
         type="email"
-        placeholder="Enter your email"
+        :placeholder="t('messages.account.emailPlaceholder')"
         class="w-full"
       />
     </UFormField>
 
-    <UFormField label="Password" name="password" size="xl">
+    <UFormField
+      :label="t('messages.account.password')"
+      name="password"
+      size="xl"
+    >
       <UInput
         v-model="state.password"
         type="password"
-        placeholder="Enter your email"
+        :placeholder="t('messages.account.enterPassword')"
         class="w-full"
       />
     </UFormField>
 
-    <UFormField label="Confirm Password" name="confirmPassword" size="xl">
+    <UFormField
+      :label="t('messages.account.confirmPassword')"
+      name="confirmPassword"
+      size="xl"
+    >
       <UInput
         v-model="state.confirmPassword"
         type="password"
-        placeholder="Enter your email"
+        :placeholder="t('messages.account.confirmPassword')"
         class="w-full"
       />
     </UFormField>
 
     <UButton size="xl" loading-auto class="w-full justify-center" type="submit">
-      Register
+      {{ t("messages.account.register") }}
     </UButton>
   </UForm>
 </template>

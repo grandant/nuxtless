@@ -2,6 +2,7 @@
 import { h } from "vue";
 import type { TableColumn, TableRow } from "@nuxt/ui";
 
+const { locale, t } = useI18n();
 const route = useRoute();
 const code = route.params.code as string;
 const isStripe = computed(() => !!route.query.payment_intent);
@@ -11,6 +12,7 @@ type OrderLine = {
   qty: number;
   price: number;
   total: number;
+  currency: string;
 };
 
 const { data: orderData, refresh } = await useAsyncGql("GetOrderByCode", {
@@ -42,61 +44,58 @@ async function pollOrder(maxAttempts = 20, interval = 2000) {
   }
 }
 
-onMounted(() => {
-  if (isStripe.value) {
-    pollOrder();
-  }
-});
+const formatPrice = (amount: number) =>
+  new Intl.NumberFormat(locale.value, {
+    style: "currency",
+    currency: order.value?.currencyCode || "EUR",
+  }).format(amount / 100);
 
 const tableData = computed(() =>
   (order.value?.lines ?? []).map((line) => ({
     name: line.productVariant?.name ?? "",
     qty: line.quantity,
-    price: line.unitPriceWithTax / 100,
-    total: line.linePriceWithTax / 100,
+    price: formatPrice(line.unitPriceWithTax),
+    total: formatPrice(line.linePriceWithTax),
   })),
 );
 
 const columns: TableColumn<OrderLine>[] = [
   {
     accessorKey: "name",
+    header: t("messages.general.product"),
   },
   {
     accessorKey: "qty",
+    header: t("messages.shop.quantity"),
   },
   {
     accessorKey: "price",
+    header: t("messages.shop.price"),
   },
   {
     accessorKey: "total",
-    header: () => h("div", { class: "text-right" }, "Total"),
+    header: () => h("div", { class: "text-right" }, t("messages.shop.total")),
     footer: ({ column }) => {
       const total = column
         .getFacetedRowModel()
         .rows.reduce(
           (acc: number, row: TableRow<OrderLine>) =>
-            acc + Number.parseFloat(row.getValue("total")),
+            acc + Number.parseFloat(row.getValue("total")) * 100,
           0,
         );
 
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "EUR",
-      }).format(total);
+      const formatted = formatPrice(total);
 
       return h(
         "div",
         { class: "text-right font-medium" },
-        `Total: ${formatted}`,
+        `${t("messages.shop.total")}: ${formatted}`,
       );
     },
     cell: ({ row }) => {
       const total = Number.parseFloat(row.getValue("total"));
 
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "EUR",
-      }).format(total);
+      const formatted = formatPrice(total * 100);
 
       return h("div", { class: "text-right font-medium" }, formatted);
     },
@@ -108,6 +107,12 @@ function printReceipt() {
     window.print();
   }
 }
+
+onMounted(() => {
+  if (isStripe.value) {
+    pollOrder();
+  }
+});
 </script>
 
 <template>
@@ -115,10 +120,12 @@ function printReceipt() {
   <main class="container mt-14">
     <!-- 1. Heading -->
     <header class="mb-14">
-      <h1 class="text-2xl font-semibold">Order Confirmation</h1>
+      <h1 class="text-2xl font-semibold">
+        {{ t("messages.shop.orderReceived") }}
+      </h1>
       <UBadge
         color="error"
-        label="Thank you"
+        :label="t('messages.shop.thankYou')"
         trailing-icon="i-lucide-heart"
         class="text-sm font-bold"
       >
@@ -132,19 +139,19 @@ function printReceipt() {
         class="outline-primary grid grid-cols-2 gap-4 rounded outline-2 outline-offset-4 md:grid-cols-4"
       >
         <div>
-          <dt class="font-medium">Order code</dt>
+          <dt class="font-medium">{{ t("messages.shop.orderCode") }}</dt>
           <dd>{{ order?.code }}</dd>
         </div>
         <div>
-          <dt class="font-medium">Order date</dt>
+          <dt class="font-medium">{{ t("messages.general.date") }}</dt>
           <dd>{{ new Date(order?.orderPlacedAt).toLocaleDateString() }}</dd>
         </div>
         <div>
-          <dt class="font-medium">Your email</dt>
+          <dt class="font-medium">{{ t("messages.shop.rateEmail") }}</dt>
           <dd>{{ order?.customer?.emailAddress }}</dd>
         </div>
         <div>
-          <dt class="font-medium">Status</dt>
+          <dt class="font-medium">{{ t("messages.general.status") }}</dt>
           <dd>{{ order?.state }}</dd>
         </div>
       </dl>
@@ -153,7 +160,7 @@ function printReceipt() {
     <!-- 3. Order summary -->
     <section aria-labelledby="order-summary-heading" class="mb-14">
       <h2 id="order-summary-heading" class="text-xl font-semibold underline">
-        Order Summary
+        {{ t("messages.shop.orderSummary") }}
       </h2>
       <UTable :data="tableData" :columns="columns" class="flex-1" />
     </section>
@@ -164,7 +171,7 @@ function printReceipt() {
         id="order-details-heading"
         class="mb-4 text-xl font-semibold underline"
       >
-        Order Details
+        {{ t("messages.shop.orderDetails") }}
       </h2>
 
       <div
@@ -172,7 +179,9 @@ function printReceipt() {
       >
         <!-- Column 1: Shipping -->
         <div class="">
-          <h3 class="mb-2 font-medium">Delivery Address</h3>
+          <h3 class="mb-2 font-medium">
+            {{ t("messages.general.shippingAddress") }}
+          </h3>
           <address class="not-italic">
             <div>{{ order?.shippingAddress?.fullName }}</div>
             <div>{{ order?.shippingAddress?.streetLine1 }}</div>
@@ -185,33 +194,40 @@ function printReceipt() {
 
         <!-- Column 2: Payment & Shipping method -->
         <div class="">
-          <h3 class="mb-2 font-medium">Payment & Shipping</h3>
-          <p>Payment method: {{ order?.payments?.[0]?.method }}</p>
+          <h3 class="mb-2 font-medium">
+            {{ t("messages.general.shippingDetails") }}
+          </h3>
           <p>
-            Shipping method:
+            {{ t("messages.general.paymentMethod") }}:
+            {{ order?.payments?.[0]?.method }}
+          </p>
+          <p>
+            {{ t("messages.general.shippingSelect") }}:
             {{ order?.shippingLines?.[0]?.shippingMethod?.name }}
           </p>
         </div>
 
         <!-- Column 3: Totals -->
-        <div class="">
-          <h3 class="mb-2 font-medium">Totals</h3>
+        <div>
+          <h3 class="mb-2 font-medium">{{ t("messages.general.amount") }}</h3>
           <dl class="space-y-1">
             <div class="flex justify-between">
-              <dt>Subtotal</dt>
-              <dd>{{ order?.subTotal }}</dd>
+              <dt>{{ t("messages.shop.subtotal") }}</dt>
+              <dd>{{ formatPrice(order?.subTotal) }}</dd>
             </div>
             <div class="flex justify-between">
-              <dt>Shipping</dt>
-              <dd>{{ order?.shippingWithTax }}</dd>
+              <dt>{{ t("messages.general.shipping") }}</dt>
+              <dd>{{ formatPrice(order?.shippingWithTax) }}</dd>
             </div>
             <div class="flex justify-between">
-              <dt>VAT</dt>
-              <dd>{{ order?.taxSummary?.[0]?.taxTotal }}</dd>
+              <dt>{{ t("messages.general.tax") }}</dt>
+              <dd>{{ formatPrice(order?.taxSummary?.[0]?.taxTotal) }}</dd>
             </div>
             <div class="flex justify-between font-bold">
-              <dt>Total</dt>
-              <dd>{{ order?.totalWithTax }}</dd>
+              <dt>{{ t("messages.shop.total") }}</dt>
+              <dd>
+                {{ formatPrice(order?.totalWithTax) }}
+              </dd>
             </div>
           </dl>
         </div>
@@ -221,19 +237,16 @@ function printReceipt() {
     <!-- 4. Gratuity -->
     <section class="no-print mb-14 text-sm">
       <p>
-        Thank you for your order! Please check your email for further
-        information and don’t forget to check your spam folder. If the email you
-        provided is incorrect or you do not receive a confirmation within 5–10
-        minutes, please contact our support team and quote your order code.
-        Standard delivery takes around 3–5 business days. We truly appreciate
-        your trust in us and look forward to serving you again.
+        {{ t("messages.shop.orderThanks") }}
       </p>
     </section>
 
     <!-- 4. Actions -->
     <section aria-labelledby="actions-heading" class="no-print mb-14">
       <h2 id="actions-heading" class="sr-only">Actions</h2>
-      <UButton variant="soft" @click="printReceipt">Print receipt</UButton>
+      <UButton variant="soft" @click="printReceipt">{{
+        t("messages.general.printReceipt")
+      }}</UButton>
     </section>
   </main>
 </template>

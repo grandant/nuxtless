@@ -5,6 +5,7 @@ definePageMeta({
 
 const route = useRoute();
 const token = route.query.token as string;
+const { t } = useI18n();
 const localePath = useLocalePath();
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const loading = ref(true);
@@ -33,14 +34,21 @@ onMounted(() => {
       class="mb-8 flex flex-col items-center"
       aria-labelledby="reset-password-heading"
     >
-      <LogoElement :width="46" aria-hidden="true" focusable="false" />
+      <LogoElement
+        logo-light="/logo-full.svg"
+        logo-dark="/logo-full.svg"
+        :width="100"
+        aria-hidden="true"
+        focusable="false"
+        class="mb-4"
+      />
       <h1 id="reset-password-heading" class="text-2xl font-bold">
-        Reset Your Password
+        {{ t("messages.account.updatePassword") }}
       </h1>
       <p>
-        Remember your password?
+        {{ t("messages.account.rememberPassword") }}
         <ULink :to="localePath('/account/login')" class="underline">
-          Login here.
+          {{ t("messages.account.backToLogin") }}
         </ULink>
       </p>
     </header>

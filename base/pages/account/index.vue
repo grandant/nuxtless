@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ActiveCustomerDetail } from "~~/types/customer";
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 const { customer } = storeToRefs(useCustomerStore());
 const { fetchCustomer } = useCustomerStore();
@@ -36,10 +37,7 @@ onMounted(() => {
   <BaseLoader v-if="loading && !isAuthenticated" width="sm:w-xs md:w-sm" />
   <main v-else class="container">
     <header class="my-14">
-      <h1 class="text-2xl font-semibold">My Account</h1>
-      <ULink :to="localePath('/account')" class="mt-2">
-        {{ activeCustomer?.emailAddress }}
-      </ULink>
+      <AccountHeader :active-customer="activeCustomer" />
     </header>
 
     <section aria-labelledby="profile-info" class="mb-14 flex flex-col gap-4">
@@ -55,11 +53,14 @@ onMounted(() => {
       </div>
       <dl>
         <dt class="sr-only">Phone</dt>
-        <dd>Phone: {{ activeCustomer?.phoneNumber || "No phone provided" }}</dd>
+        <dd v-if="activeCustomer.phoneNumber">
+          {{ t("messages.account.myPhone") }}:
+          {{ activeCustomer?.phoneNumber }}
+        </dd>
         <dt class="sr-only">Address</dt>
-        <dd>
-          Address:
-          <address v-if="activeCustomer?.addresses?.[0]">
+        <dd class="flex gap-2">
+          {{ t("messages.account.myAddress") }}:
+          <address v-if="activeCustomer?.addresses?.[0]" class="wrap-anywhere">
             {{ activeCustomer.addresses[0].streetLine1 }},
             {{ activeCustomer.addresses[0].city }},
             {{ activeCustomer.addresses[0].country?.name }}
@@ -71,7 +72,9 @@ onMounted(() => {
 
     <section aria-labelledby="account-actions" class="mb-14">
       <h2 id="account-actions" class="sr-only">Account Actions</h2>
-      <UButton :to="localePath('/account/orders')">My Orders</UButton>
+      <UButton :to="localePath('/account/orders')" class="px-7">
+        {{ t("messages.account.orders") }}
+      </UButton>
     </section>
   </main>
 </template>

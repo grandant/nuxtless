@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { ResetPasswordForm } from "~~/base/validators/resetPasswordForm";
+
 import type { FormSubmitEvent } from "@nuxt/ui";
 
 const route = useRoute();
 const router = useRouter();
 const token = route.query.token as string;
+const { t } = useI18n();
 
 const { resetPassword } = useCustomerStore();
 const toast = useToast();
 
-const state = reactive({
+const state = shallowReactive({
   password: "",
   confirmPassword: "",
 });
@@ -17,8 +19,8 @@ const state = reactive({
 async function onSubmit(event: FormSubmitEvent<ResetPasswordForm>) {
   if (!token) {
     toast.add({
-      title: "Invalid Link",
-      description: "Invalid or expired link. Please request a new one.",
+      title: t("messages.error.resetFail"),
+      description: t("messages.error.invalidPasswordResetLink"),
       color: "error",
     });
     return;
@@ -28,8 +30,8 @@ async function onSubmit(event: FormSubmitEvent<ResetPasswordForm>) {
 
   if (result && "id" in result) {
     toast.add({
-      title: "Success",
-      description: "Your password has been reset.",
+      title: t("messages.acocunt.resetSuccess"),
+      description: t("messages.account.resetMessage"),
       color: "success",
     });
     router.push("/account/login");
@@ -41,8 +43,8 @@ async function onSubmit(event: FormSubmitEvent<ResetPasswordForm>) {
     });
   } else {
     toast.add({
-      title: "Error",
-      description: "Something went wrong.",
+      title: t("messages.error.general"),
+      description: t("messages.error.generalMessage"),
       color: "error",
     });
   }
@@ -56,26 +58,34 @@ async function onSubmit(event: FormSubmitEvent<ResetPasswordForm>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField label="Password" name="password" size="xl">
+    <UFormField
+      :label="t('messages.account.newPassword')"
+      name="password"
+      size="xl"
+    >
       <UInput
         v-model="state.password"
         type="password"
-        placeholder="Enter your password"
+        :placeholder="t('messages.account.enterPassword')"
         class="w-full"
       />
     </UFormField>
 
-    <UFormField label="Confirm Password" name="confirmPassword" size="xl">
+    <UFormField
+      :label="t('messages.account.confirmNewPassword')"
+      name="confirmPassword"
+      size="xl"
+    >
       <UInput
         v-model="state.confirmPassword"
         type="password"
-        placeholder="Enter your password"
+        :placeholder="t('messages.account.enterPassword')"
         class="w-full"
       />
     </UFormField>
 
     <UButton size="xl" loading-auto class="w-full justify-center" type="submit">
-      Reset Password
+      {{ t("messages.account.resetPassword") }}
     </UButton>
   </UForm>
 </template>

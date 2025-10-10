@@ -1,26 +1,28 @@
 <script setup lang="ts">
 import type { ShopFeature } from "~~/types/general";
 
+const { t } = useI18n();
+
 const features: ShopFeature[] = [
   {
     icon: "i-lucide:truck",
-    title: "Free Shipping",
-    description: "Enjoy free delivery on all orders over €50.",
+    title: t("messages.general.shopFeatures.shipping"),
+    description: t("messages.general.shopFeatures.shippingText"),
   },
   {
     icon: "i-lucide:rotate-ccw",
-    title: "30-Day Returns",
-    description: "Not satisfied? Return your order within 30 days.",
+    title: t("messages.general.shopFeatures.returns"),
+    description: t("messages.general.shopFeatures.returnsText"),
   },
   {
     icon: "i-lucide:shield-check",
-    title: "Secure Checkout",
-    description: "Powered by Stripe for encrypted, safe payments.",
+    title: t("messages.general.shopFeatures.checkout"),
+    description: t("messages.general.shopFeatures.checkoutText"),
   },
   {
     icon: "i-lucide:headphones",
-    title: "Always Here",
-    description: "24/7 online support for all your questions.",
+    title: t("messages.general.shopFeatures.support"),
+    description: t("messages.general.shopFeatures.supportText"),
   },
 ];
 </script>
@@ -38,7 +40,7 @@ const features: ShopFeature[] = [
             :aria-label="feature.title"
           />
           <div class="space-y-1">
-            <h3 class="text-lg font-bold">{{ feature.title }}</h3>
+            <h3 class="text-lg font-bold capitalize">{{ feature.title }}</h3>
             <p class="text-sm">{{ feature.description }}</p>
           </div>
         </div>

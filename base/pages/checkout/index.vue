@@ -3,6 +3,8 @@ import type { ActiveOrderDetail } from "~~/types/order";
 import type { CheckoutState } from "~~/types/general";
 
 const router = useRouter();
+const { t } = useI18n();
+const localePath = useLocalePath();
 const toast = useToast();
 const orderStore = useOrderStore();
 const { order } = storeToRefs(orderStore);
@@ -71,7 +73,7 @@ async function onSubmit() {
 
     orderStore.error = null;
     const orderCode = activeOrder.value?.code;
-    await router.push(`/checkout/confirmation/${orderCode}`);
+    await router.push(localePath(`/checkout/confirmation/${orderCode}`));
     order.value = null;
 
     toast.add({
@@ -104,8 +106,11 @@ onMounted(() => {
       </section>
 
       <section aria-labelledby="home-products-heading">
-        <h2 id="home-products-heading" class="mb-4 text-2xl font-semibold">
-          Featured Products
+        <h2
+          id="home-products-heading"
+          class="mt-14 mb-4 text-2xl font-semibold"
+        >
+          {{ t("messages.shop.popularProducts") }}
         </h2>
         <HomeFeaturedProducts />
       </section>
@@ -115,7 +120,7 @@ onMounted(() => {
       <div class="w-full md:w-1/2 lg:w-2/3">
         <section id="address" aria-labelledby="address-heading">
           <h2 id="address-heading" class="mb-4 text-2xl font-semibold">
-            Delivery Information
+            {{ t("messages.general.shippingDetails") }}
           </h2>
 
           <div id="address-errors" role="status" aria-live="polite" />
@@ -166,7 +171,7 @@ onMounted(() => {
         class="sticky top-30 h-fit w-full md:w-2/3 lg:w-1/3"
       >
         <h2 id="order-summary-heading" class="mb-4 text-2xl font-semibold">
-          Order summary
+          {{ t("messages.shop.orderSummary") }}
         </h2>
         <CheckoutOrderSummary :on-submit="onSubmit" />
       </aside>

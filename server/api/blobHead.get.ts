@@ -1,6 +1,6 @@
 export default eventHandler(async (event) => {
-  const { pathname } = await getQuery(event);
+  const { pathname } = getQuery(event);
+  const blob = await hubBlob().head(pathname as string);
 
-  const blob = await hubBlob().head(pathname);
   return blob;
 });

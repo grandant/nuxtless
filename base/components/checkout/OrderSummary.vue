@@ -3,6 +3,7 @@ import type { ActiveOrderDetail } from "~~/types/order";
 
 const { onSubmit } = defineProps<{ onSubmit: () => Promise<void> | void }>();
 
+const { t } = useI18n();
 const orderStore = useOrderStore();
 const { order, loading } = storeToRefs(orderStore);
 const activeOrder = order as Ref<ActiveOrderDetail>;
@@ -30,28 +31,28 @@ const shippingWithTax = computed(() =>
     <div class="mt-6 flex gap-4">
       <UInput
         icon="i-lucide-ticket-percent"
-        placeholder="Apply coupon"
+        :placeholder="t('messages.shop.couponCode')"
         class="w-full"
       />
-      <UButton class="px-7">Apply</UButton>
+      <UButton class="px-7">{{ t("messages.general.apply") }}</UButton>
     </div>
 
     <template #footer>
       <div class="mb-2 flex flex-col font-medium">
         <div class="flex justify-between">
-          <span>Subtotal</span>
+          <span>{{ t("messages.shop.subtotal") }}</span>
           <span>
             {{ subTotal }}
           </span>
         </div>
         <div class="flex justify-between">
-          <span>VAT</span>
+          <span>{{ t("messages.general.tax") }}</span>
           <span>
             {{ orderTaxTotal }}
           </span>
         </div>
         <div class="flex justify-between">
-          <span>Shipping</span>
+          <span>{{ t("messages.general.shipping") }}</span>
           <span>
             {{ shippingWithTax }}
           </span>
@@ -60,7 +61,7 @@ const shippingWithTax = computed(() =>
         <USeparator class="my-1" />
 
         <div class="flex justify-between font-bold">
-          <span>Total </span>
+          <span>{{ t("messages.shop.total") }}</span>
           <span>
             {{ orderTotal }}
           </span>
@@ -74,7 +75,7 @@ const shippingWithTax = computed(() =>
         class="w-full justify-center"
         @click="onSubmit"
       >
-        <span>Checkout</span>
+        <span>{{ t("messages.shop.checkout") }}</span>
         <span v-if="(activeOrder?.lines.length ?? 0) > 0">
           {{ orderTotal }} {{ activeOrder?.currencyCode }}
         </span>

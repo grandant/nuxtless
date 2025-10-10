@@ -92,7 +92,8 @@ if (currentCollection) {
       aria-labelledby="child-collections-heading"
     >
       <h2 id="child-collections-heading" class="mb-4 text-xl font-semibold">
-        Collections
+        <!-- Second argument is '2' because we always need plural here -->
+        {{ t("messages.shop.category", 2) }}
       </h2>
       <div
         class="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-6"

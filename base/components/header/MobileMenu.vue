@@ -6,6 +6,7 @@ defineProps<{
 }>();
 
 const router = useRouter();
+const { t } = useI18n();
 const open = ref(false);
 
 router.afterEach(() => {
@@ -16,8 +17,8 @@ router.afterEach(() => {
 <template>
   <USlideover
     v-model:open="open"
-    title="Menu"
-    description="Mobile Menu"
+    :title="t('messages.general.menu')"
+    :description="t('messages.general.mobileMenu')"
     side="left"
   >
     <UButton

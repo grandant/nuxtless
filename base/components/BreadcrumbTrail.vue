@@ -7,6 +7,7 @@ const { product = undefined, trail } = defineProps<{
   trail: "category" | "product";
 }>();
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 
 const collections =
@@ -14,7 +15,7 @@ const collections =
 
 const breadcrumbItems = computed<BreadcrumbItem[]>(() => [
   {
-    label: "Home",
+    label: t("messages.general.home"),
     icon: "i-lucide-home",
     to: localePath("/"),
   },

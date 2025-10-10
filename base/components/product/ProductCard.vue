@@ -10,6 +10,7 @@ if (!product) {
   throw new Error("ProductCard: 'product' prop is required");
 }
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 
 const productStartPrice = computed(() => {
@@ -21,7 +22,9 @@ const productStartPrice = computed(() => {
   if ("min" in price && "max" in price) {
     const min = (price.min / 100).toFixed(2);
     const max = (price.max / 100).toFixed(2);
-    return min === max ? `${min} ${currency}` : `From ${min} ${currency}`;
+    return min === max
+      ? `${min} ${currency}`
+      : `${t("messages.shop.priceFrom")} ${min} ${currency}`;
   }
 
   const value = (price.value / 100).toFixed(2);
