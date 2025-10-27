@@ -6,7 +6,10 @@ import type {
 } from "@stripe/stripe-js";
 
 export function useStripe() {
-  const { order } = storeToRefs(useOrderStore());
+  const colorMode = useColorMode();
+  const localePath = useLocalePath();
+  const orderStore = useOrderStore();
+  const { order } = storeToRefs(orderStore);
   const stripe = ref<Stripe | null>(null);
   const elements = ref<StripeElements | null>(null);
   const paymentEl = shallowRef<StripePaymentElement | null>(null);
@@ -16,7 +19,7 @@ export function useStripe() {
     if (!stripe.value || !paymentElRef.value) return;
 
     const appearance: Appearance = {
-      theme: "stripe",
+      theme: colorMode.value === "dark" ? "night" : "stripe",
       labels: "floating",
     };
 
@@ -32,11 +35,14 @@ export function useStripe() {
     const { error } = await stripe.value.confirmPayment({
       elements: elements.value,
       confirmParams: {
-        return_url: `${location.origin}/checkout/confirmation/${order.value?.code}`,
+        return_url: `${location.origin}${localePath(`/checkout/confirmation/${order.value?.code}`)}`,
       },
     });
 
-    if (error) throw new Error(error.message);
+    if (error) {
+      orderStore.loading = false;
+      throw new Error(error.message);
+    }
   }
 
   return { stripe, elements, paymentElRef, initStripe, submitStripePayment };

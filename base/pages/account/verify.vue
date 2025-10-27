@@ -34,8 +34,8 @@ onMounted(async () => {
   if (result && "identifier" in result) {
     await navigateTo(localePath("/account/login"), { replace: true });
     toast.add({
-      title: "Account Verified",
-      description: "You can now login with your email and password.",
+      title: t("messages.account.verifySuccess"),
+      description: t("messages.account.verifySuccessMessage"),
       color: "success",
     });
   } else {

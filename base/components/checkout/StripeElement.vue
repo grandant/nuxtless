@@ -2,8 +2,11 @@
 import type { CheckoutState } from "~~/types/general";
 
 const { stripePublicKey } = useRuntimeConfig().public;
+const colorMode = useColorMode();
+const { locale } = useI18n();
 const { onLoaded } = useScriptStripe();
-const { stripe, paymentElRef, initStripe, submitStripePayment } = useStripe();
+const { stripe, elements, paymentElRef, initStripe, submitStripePayment } =
+  useStripe();
 
 defineExpose({ submitStripePayment });
 
@@ -23,9 +26,18 @@ watch(
   },
 );
 
+watch(colorMode, () => {
+  elements.value?.update({
+    appearance: {
+      theme: colorMode.value === "dark" ? "night" : "stripe",
+      labels: "floating",
+    },
+  });
+});
+
 onMounted(() => {
   onLoaded(async ({ Stripe }) => {
-    stripe.value = Stripe(stripePublicKey);
+    stripe.value = Stripe(stripePublicKey, { locale: locale.value });
 
     if (state.code === "stripe-payment") {
       const { createStripePaymentIntent } =

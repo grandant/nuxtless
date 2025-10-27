@@ -141,6 +141,8 @@
       "registerSuccess": "Успешна регистрация",
       "registerSuccessMessage": "Моля, проверете имейла си, за да потвърдите акаунта.",
       "registerFail": "Неуспешна регистрация",
+      "verifySuccess": "Акаунтът е потвърден",
+      "verifySuccessMessage": "Вече можете да влезете с вашия имейл и парола.",
       "personalInfo": "Лична информация",
       "updating": "Актуализиране",
       "updateDetails": "Актуализиране на детайли",

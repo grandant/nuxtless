@@ -7,6 +7,7 @@ const route = useRoute();
 const router = useRouter();
 const token = route.query.token as string;
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 const { resetPassword } = useCustomerStore();
 const toast = useToast();
@@ -30,11 +31,11 @@ async function onSubmit(event: FormSubmitEvent<ResetPasswordForm>) {
 
   if (result && "id" in result) {
     toast.add({
-      title: t("messages.acocunt.resetSuccess"),
+      title: t("messages.account.resetSuccess"),
       description: t("messages.account.resetMessage"),
       color: "success",
     });
-    router.push("/account/login");
+    router.push(localePath("/account/login"));
   } else if (result && "errorCode" in result) {
     toast.add({
       title: "Error",

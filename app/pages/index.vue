@@ -10,7 +10,7 @@ const { data: imgUrl } = await useFetch<{ urls: { raw: string } }>(
       Authorization: `Client-ID ${unsplashApiKey}`,
     },
     query: {
-      query: "cycling",
+      query: "electronics",
       orientation: "landscape",
     },
     getCachedData(key) {

@@ -3,6 +3,11 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
+## [0.9.0] - 2025-10-10
+### Localization & UI
+- Added localized strings across components and pages
+- Applied minor UI polish and consistency tweaks
+
 ## [0.8.0] - 2025-09-30
 ### Framework & UI
 - Migrated to Nuxt 4

@@ -132,6 +132,8 @@
       "registerSuccess": "Registro bem-sucedido",
       "registerSuccessMessage": "Verifique seu e-mail para confirmar sua conta.",
       "registerFail": "Falha no registro",
+      "verifySuccess": "Conta Verificada",
+      "verifySuccessMessage": "Agora você pode fazer login com seu e-mail e senha.",
       "personalInfo": "Informações Pessoais",
       "updating": "Atualizando",
       "updateDetails": "Atualizar Detalhes",

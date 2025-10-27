@@ -142,6 +142,8 @@
       "registerSuccess": "Registration successful",
       "registerSuccessMessage": "Please check your email to verify your account.",
       "registerFail": "Registration failed",
+      "verifySuccess": "Account verified",
+      "verifySuccessMessage": "You can now login with your email and password.",
       "personalInfo": "Personal information",
       "updating": "Updating",
       "updateDetails": "Update details",

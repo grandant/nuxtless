@@ -133,6 +133,8 @@
       "registerSuccessMessage": "Veuillez vérifier vos e-mails pour confirmer votre compte.",
       "registerFail": "Échec de l'inscription",
       "personalInfo": "Informations personnelles",
+      "verifySuccess": "Compte Vérifié",
+      "verifySuccessMessage": "Vous pouvez maintenant vous connecter avec votre e-mail et votre mot de passe.",
       "updating": "Mise à jour",
       "updateDetails": "Mettre à jour les détails",
       "updateSuccess": "Mise à jour réussie",
