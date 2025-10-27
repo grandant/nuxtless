@@ -86,7 +86,4 @@ fragment OrderDetail on Order {
     description
     taxTotal
   }
-  customFields {
-    paymentProvider
-  }
 }
