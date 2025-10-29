@@ -1,30 +1,40 @@
 # Nuxtless
 
-**Nuxtless** is a clean, developer-friendly starter for building headless ecommerce frontends using [Nuxt 3](https://nuxt.com) and [Vendure](https://www.vendure.io) out of the box — but easily swappable.
+**Nuxtless** is a clean, developer-friendly starter for building headless ecommerce frontends using [Nuxt 4](https://nuxt.com) and [Vendure](https://www.vendure.io) out of the box.
 
-Built with a focus on SEO, security, and type safety.
+Built with a focus on SEO, security, and type safety in mind.
 
 ---
 
-## Goals and Features
+## Goals
 
-- **SEO-first architecture** – optimized routes, head tags, i18n
-- **Token-based session handling** – secure by default
-- **Composable & modular** – customize what you need, swap the rest
-- **Vendure-ready** – built for Vendure, but not tied to it
-- **Developer-first DX** – no clutter, readable code, typed GraphQL
+* Deliver a solid foundation for projects built on [Vendure](https://www.vendure.io).
+* Keep SEO capabilities current and expand with new Nuxt SEO modules.
+* Improve design foundations using Nuxt UI v4 components and modern Tailwind features.
+* Introduce automated testing for key flows and components.
+* Strengthen security practices and validation across all layers.
+
+---
+
+## Features
+
+* **SEO-first architecture** – optimized routes, head tags, i18n
+* **Token-based session handling** – secure by default
+* **Composable & modular** – customize what you need, extend the rest
+* **Vendure integration** – built for Vendure and optimized for its Shop API
+* **Developer-first DX** – no clutter, readable code, typed GraphQL
 
 ---
 
 ## Core Dependencies
 
-- **Nuxt 3** with **Nuxt UI v3**
-- **Tailwind CSS v4**
-- **Pinia** with persisted state
-- **Valibot** for validation
-- **nuxt-graphql-client** for typed GraphQL
-- **@nuxtjs/i18n** for localization/localized SEO
-- **VueUse** for utility composables
+* **Nuxt 4** with **Nuxt UI v4**
+* **Tailwind CSS v4**
+* **Pinia** with persisted state
+* **Valibot** for validation
+* **nuxt-graphql-client** for typed GraphQL
+* **@nuxtjs/i18n** for localization/localized SEO
+* **VueUse** for utility composables
 
 > For a full list, see [`package.json`](./package.json)
 
@@ -43,12 +53,11 @@ pnpm run dev
 
 ## Status
 
-Vendure currently offers official starters for React and Angular, but not for Nuxt. **Nuxtless aims to fill that gap** — providing a clean, minimal, and SEO-friendly Nuxt 3 starter tailored for headless commerce.
+Vendure currently offers official starters for React and Angular, but not for Nuxt. **Nuxtless aims to fill that gap** — providing a clean, minimal, and SEO-friendly Nuxt 4 starter tailored for Vendure.
 
-The current UI displays test data from Vendure in simple layouts.
-Focus is on building clean architecture and frontend logic.
+Since **v0.5.0**, Nuxtless has reached its MVP stage and continues to evolve through gradual improvements. Most strings are now localized, and all key features—accounts, checkout, and product listings—are functional.
 
-Expect rapid iteration and improvements.
+Additional niceties include a loading widget, disabled checkout buttons during processing, pagination, and an image gallery powered by PhotoSwipe. The order confirmation page is fully implemented with printable receipts, marking an important milestone for the project's core user flow.
 
 ---
 
@@ -87,12 +96,18 @@ nuxtless/
 ## Environment Example
 
 ```env
-GQL_HOST="https://your-vendure-backend.com/shop-api"
+GQL_HOST="http://localhost:3001/shop-api"
 NUXT_PUBLIC_I18N_BASE_URL="nuxtless.unstack.dev"
+NUXT_PUBLIC_IMAGE_PROVIDER="ipx"
+NUXT_PUBLIC_CHANNEL_TOKEN="your-channel-token"
+NUXT_PUBLIC_SITE_NAME="Nuxtless"
+NUXT_PUBLIC_STRIPE_PUBLIC_KEY="pk_prod_super-long-key"
+NUXT_PUBLIC_UNSPLASH_API_KEY="your-unsplash-api-key"
 ```
 
-> `GQL_HOST` is the main GraphQL endpoint (typically Vendure's `/shop-api`).
-> `NUXT_PUBLIC_I18N_BASE_URL` is the base domain used for localized routing and SEO. Both are **required** for the app to function correctly.
+> `GQL_HOST` is the main GraphQL endpoint (typically Vendure's `/shop-api`). `NUXT_PUBLIC_I18N_BASE_URL` is the base domain used for localized routing and SEO. Both are **required** for the app to function correctly.
+>
+> NUXT_PUBLIC_UNSPLASH_API_KEY is only needed if not using own images for the hero banned on the index page.
 
 ---
 
