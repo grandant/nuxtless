@@ -48,7 +48,7 @@ export default defineNuxtConfig({
   // Global NuxtImage  Configuration
   image: {
     domains: ["localhost", "cdn.unstack.dev"],
-    provider: process.env.NUXT_IMAGE_PROVIDER,
+    provider: process.env.NUXT_PUBLIC_IMAGE_PROVIDER,
     cloudflare: {
       baseURL: "https://cdn.unstack.dev",
     },
@@ -90,7 +90,7 @@ export default defineNuxtConfig({
 
   // Global i18n Configuration
   i18n: {
-    baseUrl: process.env.I18_BASE_URL,
+    baseUrl: process.env.NUXT_PUBLIC_I18_BASE_URL,
     locales: [
       {
         code: "bg",

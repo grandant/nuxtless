@@ -39,12 +39,12 @@ export default defineNuxtConfig({
 
   sitemap: {
     sources: [
-      [
-        `${process.env.NUXT_PUBLIC_API_BASE}/vendure/sitemap?base_url=${process.env.NUXT_PUBLIC_I18N_BASE_URL}`,
-        {
-          headers: { "vendure-token": process.env.NUXT_PUBLIC_CHANNEL_TOKEN! },
-        },
-      ],
+      // [
+      //   `${process.env.NUXT_PUBLIC_API_BASE}/vendure/sitemap?base_url=${process.env.NUXT_PUBLIC_I18N_BASE_URL}`,
+      //   {
+      //     headers: { "vendure-token": process.env.NUXT_PUBLIC_CHANNEL_TOKEN! },
+      //   },
+      // ],
     ],
   },
 });
