@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { h } from "vue";
-import type { TableColumn, TableRow } from "@nuxt/ui";
+import type { TableColumn } from "@nuxt/ui";
 
 const { locale, t } = useI18n();
 const route = useRoute();
@@ -10,8 +10,9 @@ const isStripe = computed(() => !!route.query.payment_intent);
 type OrderLine = {
   name: string;
   qty: number;
-  price: number;
-  total: number;
+  unitPrice: number;
+  lineTotal: number;
+  orderTotal: number;
   currency: string;
 };
 
@@ -54,8 +55,8 @@ const tableData = computed(() =>
   (order.value?.lines ?? []).map((line) => ({
     name: line.productVariant?.name ?? "",
     qty: line.quantity,
-    price: formatPrice(line.unitPriceWithTax),
-    total: formatPrice(line.linePriceWithTax),
+    unitPrice: formatPrice(line.unitPriceWithTax),
+    lineTotal: formatPrice(line.linePriceWithTax),
   })),
 );
 
@@ -69,36 +70,24 @@ const columns: TableColumn<OrderLine>[] = [
     header: t("messages.shop.quantity"),
   },
   {
-    accessorKey: "price",
+    accessorKey: "unitPrice",
     header: t("messages.shop.price"),
   },
   {
-    accessorKey: "total",
+    accessorKey: "lineTotal",
     header: () => h("div", { class: "text-right" }, t("messages.shop.total")),
-    footer: ({ column }) => {
-      const total = column
-        .getFacetedRowModel()
-        .rows.reduce(
-          (acc: number, row: TableRow<OrderLine>) =>
-            acc + Number.parseFloat(row.getValue("total")) * 100,
-          0,
-        );
-
-      const formatted = formatPrice(total);
+    footer: () => {
+      const taxTotal = order.value.taxSummary?.[0]?.taxTotal ?? 0;
+      const orderTotal = formatPrice(order.value.subTotal + taxTotal);
 
       return h(
         "div",
         { class: "text-right font-medium" },
-        `${t("messages.shop.total")}: ${formatted}`,
+        `${t("messages.shop.total")}: ${orderTotal}`,
       );
     },
-    cell: ({ row }) => {
-      const total = Number.parseFloat(row.getValue("total"));
-
-      const formatted = formatPrice(total * 100);
-
-      return h("div", { class: "text-right font-medium" }, formatted);
-    },
+    cell: ({ row }) =>
+      h("div", { class: "text-right font-medium" }, row.getValue("lineTotal")),
   },
 ];
 
@@ -216,12 +205,12 @@ onMounted(() => {
               <dd>{{ formatPrice(order?.subTotal) }}</dd>
             </div>
             <div class="flex justify-between">
-              <dt>{{ t("messages.general.shipping") }}</dt>
-              <dd>{{ formatPrice(order?.shippingWithTax) }}</dd>
+              <dt>{{ t("messages.general.tax") }}</dt>
+              <dd>{{ formatPrice(order?.taxSummary?.[0]?.taxTotal ?? 0) }}</dd>
             </div>
             <div class="flex justify-between">
-              <dt>{{ t("messages.general.tax") }}</dt>
-              <dd>{{ formatPrice(order?.taxSummary?.[0]?.taxTotal) }}</dd>
+              <dt>{{ t("messages.general.shipping") }}</dt>
+              <dd>{{ formatPrice(order?.shippingWithTax) }}</dd>
             </div>
             <div class="flex justify-between font-bold">
               <dt>{{ t("messages.shop.total") }}</dt>

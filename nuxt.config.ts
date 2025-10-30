@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   devtools: { enabled: import.meta.env.DEV },
 
   extends: ["./base"],
+
   css: ["~/assets/css/main.css"],
 
   vite: {
