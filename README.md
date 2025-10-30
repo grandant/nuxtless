@@ -61,7 +61,7 @@ Additional niceties include a loading widget, disabled checkout buttons during p
 
 ---
 
-## Project Structure (Nuxt 4 compat mode)
+## Project Structure
 
 ```
 nuxtless/
