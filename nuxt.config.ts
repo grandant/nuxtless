@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-09-30",
   devtools: { enabled: import.meta.env.DEV },
 
+  experimental: {
+    typescriptPlugin: true,
+  },
+
   extends: ["./base"],
 
   css: ["~/assets/css/main.css"],
@@ -16,6 +20,17 @@ export default defineNuxtConfig({
 
   pinia: {
     storesDirs: ["./base/stores/**"],
+  },
+
+  // Note: runtimeConfig is overridden. Better to keep it central.
+  runtimeConfig: {
+    public: {
+      GQL_HOST: process.env.GQL_HOST,
+      channelToken: process.env.CHANNEL_TOKEN,
+      payloadBase: process.env.PAYLOAD_BASE,
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
+      unsplashApiKey: process.env.UNSPLASH_API_KEY,
+    },
   },
 
   // NuxtSEO Modules Config

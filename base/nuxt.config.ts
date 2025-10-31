@@ -21,19 +21,6 @@ export default defineNuxtConfig({
     "pinia-plugin-persistedstate/nuxt",
   ],
 
-  // Shared Runtime Configurations
-  runtimeConfig: {
-    apiKey: "my-specific-api-key",
-    public: {
-      GQL_HOST: process.env.GQL_HOST,
-      apiBase: process.env.API_BASE,
-      channelToken: process.env.CHANNEL_TOKEN,
-      payloadBase: process.env.PAYLOAD_BASE,
-      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
-      unsplashApiKey: process.env.UNSPLASH_API_KEY,
-    },
-  },
-
   hub: {
     blob: true,
   },

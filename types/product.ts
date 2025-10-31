@@ -1,13 +1,20 @@
-export type ProductBase = Awaited<ReturnType<typeof GqlGetProduct>>["product"];
+// /types/product.ts
 
-export type ProductDetail = Awaited<
-  ReturnType<typeof GqlGetProductDetail>
->["product"];
+import type {
+  GetProductQuery,
+  GetProductDetailQuery,
+  GetProductVariantStockQuery,
+  SearchProductsQuery,
+} from "~~/.nuxt/gql/default";
 
-export type VariantStock = Awaited<
-  ReturnType<typeof GqlGetProductVariantStock>
->["product"];
+// ─────────────────────────────────────────────────────────────
+// Products
+// ─────────────────────────────────────────────────────────────
 
-export type SearchResult = Awaited<
-  ReturnType<typeof GqlSearchProducts>
->["search"]["items"];
+export type ProductBase = GetProductQuery["product"];
+
+export type ProductDetail = GetProductDetailQuery["product"];
+
+export type VariantStock = GetProductVariantStockQuery["product"];
+
+export type SearchResult = SearchProductsQuery["search"]["items"];

@@ -35,14 +35,12 @@ useState<CheckoutState>("checkoutState", () => ({
     streetLine1: "",
     streetLine2: "",
     city: "",
-    cityId: undefined,
     postalCode: "",
     countryCode: "BG",
     billingSameAsShipping: true,
   },
   shippingForm: {
     shippingMethodId: "",
-    courierOfficeId: undefined,
   },
   paymentForm: {
     code: "",

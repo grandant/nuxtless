@@ -1,3 +1,20 @@
 {
-  "extends": "../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["nuxt"],
+    // "composite": true,
+    // "skipLibCheck": true,
+    "paths": {
+      "~~/*": ["../*"],
+      "#imports": ["../.nuxt/imports.d.ts"]
+    }
+  },
+  "include": [
+    "**/*.vue",
+    "**/*.ts",
+    "../.nuxt/nuxt.d.ts",
+    "../.nuxt/imports.d.ts",
+    "../.nuxt/components.d.ts",
+    "../.nuxt/schema.d.ts"
+  ]
 }

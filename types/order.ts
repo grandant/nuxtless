@@ -1,66 +1,81 @@
-type ActiveOrderBase = Awaited<
-  ReturnType<typeof GqlGetActiveOrder>
->["activeOrder"];
+// /types/order.ts
 
-export type ActiveOrderDetail = Awaited<
-  ReturnType<typeof GqlGetActiveOrderDetail>
->["activeOrder"];
+import type {
+  GetActiveOrderQuery,
+  GetActiveOrderDetailQuery,
+  AddItemToOrderMutation,
+  RemoveItemFromOrderMutation,
+  AdjustOrderLineMutation,
+  ApplyCouponCodeMutation,
+  RemoveCouponCodeMutation,
+  SetCustomerForOrderMutation,
+  SetOrderShippingAddressMutation,
+  GetShippingMethodsQuery,
+  SetShippingMethodMutation,
+  GetPaymentMethodsQuery,
+  TransitionToStateMutation,
+  AddPaymentToOrderMutation,
+} from "~~/.nuxt/gql/default";
+
+// ─────────────────────────────────────────────────────────────
+// Core Order Types
+// ─────────────────────────────────────────────────────────────
+
+export type ActiveOrderBase = GetActiveOrderQuery["activeOrder"];
+
+export type ActiveOrderDetail = GetActiveOrderDetailQuery["activeOrder"];
 
 export type ActiveOrder = ActiveOrderBase | ActiveOrderDetail;
+
 export type OrderLine = NonNullable<ActiveOrder>["lines"][number];
+
+// ─────────────────────────────────────────────────────────────
+// Status
+// ─────────────────────────────────────────────────────────────
 
 export type OrderStatus =
   | { status: "success" }
   | { status: "partial"; quantityAvailable: number }
   | { status: "error"; message: string };
 
-export type AddItemResult = Awaited<
-  ReturnType<typeof GqlAddItemToOrder>
->["addItemToOrder"];
+// ─────────────────────────────────────────────────────────────
+// Mutations & Queries
+// ─────────────────────────────────────────────────────────────
 
-export type RemoveItemResult = Awaited<
-  ReturnType<typeof GqlRemoveItemFromOrder>
->["removeOrderLine"];
+export type AddItemResult = AddItemToOrderMutation["addItemToOrder"];
 
-export type AdjustItemResult = Awaited<
-  ReturnType<typeof GqlAdjustOrderLine>
->["adjustOrderLine"];
+export type RemoveItemResult = RemoveItemFromOrderMutation["removeOrderLine"];
 
-export type ApplyCouponResult = Awaited<
-  ReturnType<typeof GqlApplyCouponCode>
->["applyCouponCode"];
+export type AdjustItemResult = AdjustOrderLineMutation["adjustOrderLine"];
 
-export type RemoveCouponCodeResult = Awaited<
-  ReturnType<typeof GqlRemoveCouponCode>
->["removeCouponCode"];
+export type ApplyCouponResult = ApplyCouponCodeMutation["applyCouponCode"];
 
-export type SetCustomerForOrderResult = Awaited<
-  ReturnType<typeof GqlSetCustomerForOrder>
->["setCustomerForOrder"];
+export type RemoveCouponCodeResult =
+  RemoveCouponCodeMutation["removeCouponCode"];
 
-export type SetOrderShippingAddressResult = Awaited<
-  ReturnType<typeof GqlSetOrderShippingAddress>
->["setOrderShippingAddress"];
+export type SetCustomerForOrderResult =
+  SetCustomerForOrderMutation["setCustomerForOrder"];
 
-export type ShippingMethods = Awaited<
-  ReturnType<typeof GqlGetShippingMethods>
->["eligibleShippingMethods"];
+export type SetOrderShippingAddressResult =
+  SetOrderShippingAddressMutation["setOrderShippingAddress"];
 
-export type SetShippingMethodResult = Awaited<
-  ReturnType<typeof GqlSetShippingMethod>
->["setOrderShippingMethod"];
+export type ShippingMethods =
+  GetShippingMethodsQuery["eligibleShippingMethods"];
 
-export type PaymentMethods = Awaited<
-  ReturnType<typeof GqlGetPaymentMethods>
->["eligiblePaymentMethods"];
+export type SetShippingMethodResult =
+  SetShippingMethodMutation["setOrderShippingMethod"];
 
-export type TransitionToStateResult = Awaited<
-  ReturnType<typeof GqlTransitionToState>
->["transitionOrderToState"];
+export type PaymentMethods = GetPaymentMethodsQuery["eligiblePaymentMethods"];
 
-export type AddPaymentToOrderResult = Awaited<
-  ReturnType<typeof GqlAddPaymentToOrder>
->["addPaymentToOrder"];
+export type TransitionToStateResult =
+  TransitionToStateMutation["transitionOrderToState"];
+
+export type AddPaymentToOrderResult =
+  AddPaymentToOrderMutation["addPaymentToOrder"];
+
+// ─────────────────────────────────────────────────────────────
+// Aggregate
+// ─────────────────────────────────────────────────────────────
 
 export type OrderMutationResult =
   | AddItemResult

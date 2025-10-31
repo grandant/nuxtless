@@ -1,32 +1,46 @@
-type ActiveCustomerBase = Awaited<
-  ReturnType<typeof GqlGetActiveCustomer>
->["activeCustomer"];
+// /types/customer.ts
 
-export type ActiveCustomerDetail = Awaited<
-  ReturnType<typeof GqlGetActiveCustomerDetail>
->["activeCustomer"];
+import type {
+  GetActiveCustomerQuery,
+  GetActiveCustomerDetailQuery,
+  LogInUserMutation,
+  LogOutUserMutation,
+  RegisterCustomerAccountMutation,
+  VerifyCustomerAccountMutation,
+  RequestPasswordResetMutation,
+  ResetPasswordMutation,
+  GetCustomerAddressesQuery,
+} from "~~/.nuxt/gql/default";
+
+// ─────────────────────────────────────────────────────────────
+// Core Customer Types
+// ─────────────────────────────────────────────────────────────
+
+export type ActiveCustomerBase = GetActiveCustomerQuery["activeCustomer"];
+
+export type ActiveCustomerDetail =
+  GetActiveCustomerDetailQuery["activeCustomer"];
 
 export type ActiveCustomer = ActiveCustomerBase | ActiveCustomerDetail;
-export type LogInResult = Awaited<ReturnType<typeof GqlLogInUser>>["login"];
 
-export type LogOutResult = Awaited<ReturnType<typeof GqlLogOutUser>>["logout"];
+// ─────────────────────────────────────────────────────────────
+// Auth & Account Results
+// ─────────────────────────────────────────────────────────────
 
-export type RegisterResult = Awaited<
-  ReturnType<typeof GqlRegisterCustomerAccount>
->["registerCustomerAccount"];
+export type LogInResult = LogInUserMutation["login"];
 
-export type VerifyResult = Awaited<
-  ReturnType<typeof GqlVerifyCustomerAccount>
->["verifyCustomerAccount"];
+export type LogOutResult = LogOutUserMutation["logout"];
 
-export type RequestPasswordResetResult = Awaited<
-  ReturnType<typeof GqlRequestPasswordReset>
->["requestPasswordReset"];
+export type RegisterResult =
+  RegisterCustomerAccountMutation["registerCustomerAccount"];
 
-export type ResetPasswordResult = Awaited<
-  ReturnType<typeof GqlResetPassword>
->["resetPassword"];
+export type VerifyResult =
+  VerifyCustomerAccountMutation["verifyCustomerAccount"];
 
-export type GetCustomerAddressesResult = Awaited<
-  ReturnType<typeof GqlGetCustomerAddresses>
->["activeCustomer"];
+export type RequestPasswordResetResult =
+  RequestPasswordResetMutation["requestPasswordReset"];
+
+export type ResetPasswordResult = ResetPasswordMutation["resetPassword"];
+
+export type GetCustomerAddressesResult =
+  GetCustomerAddressesQuery["activeCustomer"];
