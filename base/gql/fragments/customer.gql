@@ -24,7 +24,6 @@ fragment CustomerDetail on Customer {
     id
     identifier
   }
-  customFields
 }
 
 fragment CurrentUser on CurrentUser {

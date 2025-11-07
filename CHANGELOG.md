@@ -3,6 +3,18 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
+## [0.10.0] - 2025-11-07
+### Core
+- Removed legacy GraphQL dependencies and switched to `@graphql-inspector/cli`
+- Updated Pinia dependencies
+- Moved `runtimeConfig` to root layer
+
+### Features
+- Added configurable language switcher
+
+### Cleanup
+- Removed lingering `customFields` from customer fragment (#7)
+
 ## [0.9.0] - 2025-10-10
 ### Localization & UI
 - Added localized strings across components and pages

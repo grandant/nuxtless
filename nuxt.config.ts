@@ -18,11 +18,7 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 
-  pinia: {
-    storesDirs: ["./base/stores/**"],
-  },
-
-  // Note: runtimeConfig is overridden. Better to keep it central.
+  // Note: runtimeConfig is overridden. Better keep it central.
   runtimeConfig: {
     public: {
       GQL_HOST: process.env.GQL_HOST,
@@ -55,12 +51,10 @@ export default defineNuxtConfig({
 
   sitemap: {
     sources: [
-      // [
-      //   `${process.env.NUXT_PUBLIC_API_BASE}/vendure/sitemap?base_url=${process.env.NUXT_PUBLIC_I18N_BASE_URL}`,
-      //   {
-      //     headers: { "vendure-token": process.env.NUXT_PUBLIC_CHANNEL_TOKEN! },
-      //   },
-      // ],
+      // Optional sitemap integration.
+      // Requires custom logic to fetch Vendure products and collections.
+      // This can be handled via a third-party backend service.
+      // A recipe or mapping example can be provided on request.
     ],
   },
 });

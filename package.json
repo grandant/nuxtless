@@ -1,6 +1,6 @@
 {
   "name": "nuxtless",
-  "version": "0.9.3",
+  "version": "0.10.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,6 +11,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@graphql-inspector/cli": "5.0.8",
     "@nuxt/fonts": "0.11.4",
     "@nuxt/icon": "2.1.0",
     "@nuxt/image": "1.11.0",
@@ -20,7 +21,7 @@
     "@nuxtjs/i18n": "10.1.0",
     "@nuxtjs/robots": "5.5.5",
     "@nuxtjs/sitemap": "7.4.7",
-    "@pinia/nuxt": "0.11.2",
+    "@pinia/nuxt": "0.11.3",
     "@tailwindcss/vite": "4.1.13",
     "graphql-request": "7.1.2",
     "nuxt": "4.2.0",
@@ -29,17 +30,14 @@
     "nuxt-og-image": "5.1.11",
     "nuxt-schema-org": "5.0.9",
     "photoswipe": "5.4.4",
-    "pinia": "3.0.3",
-    "pinia-plugin-persistedstate": "4.5.0",
+    "pinia": "3.0.4",
+    "pinia-plugin-persistedstate": "4.7.1",
     "tailwindcss": "4.1.13",
     "valibot": "1.1.0",
     "vue": "3.5.22"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
   "devDependencies": {
-    "@graphql-cli/introspect": "^2.1.0",
-    "@graphql-inspector/cli": "^5.0.8",
-    "@graphql-inspector/graphql-cli-common": "^2.9.0",
     "@iconify-json/lucide": "1.2.42",
     "@nuxt/eslint": "1.10.0",
     "@nuxt/test-utils": "3.20.1",
@@ -50,9 +48,7 @@
     "@vueuse/nuxt": "14.0.0",
     "eslint": "9.38.0",
     "eslint-config-prettier": "10.1.8",
-    "graphql": "^16",
-    "graphql-cli": "^4.1.0",
-    "graphql-config": "^5",
+    "graphql": "16.12.0",
     "prettier-plugin-tailwindcss": "0.6.14",
     "typescript": "5.9.3",
     "vue-tsc": "3.1.0",
