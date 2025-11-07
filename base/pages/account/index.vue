@@ -10,6 +10,7 @@ const { setUser } = useAuthStore();
 const loading = ref(true);
 
 if (!customer.value || !("phoneNumber" in customer.value)) {
+  // @ts-expect-error TS1378: https://github.com/nuxt/nuxt/issues/32633
   await fetchCustomer("detail");
 }
 

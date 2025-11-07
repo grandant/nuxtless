@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     "pinia-plugin-persistedstate/nuxt",
   ],
 
+  // @ts-expect-error TS1378: https://github.com/nuxt/nuxt/issues/32633
   hub: {
     blob: true,
   },
@@ -30,6 +31,11 @@ export default defineNuxtConfig({
     head: {
       link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
     },
+  },
+
+  // Pinia Configuration
+  pinia: {
+    storesDirs: ["./stores/**"],
   },
 
   // Global NuxtImage  Configuration
