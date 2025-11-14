@@ -8,33 +8,33 @@ Built with a focus on SEO, security, and type safety in mind.
 
 ## Goals
 
-* Deliver a solid foundation for projects built on [Vendure](https://www.vendure.io).
-* Keep SEO capabilities current and expand with new Nuxt SEO modules.
-* Improve design foundations using Nuxt UI v4 components and modern Tailwind features.
-* Introduce automated testing for key flows and components.
-* Strengthen security practices and validation across all layers.
+- Deliver a solid foundation for projects built on [Vendure](https://www.vendure.io).
+- Keep SEO capabilities current and expand with new Nuxt SEO modules.
+- Improve design foundations using Nuxt UI v4 components and modern Tailwind features.
+- Introduce automated testing for key flows and components.
+- Strengthen security practices and validation across all layers.
 
 ---
 
 ## Features
 
-* **SEO-first architecture** – optimized routes, head tags, i18n
-* **Token-based session handling** – secure by default
-* **Composable & modular** – customize what you need, extend the rest
-* **Vendure integration** – built for Vendure and optimized for its Shop API
-* **Developer-first DX** – no clutter, readable code, typed GraphQL
+- **SEO-first architecture** – optimized routes, head tags, i18n
+- **Token-based session handling** – secure by default
+- **Composable & modular** – customize what you need, extend the rest
+- **Vendure integration** – built for Vendure and optimized for its Shop API
+- **Developer-first DX** – no clutter, readable code, typed GraphQL
 
 ---
 
 ## Core Dependencies
 
-* **Nuxt 4** with **Nuxt UI v4**
-* **Tailwind CSS v4**
-* **Pinia** with persisted state
-* **Valibot** for validation
-* **nuxt-graphql-client** for typed GraphQL
-* **@nuxtjs/i18n** for localization/localized SEO
-* **VueUse** for utility composables
+- **Nuxt 4** with **Nuxt UI v4**
+- **Tailwind CSS v4**
+- **Pinia** with persisted state
+- **Valibot** for validation
+- **nuxt-graphql-client** for typed GraphQL
+- **@nuxtjs/i18n** for localization/localized SEO
+- **VueUse** for utility composables
 
 > For a full list, see [`package.json`](./package.json)
 
@@ -65,27 +65,63 @@ Additional niceties include a loading widget, disabled checkout buttons during p
 
 ```
 nuxtless/
-├── app/
-│   ├── assets/css/
-│   ├── layouts/
-│   │   └── default.vue
-│   ├── pages/
-│   │   └── index.vue
-│   └── app.vue
-├── base/
-│   ├── components/
-│   ├── composables/
-│   ├── gql/
-│   ├── i18n/locales/
-│   ├── pages/
-│   ├── stores/
-│   ├── app.config.ts
-│   └── nuxt.config.ts
-├── public/
-├── server/
-├── types/
-├── .env
-├── nuxt.config.ts
+├── src/
+│   ├── app/                    # Application layer (final composition)
+│   │   ├── assets/             # Global assets processed by Vite (CSS, fonts, etc.)
+│   │   │   └── css/            # TailwindCSS and global styles
+│   │   ├── layouts/            # Application layouts (default, admin, etc.)
+│   │   ├── pages/              # Top-level page overrides (if any)
+│   │   └── app.vue             # Root Vue component
+│   │
+│   ├── base/                   # Nuxtless base layer - core ecommerce functionality
+│   │   ├── components/         # Base reusable UI components
+│   │   │   ├── account/        # Account-related components
+│   │   │   ├── cart/           # Shopping cart components
+│   │   │   ├── category/       # Category/collection components
+│   │   │   ├── checkout/       # Checkout flow components
+│   │   │   ├── header/         # Header components
+│   │   │   ├── product/        # Product display components
+│   │   │   └── CLAUDE.md       # Generic component/UI rules for Vue/Nuxt
+│   │   ├── composables/        # Core composition functions
+│   │   ├── gql/                # GraphQL queries and fragments
+│   │   │   ├── queries/        # GraphQL query definitions
+│   │   │   └── fragments/      # GraphQL fragment definitions
+│   │   ├── i18n/               # Internationalization files
+│   │   ├── pages/              # Base pages (can be overridden by layers)
+│   │   │   ├── account/        # Account pages
+│   │   │   ├── category/       # Category pages
+│   │   │   ├── checkout/       # Checkout pages
+│   │   │   ├── product/        # Product pages
+│   │   │   └── CLAUDE.md       # Generic page/SEO/routing rules for Nuxt
+│   │   ├── plugins/            # Core Nuxt plugins
+│   │   ├── stores/             # Base Pinia stores (state management, NOT data fetching)
+│   │   ├── utils/              # Base utility functions
+│   │   ├── validators/         # Base validation schemas
+│   │   └── nuxt.config.ts      # Base layer configuration (modules & settings)
+│   │
+│   ├── layers/                 # Custom extension layers (added by extending projects)
+│   │   └── <layer-name>/       # Example: unstack, theater, festival, etc.
+│   │       ├── components/     # Layer-specific components
+│   │       ├── composables/    # Layer-specific composables
+│   │       ├── pages/          # Layer-specific pages (extends base)
+│   │       ├── stores/         # Layer-specific stores
+│   │       ├── utils/          # Layer-specific utilities
+│   │       ├── validators/     # Layer-specific validators
+│   │       └── nuxt.config.ts  # Layer configuration
+│   │
+│   ├── schema/                 # Schema definitions (schema-org, structured data)
+│   ├── server/                 # Nuxt server directory
+│   │   ├── api/                # Server API routes
+│   │   └── routes/             # Server routes
+│   └── types/                  # Global TypeScript type definitions
+│       ├── collection.ts
+│       ├── customer.ts
+│       ├── order.ts
+│       ├── product.ts
+│       └── ...
+│
+├── public/                     # Static files served as-is (favicon, robots.txt, etc.)
+├── nuxt.config.ts              # Root config (extends base, defines srcDir)
 ├── tsconfig.json
 ├── package.json
 └── README.md
@@ -107,7 +143,7 @@ NUXT_PUBLIC_UNSPLASH_API_KEY="your-unsplash-api-key"
 
 > `GQL_HOST` is the main GraphQL endpoint (typically Vendure's `/shop-api`). `NUXT_PUBLIC_I18N_BASE_URL` is the base domain used for localized routing and SEO. Both are **required** for the app to function correctly.
 >
-> NUXT_PUBLIC_UNSPLASH_API_KEY is only needed if not using own images for the hero banned on the index page.
+> `NUXT_PUBLIC_UNSPLASH_API_KEY` is only needed if not using your own images for the hero banner on the index page.
 
 ---
 

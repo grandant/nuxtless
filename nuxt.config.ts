@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
-import { shopIdentity } from "./schema/identity";
+import { shopIdentity } from "./src/schema/identity";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-09-30",
@@ -10,15 +10,16 @@ export default defineNuxtConfig({
     typescriptPlugin: true,
   },
 
-  extends: ["./base"],
+  srcDir: "./src/app",
 
-  css: ["~/assets/css/main.css"],
+  extends: ["./src/base"],
+
+  css: ["./src/app/assets/css/main.css"],
 
   vite: {
     plugins: [tailwindcss()],
   },
 
-  // Note: runtimeConfig is overridden. Better keep it central.
   runtimeConfig: {
     public: {
       GQL_HOST: process.env.GQL_HOST,

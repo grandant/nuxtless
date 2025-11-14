@@ -32,6 +32,7 @@ logs
 .vscode/
 .swp
 .swx
+.wrangler
 
 # GQL schema
 schema.graphql
@@ -40,4 +41,6 @@ graphql.schema.json
 # Media files
 public/media/
 
-.wrangler
+# Agents
+AGENTS.md
+CLAUDE.md
