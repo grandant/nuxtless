@@ -6,7 +6,7 @@ import type {
   VerifyResult,
   RequestPasswordResetResult,
   ResetPasswordResult,
-} from "~~/types/customer";
+} from "~~/src/types/customer";
 
 export const useCustomerStore = defineStore("customer", () => {
   const customer = ref<ActiveCustomer | null>(null);

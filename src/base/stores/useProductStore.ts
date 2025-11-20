@@ -1,4 +1,4 @@
-import type { ProductDetail } from "~~/types/product";
+import type { ProductDetail } from "~~/src/types/product";
 
 export const useProductStore = defineStore("product", () => {
   const product = ref<ProductDetail>(null);

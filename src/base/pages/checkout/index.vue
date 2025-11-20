@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ActiveOrderDetail } from "~~/types/order";
-import type { CheckoutState } from "~~/types/general";
+import type { ActiveOrderDetail } from "~~/src/types/order";
+import type { CheckoutState } from "~~/src/types/general";
 
 const router = useRouter();
 const { t } = useI18n();

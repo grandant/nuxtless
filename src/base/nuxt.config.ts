@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     "pinia-plugin-persistedstate/nuxt",
   ],
 
+  // @ts-expect-error https://github.com/nuxt/nuxt/issues/32633
   hub: {
     blob: true,
   },

@@ -19,7 +19,7 @@ const { data: imgUrl } = await useFetch<{ urls: { raw: string } }>(
   },
 );
 
-let bannerUrl = "/images/placeholder-banner.jpg";
+let bannerUrl = "/hero.jpg";
 
 if (imgUrl.value?.urls?.raw) {
   const url = new URL(imgUrl.value.urls.raw);

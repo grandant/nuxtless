@@ -2,7 +2,7 @@ import type {
   ActiveOrder,
   ShippingMethods,
   PaymentMethods,
-} from "~~/types/order";
+} from "~~/src/types/order";
 
 export const useOrderStore = defineStore("order", () => {
   const loading = ref(false);
