@@ -3,9 +3,11 @@ import { h } from "vue";
 import type { TableColumn } from "@nuxt/ui";
 
 const { locale, t } = useI18n();
+const localePath = useLocalePath();
 const route = useRoute();
 const code = route.params.code as string;
-const isStripe = computed(() => !!route.query.payment_intent);
+const isMounted = ref(false);
+// const isStripe = computed(() => !!route.query.payment_intent);
 
 type OrderLine = {
   name: string;
@@ -16,31 +18,37 @@ type OrderLine = {
   currency: string;
 };
 
-const { data: orderData, refresh } = await useAsyncGql("GetOrderByCode", {
-  code,
-});
+const {
+  data: orderData,
+  error,
+  refresh,
+} = await useAsyncGql("GetOrderByCode", { code });
 
 const order = computed(() => orderData.value?.orderByCode ?? null);
+const hasError = computed(() => !!error.value);
 
 async function pollOrder(maxAttempts = 20, interval = 2000) {
   let attempts = 0;
   while (attempts < maxAttempts) {
+    attempts++;
     await refresh();
-    const state = order.value?.state;
-    const finalStates = [
-      "PaymentSettled",
-      "PaymentAuthorized",
-      "ArrangingFulfillment",
-      "Cancelled",
-    ];
-    if (!state) {
-      console.warn("Order state missing during polling");
-      continue;
-    }
-    if (finalStates.includes(state)) {
+
+    if (error.value) {
+      console.error("Error during order polling:", error.value);
       break;
     }
-    attempts++;
+
+    const state = order.value?.state;
+    const initialStates = ["AddingItems", "ArrangingPayment"];
+
+    if (!state) {
+      console.warn("Order state missing during polling, attempt", attempts);
+      await new Promise((res) => setTimeout(res, interval));
+      continue;
+    }
+
+    if (!initialStates.includes(state)) break;
+
     await new Promise((res) => setTimeout(res, interval));
   }
 }
@@ -98,15 +106,35 @@ function printReceipt() {
 }
 
 onMounted(() => {
-  if (isStripe.value) {
-    pollOrder();
-  }
+  // if (isStripe.value) {
+  //   pollOrder();
+  // }
+  isMounted.value = true;
+  pollOrder();
 });
 </script>
 
 <template>
-  <!-- <BaseLoader v-if="!order" width="sm:w-xs md:w-sm" /> -->
-  <main class="container mt-14">
+  <BaseLoader v-if="!isMounted && !order" width="sm:w-xs md:w-sm" />
+
+  <UError
+    v-else-if="isMounted && hasError"
+    :error="{
+      statusCode: 404,
+      statusMessage: t('messages.error.noOrder'),
+      message: t('messages.error.orderNotFound'),
+    }"
+  >
+    <template #links>
+      <UButton
+        :to="localePath('/account/login')"
+        :label="t('messages.account.login')"
+        class="px-7"
+      />
+    </template>
+  </UError>
+
+  <main v-else class="container mt-14">
     <!-- 1. Heading -->
     <header class="mb-14">
       <h1 class="text-2xl font-semibold">
@@ -133,7 +161,10 @@ onMounted(() => {
         </div>
         <div>
           <dt class="font-medium">{{ t("messages.general.date") }}</dt>
-          <dd>{{ new Date(order?.orderPlacedAt).toLocaleDateString() }}</dd>
+          <dd v-if="isMounted">
+            {{ new Date(order?.orderPlacedAt).toLocaleDateString() }}
+          </dd>
+          <USkeleton v-else class="h-4 w-full md:w-1/2" />
         </div>
         <div>
           <dt class="font-medium">{{ t("messages.shop.rateEmail") }}</dt>
@@ -206,7 +237,9 @@ onMounted(() => {
             </div>
             <div class="flex justify-between">
               <dt>{{ t("messages.general.tax") }}</dt>
-              <dd>{{ formatPrice(order?.taxSummary?.[0]?.taxTotal ?? 0) }}</dd>
+              <dd>
+                {{ formatPrice(order?.taxSummary?.[0]?.taxTotal ?? 0) }}
+              </dd>
             </div>
             <div class="flex justify-between">
               <dt>{{ t("messages.general.shipping") }}</dt>
