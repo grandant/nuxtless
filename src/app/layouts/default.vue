@@ -3,14 +3,26 @@ const route = useRoute();
 const { t } = useI18n();
 const head = useLocaleHead();
 const title = computed(() => t(route.meta.title || "messages.site.title"));
+const description = computed(() =>
+  t(route.meta.description || "messages.site.description"),
+);
 const isPdp = computed(() => route.path.startsWith("/product/"));
+
+useSeoMeta({
+  title: title,
+  description: description,
+  ogTitle: title,
+  ogDescription: description,
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterCard: "summary_large_image",
+});
 </script>
 
 <template>
   <div>
     <Html :lang="head.htmlAttrs.lang" :dir="head.htmlAttrs.dir">
       <Head>
-        <Title>{{ title }}</Title>
         <template v-for="link in head.link" :key="link.hid">
           <Link
             :id="link.hid"

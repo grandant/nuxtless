@@ -3,8 +3,8 @@
     "site": {
       "title": "Nuxtless",
       "tagline": "Nuxt Level Headless E-commerce",
-      "shortDescription": "Oferecemos serviços confiáveis e profissionais, adaptados às necessidades dos nossos clientes.",
-      "description": "Há anos, nos dedicamos a fornecer serviços e produtos de alta qualidade, adaptados às necessidades exclusivas de cada cliente com atenção a cada detalhe."
+      "shortDescription": "Uma base moderna, rápida e segura para criar lojas online headless com Nuxt e Vendure.",
+      "description": "Nuxtless é um projeto inicial flexível e modular para e-commerce headless, desenvolvido para alta performance, excelente SEO e uma arquitetura limpa. Ele oferece integrações prontas com Vendure, Nuxt UI e Payload, código com tipagem segura e práticas profissionais de segurança — uma base sólida para qualquer loja online profissional."
     },
     "pages": {
       "index": {

@@ -26,7 +26,7 @@ defineOgImageComponent("Frame", {
   title: t("messages.site.title"),
   description: t("messages.site.tagline"),
   // image: "/logo.png",
-  // logo: "/logo.png",
+  // logo: "/logo-full.svg",
 });
 
 // SchemaOrg

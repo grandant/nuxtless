@@ -1,4 +1,4 @@
-import type { CheckoutState } from "~~/types/general";
+import type { CheckoutState } from "~~/src/types/general";
 
 export function useCheckout() {
   const GqlInstance = useGql();

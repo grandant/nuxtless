@@ -1,5 +1,5 @@
-import type { LogInResult } from "~~/types/customer";
-import type { ActiveOrder } from "~~/types/order";
+import type { LogInResult } from "~~/src/types/customer";
+import type { ActiveOrder } from "~~/src/types/order";
 
 export async function useGqlSession(
   locale: string,

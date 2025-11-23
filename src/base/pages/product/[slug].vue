@@ -2,6 +2,7 @@
 const route = useRoute();
 const slug = route.params.slug as string;
 const { t, locale } = useI18n();
+const { i18NBaseUrl } = useRuntimeConfig().public;
 const productStore = useProductStore();
 
 const { data } = await useAsyncGql("GetProductDetail", {
@@ -26,11 +27,21 @@ const formatPrice = (amount: number) =>
     currency: selectedVariant.value?.currencyCode || "EUR",
   }).format(amount / 100);
 
+// SEO Meta
+useSeoMeta({
+  title: product.value?.name,
+  description: product.value?.description,
+  ogTitle: product.value?.name,
+  ogDescription: product.value?.description,
+  twitterTitle: product.value?.name,
+  twitterDescription: product.value?.description,
+});
+
 // OgImage
 defineOgImageComponent("Frame", {
   title: t("messages.site.title"),
   description: `${product.value?.name}: ${product.value?.description}`,
-  // image: product.value?.featuredAsset?.preview,
+  image: product.value?.featuredAsset?.preview,
   // logo: "/logo.png",
 });
 
@@ -51,13 +62,13 @@ if (product.value && selectedVariant.value) {
       inLanguage: locale.value,
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": `https://nuxtless.unstack.dev/${locale.value}/products/${product.value.slug}`,
+        "@id": `${i18NBaseUrl}/products/${product.value.slug}`,
       },
 
       // Offers
       offers: {
         "@type": "Offer",
-        url: `https://nuxtless.unstack.dev/${locale.value}/products/${product.value.slug}`,
+        url: `${i18NBaseUrl}/products/${product.value.slug}`,
         price: (selectedVariant.value.priceWithTax ?? 0) / 100,
         priceCurrency: selectedVariant.value.currencyCode ?? "EUR",
         availability:
@@ -77,13 +88,13 @@ if (product.value && selectedVariant.value) {
           "@type": "ListItem",
           position: i + 1,
           name: c.label,
-          item: `https://nuxtless.unstack.dev/${locale.value}${c.to}`,
+          item: `${i18NBaseUrl}${c.to}`,
         })),
         {
           "@type": "ListItem",
           position: (getProductTrail(product.value).length ?? 0) + 1,
           name: product.value.name,
-          item: `https://nuxtless.unstack.dev/${locale.value}/products/${product.value.slug}`,
+          item: `${i18NBaseUrl}/products/${product.value.slug}`,
         },
       ],
     }),

@@ -1,5 +1,5 @@
 import { refDebounced } from "@vueuse/core";
-import type { SearchResult } from "~~/types/product";
+import type { SearchResult } from "~~/src/types/product";
 
 export function useSimpleSearch() {
   const term = ref("");

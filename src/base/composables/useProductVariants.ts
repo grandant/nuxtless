@@ -1,4 +1,4 @@
-import type { ProductDetail } from "~~/types/product";
+import type { ProductDetail } from "~~/src/types/product";
 
 export function useProductVariants(product: ProductDetail) {
   if (!product?.variants?.length) {

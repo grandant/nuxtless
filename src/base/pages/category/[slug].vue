@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { usePagination } from "#imports";
-import type { MenuCollections, ChildCollection } from "~~/types/collection";
+import type { MenuCollections, ChildCollection } from "~~/src/types/collection";
 
+const { i18NBaseUrl } = useRuntimeConfig().public;
 const route = useRoute();
 const slug = route.params.slug as string;
 const { t, locale } = useI18n();
@@ -34,48 +35,86 @@ const { data: collectionProducts } = await useAsyncGql(
 
 const products = computed(() => collectionProducts.value?.search?.items ?? []);
 const total = computed(() => collectionProducts.value?.search?.totalItems ?? 0);
+const totalPages = computed(() => Math.ceil(total.value / take));
+
+const nextUrl = computed(() =>
+  page.value < totalPages.value ? `?page=${page.value + 1}` : null,
+);
+
+const prevUrl = computed(() =>
+  page.value > 1 ? `?page=${page.value - 1}` : null,
+);
 
 watch(page, () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// Head Props
+useHead(() => ({
+  link: [
+    ...(prevUrl.value
+      ? [{ rel: "prev", href: `${i18NBaseUrl}${route.path}${prevUrl.value}` }]
+      : []),
+    ...(nextUrl.value
+      ? [{ rel: "next", href: `${i18NBaseUrl}${route.path}${nextUrl.value}` }]
+      : []),
+  ],
+}));
+
+// SEO Meta
+useSeoMeta({
+  title: currentCollection?.name,
+  // description: currentCollection?.description,
+  ogTitle: currentCollection?.name,
+  // ogDescription: currentCollection?.description,
+  twitterTitle: currentCollection?.name,
+  // twitterDescription: currentCollection?.description,
 });
 
 // OgImage
 defineOgImageComponent("Frame", {
   title: t("messages.site.title"),
   description: currentCollection?.name,
-  // image: currentCollection?.featuredAsset?.preview,
+  image: currentCollection?.featuredAsset?.preview,
   // logo: "/logo.png",
 });
 
 // SchemaOrg
-if (currentCollection) {
-  useSchemaOrg([
-    defineWebPage({
-      "@type": "CollectionPage",
-      name: currentCollection.name,
-      // description: currentCollection.description,
-      inLanguage: locale.value,
-      mainEntity: {
-        "@type": "ItemList",
-        itemListElement: products.value.map((p, i) => ({
-          "@type": "ListItem",
-          position: i + 1,
-          name: p.productName,
-          url: `https://nuxtless.unstack.dev/${locale.value}/products/${p.slug}`,
-        })),
-      },
-    }),
-
-    defineBreadcrumb({
-      itemListElement: getCategoryTrail().map((c, i) => ({
+useSchemaOrg([
+  defineWebPage({
+    "@type": "CollectionPage",
+    name: currentCollection.name,
+    // description: currentCollection.description,
+    inLanguage: locale.value,
+    url: `${i18NBaseUrl}${route.path}`,
+    nextItem: nextUrl.value
+      ? `${i18NBaseUrl}${route.path}${nextUrl.value}`
+      : undefined,
+    previousItem: prevUrl.value
+      ? `${i18NBaseUrl}${route.path}${prevUrl.value}`
+      : undefined,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: products.value.map((p, i) => ({
         "@type": "ListItem",
-        position: i + 1,
-        name: c.label,
-        item: `https://nuxtless.unstack.dev/${locale.value}${c.to}`,
+        position: skip + i + 1,
+        name: p.productName,
+        url: `${i18NBaseUrl}/products/${p.slug}`,
       })),
-    }),
-  ]);
-}
+      numberOfItems: total.value,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+    },
+  }),
+
+  defineBreadcrumb({
+    itemListElement: getCategoryTrail().map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: c.label,
+      item: `${i18NBaseUrl}${c.to}`,
+    })),
+  }),
+]);
 </script>
 
 <template>

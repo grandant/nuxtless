@@ -3,21 +3,25 @@
  * @credits @arashsheyda <https://github.com/arashsheyda>
  */
 
-withDefaults(
-  defineProps<{
-    title?: string;
-    description?: string;
-    bg?: string;
-    icon?: string;
-    logo?: string;
-    image?: string;
-    username?: string;
-    socials?: { name: string; icon: string }[];
-  }>(),
-  {
-    bg: "linear-gradient(to bottom right, #171717, #131313)",
-  },
-);
+const {
+  title = undefined,
+  description = undefined,
+  bg = "linear-gradient(to bottom right, #171717, #131313)",
+  icon = undefined,
+  logo = undefined,
+  image = undefined,
+  username = undefined,
+  socials = undefined,
+} = defineProps<{
+  title?: string;
+  description?: string;
+  bg?: string;
+  icon?: string;
+  logo?: string;
+  image?: string;
+  username?: string;
+  socials?: { name: string; icon: string }[];
+}>();
 </script>
 
 <template>
@@ -25,10 +29,12 @@ withDefaults(
     class="relative flex h-full w-full items-center justify-center border-2 border-white bg-neutral-900 text-white"
     :style="{ backgroundImage: bg }"
   >
-    <div
+    <NuxtImg
       v-if="image"
-      class="absolute inset-0 h-full w-full bg-center opacity-30"
-      :style="{ backgroundImage: `url(${image})` }"
+      format="webp"
+      class="absolute inset-0 object-contain opacity-30"
+      :src="image"
+      sizes="1200px"
     />
     <div class="flex flex-col items-center text-center">
       <h1

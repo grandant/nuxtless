@@ -2,7 +2,7 @@ import type {
   ActiveOrder,
   OrderMutationResult,
   OrderStatus,
-} from "~~/types/order";
+} from "~~/src/types/order";
 
 export function useOrderMutation(
   order: Ref<ActiveOrder>,
