@@ -102,6 +102,7 @@ export default defineI18nLocale(() => ({
       resetMessage: "Tu contraseña se ha restablecido correctamente.",
     },
     shop: {
+      category: "Categoría | Categorías",
       shopByCategory: "Comprar por categoría",
       popularProducts: "Productos populares",
       inStock: "En stock",

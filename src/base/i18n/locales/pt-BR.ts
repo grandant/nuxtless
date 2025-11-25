@@ -100,6 +100,7 @@ export default defineI18nLocale(() => ({
       resetMessage: "Sua senha foi redefinida com sucesso.",
     },
     shop: {
+      category: "Categoria | Categorias",
       shopByCategory: "Comprar por Categoria",
       popularProducts: "Produtos Populares",
       inStock: "Em Estoque",

@@ -98,6 +98,7 @@ export default defineI18nLocale(() => ({
       resetMessage: "Вашата парола беше успешно нулирана.",
     },
     shop: {
+      category: "Категория | Категории",
       shopByCategory: "Пазарувайте по категория",
       popularProducts: "Популярни продукти",
       inStock: "В наличност",

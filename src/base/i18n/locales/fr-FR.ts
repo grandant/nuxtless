@@ -100,6 +100,7 @@ export default defineI18nLocale(() => ({
       resetMessage: "Votre mot de passe a été réinitialisé avec succès.",
     },
     shop: {
+      category: "Catégorie | Catégories",
       shopByCategory: "Acheter par catégorie",
       popularProducts: "Produits populaires",
       inStock: "En stock",
