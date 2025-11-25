@@ -49,15 +49,39 @@ pnpm run dev
 
 > Update `.env.example` → `.env` with your API endpoint and other project values.
 
+### Vendure Configuration
+
+Nuxtless relies on **bearer authentication**. In your Vendure `server.config.ts`, cookie auth must be disabled:
+
+```ts
+authOptions: {
+  tokenMethod: "bearer",
+  superadminCredentials: {
+    identifier: process.env.SUPERADMIN_USERNAME,
+    password: process.env.SUPERADMIN_PASSWORD,
+  },
+  // Below lines ca be removed
+  // cookieOptions: {
+  //   secret: process.env.COOKIE_SECRET,
+  // },
+},
+```
+
 ---
 
 ## Status
 
-Vendure currently offers official starters for React and Angular, but not for Nuxt. **Nuxtless aims to fill that gap** — providing a clean, minimal, and SEO-friendly Nuxt 4 starter tailored for Vendure.
+Vendure currently offers official starters for React and Angular, but not for Nuxt. **Nuxtless aims to fill that gap** — providing a clean, minimal, and SEO-friendly Nuxt 4 starter tailored for modern headless commerce.
 
-Since **v0.5.0**, Nuxtless has reached its MVP stage and continues to evolve through gradual improvements. Most strings are now localized, and all key features—accounts, checkout, and product listings—are functional.
+A new `docs/` directory has been added to hold technical audits generated during early optimization phases. These documents provide deep-dive insights into bundle composition, test planning, and project-wide critical path analysis.
 
-Additional niceties include a loading widget, disabled checkout buttons during processing, pagination, and an image gallery powered by PhotoSwipe. The order confirmation page is fully implemented with printable receipts, marking an important milestone for the project's core user flow.
+The audits include:
+
+- **critical-path.md** — full sitemap-level breakdown of all flows
+- **test-blueprint.md** — proposed testing structure
+- **bundle-audit.md** — client bundle inspection
+
+These are reference materials, meant as starting points rather than final specifications.
 
 ---
 
@@ -65,6 +89,10 @@ Additional niceties include a loading widget, disabled checkout buttons during p
 
 ```
 nuxtless/
+├── docs/                     # Technical audits (agent-generated)
+│   ├── critical-path.md
+│   ├── test-blueprint.md
+│   └── bundle-audit.md
 ├── src/
 │   ├── app/                    # Application layer (final composition)
 │   │   ├── assets/             # Global assets processed by Vite (CSS, fonts, etc.)

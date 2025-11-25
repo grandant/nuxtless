@@ -15,23 +15,23 @@ export async function useGqlSession(
 
   const authStore = useAuthStore();
 
-  const headers = useState<Record<string, string>>("headers", () => ({
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
-  }));
+  };
 
   const token = authStore.session?.token;
 
   if (token) {
-    headers.value.authorization = `Bearer ${token}`;
+    headers.authorization = `Bearer ${token}`;
     authStore.setSession(token);
   }
 
   if (channelToken) {
-    headers.value["vendure-token"] = channelToken;
+    headers["vendure-token"] = channelToken;
   }
 
   if (locale) {
-    headers.value["Accept-Language"] = locale;
+    headers["Accept-Language"] = locale;
   }
 
   const defaultQuery = `
@@ -64,17 +64,17 @@ export async function useGqlSession(
     const res = await fetch(`${gqlHost}?languageCode=${locale}`, {
       method: "POST",
       credentials: "include",
-      headers: headers.value,
+      headers: headers,
       body: JSON.stringify({ query, variables }),
     });
 
     const newToken = res.headers.get("vendure-auth-token");
     if (newToken) {
-      headers.value.authorization = `Bearer ${newToken}`;
+      headers.authorization = `Bearer ${newToken}`;
       authStore.setSession(newToken);
     }
 
-    useGqlHeaders(headers.value);
+    useGqlHeaders(headers);
 
     const json = await res.json();
     if (queryType === "login" && json.data?.login) {
