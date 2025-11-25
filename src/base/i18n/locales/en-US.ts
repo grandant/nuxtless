@@ -264,7 +264,9 @@ export default defineI18nLocale(() => ({
       invalidPasswordResetLink: "Password reset link is invalid.",
       general: "Something went wrong",
       generalMessage: "Please try again later or contact support.",
-      noOrder: "We could not find your order. Please try again later.",
+      noOrder: "Order not found",
+      orderNotFound:
+        "We couldn't find your order. Please log in to view your orders.",
     },
   },
 }));

@@ -261,7 +261,9 @@ export default defineI18nLocale(() => ({
       general: "Qualcosa è andato storto",
       generalMessage:
         "Si prega di riprovare più tardi o contattare il supporto.",
-      noOrder: "Non abbiamo trovato il tuo ordine. Riprova più tardi.",
+      noOrder: "Ordine non trovato",
+      orderNotFound:
+        "Non siamo riusciti a trovare il tuo ordine. Accedi per visualizzare i tuoi ordini.",
     },
   },
 }));

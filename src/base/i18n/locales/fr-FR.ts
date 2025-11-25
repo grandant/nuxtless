@@ -260,8 +260,9 @@ export default defineI18nLocale(() => ({
       resetFail: "Échec de la réinitialisation",
       general: "Un problème est survenu",
       generalMessage: "Veuillez réessayer plus tard ou contacter le support.",
-      noOrder:
-        "Impossible de trouver votre commande. Veuillez réessayer plus tard.",
+      noOrder: "Commande introuvable",
+      orderNotFound:
+        "Nous n’avons pas pu trouver votre commande. Veuillez vous connecter pour voir vos commandes.",
     },
   },
 }));

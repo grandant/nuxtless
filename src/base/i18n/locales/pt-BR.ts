@@ -259,8 +259,9 @@ export default defineI18nLocale(() => ({
       general: "Algo deu errado",
       generalMessage:
         "Tente novamente mais tarde ou entre em contato com o suporte.",
-      noOrder:
-        "Não conseguimos encontrar seu pedido. Por favor, tente novamente mais tarde.",
+      noOrder: "Pedido não encontrado",
+      orderNotFound:
+        "Não conseguimos encontrar seu pedido. Faça login para ver seus pedidos.",
     },
   },
 }));

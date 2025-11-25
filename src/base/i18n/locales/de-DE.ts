@@ -268,8 +268,9 @@ export default defineI18nLocale(() => ({
       general: "Etwas ist schiefgelaufen",
       generalMessage:
         "Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.",
-      noOrder:
-        "Wir konnten Ihre Bestellung nicht finden. Bitte versuchen Sie es später noch einmal.",
+      noOrder: "Bestellung wurde nicht gefunden",
+      orderNotFound:
+        "Wir konnten Ihre Bestellung nicht finden. Bitte melden Sie sich an, um Ihre Bestellungen einzusehen.",
     },
   },
 }));
