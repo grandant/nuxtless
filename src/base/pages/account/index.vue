@@ -34,7 +34,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseLoader v-if="loading && !isAuthenticated" width="sm:w-xs md:w-sm" />
+  <BaseLoader
+    v-if="(loading && !isAuthenticated) || !activeCustomer"
+    width="sm:w-xs md:w-sm"
+  />
   <main v-else class="container">
     <header class="my-14">
       <AccountHeader :active-customer="activeCustomer" />

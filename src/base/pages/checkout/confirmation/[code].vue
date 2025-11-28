@@ -7,7 +7,6 @@ const localePath = useLocalePath();
 const route = useRoute();
 const code = route.params.code as string;
 const isMounted = ref(false);
-// const isStripe = computed(() => !!route.query.payment_intent);
 
 type OrderLine = {
   name: string;
@@ -17,6 +16,10 @@ type OrderLine = {
   orderTotal: number;
   currency: string;
 };
+
+definePageMeta({
+  alias: ["/order/:code"],
+});
 
 const {
   data: orderData,
@@ -106,9 +109,6 @@ function printReceipt() {
 }
 
 onMounted(() => {
-  // if (isStripe.value) {
-  //   pollOrder();
-  // }
   isMounted.value = true;
   pollOrder();
 });

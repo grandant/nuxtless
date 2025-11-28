@@ -4,9 +4,9 @@ export default defineI18nLocale(() => ({
       title: "Nuxtless",
       tagline: "Nuxt Level Headless E-Commerce",
       shortDescription:
-        "Eine moderne, schnelle und sichere Basis für den Aufbau von Headless-Onlineshops mit Nuxt und Vendure.",
+        "Una base moderna, rápida y segura para construir tiendas online headless con Nuxt y Vendure.",
       description:
-        "Nuxtless ist ein flexibles und modulares Starterprojekt für Headless-E-Commerce, entwickelt für hohe Leistung, hervorragendes SEO und eine saubere Architektur. Es bietet fertige Integrationen mit Vendure, Nuxt UI und Payload, typsicheren Code und professionelle Sicherheitspraktiken – eine stabile Grundlage für jeden professionellen Onlineshop.",
+        "Nuxtless es un proyecto inicial flexible y modular para comercio electrónico headless, diseñado para ofrecer alto rendimiento, un SEO excelente y una arquitectura limpia. Incluye integraciones listas con Vendure, Nuxt UI y Payload, código tipado y prácticas profesionales de seguridad — una base sólida para cualquier tienda online profesional.",
     },
     pages: {
       index: {
@@ -19,6 +19,11 @@ export default defineI18nLocale(() => ({
       },
     },
     general: {
+      actions: "Acciones",
+      details: "Detalles",
+      getLink: "Copiar enlace",
+      getLinkSuccess: "¡Enlace del pedido copiado al portapapeles!",
+      citySearchHint: "Empieza a escribir para buscar ciudades…",
       date: "Fecha",
       status: "Estado",
       amount: "Importe",

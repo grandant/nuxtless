@@ -19,6 +19,11 @@ export default defineI18nLocale(() => ({
       },
     },
     general: {
+      actions: "Действия",
+      details: "Подробности",
+      getLink: "Копиране на линк",
+      getLinkSuccess: "Линкът към поръчката беше копиран в клипборда!",
+      citySearchHint: "Започнете да пишете за бъзо търсене...",
       date: "Дата",
       status: "Статус",
       amount: "Сума",

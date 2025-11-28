@@ -19,6 +19,11 @@ export default defineI18nLocale(() => ({
       },
     },
     general: {
+      actions: "Aktionen",
+      details: "Details",
+      getLink: "Link kopieren",
+      getLinkSuccess: "Bestelllink wurde in die Zwischenablage kopiert!",
+      citySearchHint: "Beginnen Sie zu tippen, um Städte zu suchen…",
       date: "Datum",
       status: "Status",
       amount: "Betrag",

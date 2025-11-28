@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ActiveCustomer } from "~~/types/customer";
+import type { ActiveCustomer } from "~~/src/types/customer";
 
 const { t } = useI18n();
 

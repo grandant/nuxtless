@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { h } from "vue";
+import { h, resolveComponent } from "vue";
 import { SortOrder } from "~~/src/types/default";
 
-import type { TableColumn } from "@nuxt/ui";
+import type { TableColumn, TableRow } from "@nuxt/ui";
 
 type Order = {
   id: string;
@@ -10,31 +10,40 @@ type Order = {
   status: string;
   amount: string;
   currency: string;
+  code: string;
 };
 
+const { i18NBaseUrl } = useRuntimeConfig().public;
 const { locale, d, t } = useI18n();
 const localePath = useLocalePath();
+const { copy } = useClipboard();
+const toast = useToast();
 const { customer } = storeToRefs(useCustomerStore());
-const { fetchCustomer } = useCustomerStore();
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const loading = ref(true);
 
-if (!customer.value) {
-  await fetchCustomer();
-}
+const UButton = resolveComponent("UButton");
+const UDropdownMenu = resolveComponent("UDropdownMenu");
 
 const options = {
   sort: { createdAt: SortOrder.DESC },
   take: 10,
 };
 
-const { data } = await useAsyncGql("GetOrderHistory", {
-  options,
-});
+const { data: orderHistory, refresh } = await useAsyncGql(
+  "GetOrderHistory",
+  {
+    options,
+  },
+  {
+    immediate: false,
+    server: false,
+  },
+);
 
 // TODO: remove uneeded data from the GQL payload
 const orders = computed(() =>
-  (data.value.activeCustomer?.orders?.items ?? []).filter(
+  (orderHistory.value.activeCustomer?.orders?.items ?? []).filter(
     (o) => o.state !== "AddingItems",
   ),
 );
@@ -46,6 +55,7 @@ const tableData = computed<Order[]>(() =>
     status: order.state,
     amount: (order.totalWithTax / 100).toFixed(2),
     currency: order.currencyCode,
+    code: order.code,
   })),
 );
 
@@ -80,20 +90,82 @@ const columns: TableColumn<Order>[] = [
       return h("div", { class: "text-right font-medium" }, formatted);
     },
   },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      return h(
+        "div",
+        { class: "text-right" },
+        h(
+          UDropdownMenu,
+          {
+            content: {
+              align: "end",
+            },
+            items: getRowItems(row),
+            "aria-label": "Actions dropdown",
+          },
+          () =>
+            h(UButton, {
+              icon: "i-lucide-ellipsis-vertical",
+              color: "neutral",
+              variant: "ghost",
+              class: "ml-auto",
+              "aria-label": "Actions dropdown",
+            }),
+        ),
+      );
+    },
+  },
 ];
 
-onMounted(() => {
+function getRowItems(row: TableRow<Order>) {
+  return [
+    {
+      type: "label",
+      label: t("messages.general.actions"),
+    },
+    {
+      type: "separator",
+    },
+    {
+      label: t("messages.general.getLink"),
+      icon: "i-lucide-link",
+      class: "items-center",
+      onSelect() {
+        const path = localePath(`/order/${row.original.code}`);
+        copy(`${i18NBaseUrl}${path}`);
+
+        toast.add({
+          title: t("messages.general.getLinkSuccess"),
+          color: "success",
+          icon: "i-lucide-clipboard-check",
+        });
+      },
+    },
+    {
+      label: t("messages.general.details"),
+      icon: "i-lucide-info",
+      to: localePath(`/order/${row.original.code}`),
+      class: "items-center",
+    },
+  ];
+}
+
+onMounted(async () => {
   if (!isAuthenticated.value) {
     navigateTo(localePath("/account/login"), { replace: true });
     return;
   }
+
+  await refresh();
 
   loading.value = false;
 });
 </script>
 
 <template>
-  <BaseLoader v-if="loading && !isAuthenticated" width="sm:w-xs md:w-sm" />
+  <BaseLoader v-if="loading || !isAuthenticated" width="sm:w-xs md:w-sm" />
   <main v-else class="container">
     <header class="my-14">
       <h1 class="text-2xl font-semibold">{{ t("messages.account.orders") }}</h1>
@@ -102,7 +174,7 @@ onMounted(() => {
       </ULink>
     </header>
 
-    <div>
+    <div v-if="orders">
       <UTable
         sticky
         :data="tableData"
