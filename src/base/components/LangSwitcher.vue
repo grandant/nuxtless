@@ -1,29 +1,31 @@
 <script setup lang="ts">
-import type { DropdownMenuItem } from "@nuxt/ui";
+import type { ButtonProps } from "@nuxt/ui";
 
 const {
-  appLocales = ["bg", "de", "en", "es", "fr", "it", "pt"],
+  label = false,
   color = "primary",
-} = defineProps<{ appLocales?: string[]; color?: string }>();
+  variant = "outline",
+} = defineProps<{
+  label?: boolean | string;
+  color?: ButtonProps["color"];
+  variant?: ButtonProps["variant"];
+}>();
 
-const { locales } = useI18n();
-const switchLocalePath = useSwitchLocalePath();
-
-const items = computed<DropdownMenuItem[]>(() =>
-  locales.value
-    .filter((l) => appLocales.includes(l.code))
-    .map((l) => ({
-      label: l.name,
-      to: switchLocalePath(l.code),
-    })),
-);
+const { localeItems, currentLocaleName } = useLangSwitcher();
 </script>
 
 <template>
-  <UDropdownMenu :items="items">
+  <UDropdownMenu :items="localeItems">
     <UButton
       icon="i-lucide-globe"
-      variant="outline"
+      :label="
+        label
+          ? typeof label === 'string'
+            ? label
+            : currentLocaleName
+          : undefined
+      "
+      :variant="variant"
       :color="color"
       size="xl"
       aria-label="Language"

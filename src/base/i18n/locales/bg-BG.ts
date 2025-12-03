@@ -19,6 +19,10 @@ export default defineI18nLocale(() => ({
       },
     },
     general: {
+      colorMode: "Цветови режим",
+      system: "Система",
+      light: "Светъл",
+      dark: "Тъмен",
       actions: "Действия",
       details: "Подробности",
       getLink: "Копиране на линк",

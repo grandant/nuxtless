@@ -1,0 +1,56 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nuxtless",
+  "main": "./.output/server/index.mjs",
+  "compatibility_date": "2025-11-28",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./.output/public/",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "vars": {
+    "GQL_HOST": "https://your-vendure-domain/shop-api",
+    "NUXT_PUBLIC_CHANNEL_TOKEN": "<YOUR_CHANNEL_TOKEN>",
+    "NUXT_PUBLIC_I18N_BASE_URL": "<YOUR_PUBLIC_BASE_URL>",
+    "NUXT_PUBLIC_IMAGE_PROVIDER": "cloudflare",
+    "NUXT_PUBLIC_SITE_NAME": "<YOUR_SITE_NAME>",
+    "NUXT_PUBLIC_STRIPE_PUBLIC_KEY": "<YOUR_STRIPE_PUBLIC_KEY>",
+    "NUXT_PUBLIC_UNSPLASH_API_KEY": "<YOUR_UNSPLASH_API_KEY>",
+  },
+  /**
+   * Smart Placement
+   * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
+   */
+  // "placement": { "mode": "smart" }
+  /**
+   * Bindings
+   * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
+   * databases, object storage, AI inference, real-time communication and more.
+   * https://developers.cloudflare.com/workers/runtime-apis/bindings/
+   */
+  /**
+   * Environment Variables
+   * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
+   */
+  // "vars": { "MY_VARIABLE": "production_value" }
+  /**
+   * Note: Use secrets to store sensitive data.
+   * https://developers.cloudflare.com/workers/configuration/secrets/
+   */
+  /**
+   * Static Assets
+   * https://developers.cloudflare.com/workers/static-assets/binding/
+   */
+  // "assets": { "directory": "./public/", "binding": "ASSETS" }
+  /**
+   * Service Bindings (communicate between multiple Workers)
+   * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
+   */
+  // "services": [{ "binding": "MY_SERVICE", "service": "my-service" }]
+}

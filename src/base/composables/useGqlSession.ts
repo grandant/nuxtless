@@ -23,7 +23,6 @@ export async function useGqlSession(
 
   if (token) {
     headers.authorization = `Bearer ${token}`;
-    authStore.setSession(token);
   }
 
   if (channelToken) {

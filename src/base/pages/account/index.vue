@@ -6,27 +6,19 @@ const localePath = useLocalePath();
 const { customer } = storeToRefs(useCustomerStore());
 const { fetchCustomer } = useCustomerStore();
 const { isAuthenticated } = storeToRefs(useAuthStore());
-const { setUser } = useAuthStore();
 const loading = ref(true);
 
-if (!customer.value || !("phoneNumber" in customer.value)) {
-  await fetchCustomer("detail");
-}
-
-if (customer.value) {
-  setUser({
-    id: customer.value.id,
-    email: customer.value.emailAddress,
-  });
-}
-
-// Safe: We fetch with "detail" above. Customer.value should always be ActiveCustomerDetail.
+// Safe: We fetch with "detail" below. Customer.value should always be ActiveCustomerDetail.
 const activeCustomer = computed(() => customer.value as ActiveCustomerDetail);
 
-onMounted(() => {
+onMounted(async () => {
   if (!isAuthenticated.value) {
     navigateTo(localePath("/account/login"), { replace: true });
     return;
+  }
+
+  if (!customer.value || !("phoneNumber" in customer.value)) {
+    await fetchCustomer("detail");
   }
 
   loading.value = false;
@@ -34,10 +26,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseLoader
-    v-if="(loading && !isAuthenticated) || !activeCustomer"
-    width="sm:w-xs md:w-sm"
-  />
+  <BaseLoader v-if="loading || !activeCustomer?.id" width="sm:w-xs md:w-sm" />
   <main v-else class="container">
     <header class="my-14">
       <AccountHeader :active-customer="activeCustomer" />
@@ -56,7 +45,7 @@ onMounted(() => {
       </div>
       <dl>
         <dt class="sr-only">Phone</dt>
-        <dd v-if="activeCustomer.phoneNumber">
+        <dd v-if="activeCustomer?.phoneNumber">
           {{ t("messages.account.myPhone") }}:
           {{ activeCustomer?.phoneNumber }}
         </dd>

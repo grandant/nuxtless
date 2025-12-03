@@ -32,7 +32,6 @@ logs
 .vscode/
 .swp
 .swx
-.wrangler
 
 # GQL schema
 schema.graphql
@@ -44,3 +43,8 @@ public/media/
 # Agents
 AGENTS.md
 CLAUDE.md
+
+# Cloudflare
+.wrangler
+worker-configuration.d.ts
+wrangler.jsonc

@@ -3,11 +3,20 @@ import tailwindcss from "@tailwindcss/vite";
 import { shopIdentity } from "./src/schema/identity";
 
 export default defineNuxtConfig({
-  compatibilityDate: "2025-09-30",
+  compatibilityDate: "2025-07-15",
   devtools: { enabled: import.meta.env.DEV },
 
   experimental: {
     typescriptPlugin: true,
+  },
+
+  nitro: {
+    preset: "cloudflare_module",
+
+    cloudflare: {
+      deployConfig: true,
+      nodeCompat: true,
+    },
   },
 
   srcDir: "./src/app",

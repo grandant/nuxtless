@@ -41,7 +41,6 @@ const items = computed<NavigationMenuItem[]>(
         <HeaderDesktopMenu :items="items" class="hidden lg:flex" />
       </div>
       <div class="flex items-center gap-2 sm:gap-4">
-        <LangSwitcher />
         <SearchModal />
         <AccountMenu />
         <CartTrigger />

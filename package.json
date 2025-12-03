@@ -1,6 +1,6 @@
 {
   "name": "nuxtless",
-  "version": "0.11.6",
+  "version": "0.12.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy": "pnpm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@graphql-inspector/cli": "5.0.8",
@@ -17,14 +19,15 @@
     "@nuxt/image": "1.11.0",
     "@nuxt/scripts": "0.12.1",
     "@nuxt/ui": "4.1.0",
-    "@nuxthub/core": "0.9.0",
     "@nuxtjs/i18n": "10.1.0",
     "@nuxtjs/robots": "5.5.5",
     "@nuxtjs/sitemap": "7.4.7",
     "@pinia/nuxt": "0.11.3",
     "@tailwindcss/vite": "4.1.13",
+    "@vueuse/core": "14.0.0",
+    "@vueuse/integrations": "14.0.0",
     "graphql-request": "7.1.2",
-    "nuxt": "4.2.0",
+    "nuxt": "4.2.1",
     "nuxt-graphql-client": "0.2.46",
     "nuxt-link-checker": "4.3.2",
     "nuxt-og-image": "5.1.11",
@@ -34,7 +37,8 @@
     "pinia-plugin-persistedstate": "4.7.1",
     "tailwindcss": "4.1.13",
     "valibot": "1.1.0",
-    "vue": "3.5.22"
+    "vue": "3.5.25",
+    "vue-router": "4.6.3"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
   "devDependencies": {
@@ -44,14 +48,15 @@
     "@stripe/stripe-js": "^7.9.0",
     "@tailwindcss/typography": "0.5.19",
     "@unhead/vue": "2.0.19",
-    "@vueuse/core": "14.0.0",
     "@vueuse/nuxt": "14.0.0",
     "eslint": "9.38.0",
     "eslint-config-prettier": "10.1.8",
     "graphql": "16.12.0",
+    "nitro-cloudflare-dev": "0.2.2",
+    "nitropack": "2.12.9",
     "prettier-plugin-tailwindcss": "0.6.14",
     "typescript": "5.9.3",
     "vue-tsc": "3.1.0",
-    "wrangler": "4.24.3"
+    "wrangler": "4.51.0"
   }
 }

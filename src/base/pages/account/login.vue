@@ -7,8 +7,8 @@ const router = useRouter();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { isAuthenticated } = storeToRefs(useAuthStore());
-const loading = ref(true);
 const submitted = ref(false);
+const loading = ref(true);
 
 watch(submitted, (v) => {
   if (v) {

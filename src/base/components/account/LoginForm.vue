@@ -11,7 +11,10 @@ const { GQL_HOST: gqlHost, channelToken } = useRuntimeConfig().public;
 const { t, locale } = useI18n();
 const localePath = useLocalePath();
 const toast = useToast();
-const orderStore = useOrderStore();
+const { fetchOrder } = useOrderStore();
+const { fetchCustomer } = useCustomerStore();
+const { setUser } = useAuthStore();
+const { customer } = storeToRefs(useCustomerStore());
 
 const state = reactive({
   email: "",
@@ -32,13 +35,21 @@ async function onSubmit(event: FormSubmitEvent<LoginForm>) {
   );
 
   if (result && "identifier" in result) {
+    await fetchOrder();
+    await fetchCustomer();
+
+    setUser({
+      id: customer.value.id,
+      email: customer.value.emailAddress,
+    });
+
     toast.add({
       title: t("messages.account.loginSuccess"),
       description: t("messages.account.successMessage"),
       color: "success",
     });
+
     emit("success");
-    await orderStore.fetchOrder();
   } else if (result && "errorCode" in result) {
     toast.add({
       title: t("messages.account.loginFail"),

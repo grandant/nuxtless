@@ -157,6 +157,34 @@ nuxtless/
 
 > Note: This structure reflects compatibility with Tailwind CSS v4. Some issues were resolved by placing layout and page files inside the `app/` directory. Suggestions welcome.
 
+## Deployment
+
+Nuxtless now supports **instant deployment on Cloudflare Workers**, with NuxtHub Admin sunsetting as NuxtHub moves toward **self‑hosting**. See the announcement [here](https://hub.nuxt.com/changelog/self-hosting-first).
+
+### Steps
+
+1. **Copy the Wrangler template**
+
+   - Rename `wrangler.jsonc.example` → `wrangler.jsonc`.
+
+2. **Fill in the required variables**
+
+   - Update all values inside `wrangler.jsonc` according to your environment.
+
+3. **Deploy via Cloudflare Dashboard (or use the CLI)**
+
+   - Go to **Cloudflare → Workers & Pages → Create Application**.
+   - Choose **Link to Git Repository** and select your Nuxtless repo.
+
+4. **Set Build Variables** (Important)
+
+   - Add **GQL\_HOST** under *Build Environment Variables and Secrets*.
+   - This value must match the one in your `.env` / wrangler config.
+
+That's it — **Nuxtless running on the edge**.
+
+---
+
 ## Environment Example
 
 ```env

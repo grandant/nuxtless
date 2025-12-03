@@ -1,3 +1,23 @@
 {
-  "extends": "../../.nuxt/tsconfig.server.json"
+  "extends": "../../.nuxt/tsconfig.server.json",
+  "compilerOptions": {
+    "module": "preserve",
+    "target": "ESNext",
+    "types": ["nuxt"],
+    // "composite": true,
+    // "skipLibCheck": true,
+    "paths": {
+      "~~/*": ["../*"],
+      "#imports": ["../.nuxt/imports.d.ts"]
+    }
+  }
+  // "include": [
+  //   "**/*.vue",
+  //   "**/*.ts",
+  //   "../.nuxt/gql/**/*.ts",
+  //   "../.nuxt/nuxt.d.ts",
+  //   "../.nuxt/imports.d.ts",
+  //   "../.nuxt/components.d.ts",
+  //   "../.nuxt/schema.d.ts"
+  // ]
 }

@@ -19,6 +19,10 @@ export default defineI18nLocale(() => ({
       },
     },
     general: {
+      colorMode: "Modo de color",
+      system: "Sistema",
+      light: "Claro",
+      dark: "Oscuro",
       actions: "Acciones",
       details: "Detalles",
       getLink: "Copiar enlace",

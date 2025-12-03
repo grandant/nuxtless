@@ -3,7 +3,6 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/eslint",
     "@nuxt/fonts",
-    "@nuxthub/core",
     "@nuxtjs/i18n",
     "@nuxt/icon",
     "@nuxt/image",
@@ -14,17 +13,13 @@ export default defineNuxtConfig({
     "@nuxtjs/sitemap",
     "@pinia/nuxt",
     "@vueuse/nuxt",
+    "nitro-cloudflare-dev",
     "nuxt-graphql-client",
     "nuxt-link-checker",
     "nuxt-og-image",
     "nuxt-schema-org",
     "pinia-plugin-persistedstate/nuxt",
   ],
-
-  // @ts-expect-error https://github.com/nuxt/nuxt/issues/32633
-  hub: {
-    blob: true,
-  },
 
   // App-Wide Settings
   app: {
@@ -70,7 +65,7 @@ export default defineNuxtConfig({
     clients: {
       default: {
         schema: "../../graphql.schema.json",
-        host: process.env.GQL_HOST || "http://localhost:3001/shop-api",
+        host: process.env.GQL_HOST,
         token: {
           type: "Bearer",
           name: "Authorization",

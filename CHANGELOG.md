@@ -3,12 +3,26 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
+## [0.12.0] - 2025-11-08
+### Fixes
+- Resolved an issue where logged-in users were logged out on hard refresh
+- Fixed hydration issue on the account page causing missing user data
+
+### Core Improvements
+- Split `LangSwitcher` into a component + composable
+- Added color mode menu
+- Updated all locales with new translation strings
+
+### Deployment
+- Added Cloudflare Workers configuration for instant deploys
+- Removed NuxtHub integration
+- Removed unused server logic
+
 ## [0.11.0] - 2025-11-07
 ### Core
 - Migrated project to `src/` directory structure
 - Updated imports accordingly
 - Expanded `tsconfig` and `eslint.config` rules (temporary workarounds for Nuxt issue #32633)
-
 
 ## [0.10.0] - 2025-11-07
 ### Core
