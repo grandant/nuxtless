@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import type { ButtonProps } from "@nuxt/ui";
+import type { ButtonProps, DropdownMenuItem } from "@nuxt/ui";
 
 const {
+  locales = undefined,
   label = false,
   color = "primary",
   variant = "outline",
 } = defineProps<{
+  locales?: DropdownMenuItem[];
   label?: boolean | string;
   color?: ButtonProps["color"];
   variant?: ButtonProps["variant"];
@@ -15,7 +17,7 @@ const { localeItems, currentLocaleName } = useLangSwitcher();
 </script>
 
 <template>
-  <UDropdownMenu :items="localeItems">
+  <UDropdownMenu :items="locales || localeItems">
     <UButton
       icon="i-lucide-globe"
       :label="

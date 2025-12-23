@@ -33,6 +33,10 @@ logs
 .swp
 .swx
 
+# GQL schema
+schema.graphql
+graphql.schema.json
+
 # Media files
 public/media/
 

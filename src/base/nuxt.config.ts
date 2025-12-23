@@ -29,6 +29,7 @@ export default defineNuxtConfig({
   },
 
   // Pinia Configuration
+  // @ts-expect-error https://github.com/nuxt/nuxt/issues/32633
   pinia: {
     storesDirs: ["./stores/**"],
   },
@@ -72,6 +73,9 @@ export default defineNuxtConfig({
           value: "",
         },
         retainToken: true,
+        headers: {
+          "vendure-token": process.env.NUXT_PUBLIC_CHANNEL_TOKEN,
+        },
       },
     },
   },
