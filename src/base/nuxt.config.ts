@@ -90,6 +90,7 @@ export default defineNuxtConfig({
         file: "bg-BG.ts",
         name: "Български 🇧🇬",
       },
+      { code: "ru", language: "ru-RU", file: "ru-RU.ts", name: "Русский 🇷🇺" },
       { code: "en", language: "en-US", file: "en-US.ts", name: "English 🇺🇸" },
       { code: "de", language: "de-DE", file: "de-DE.ts", name: "Deutsch 🇩🇪" },
       { code: "es", language: "es-ES", file: "es-ES.ts", name: "Español 🇪🇸" },

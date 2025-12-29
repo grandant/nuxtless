@@ -30,13 +30,13 @@ async function onSubmit() {
   if (!state.code) return;
 
   // Note: consider a switch or a composable if more methods are added later
-  if (state.code === "standard-payment") {
-    await orderStore.transitionToState("ArrangingPayment");
-    await orderStore.addPaymentToOrder({ method: state.code, metadata: {} });
-  } else if (state.code === "stripe-payment") {
+  if (state.code === "stripe-payment") {
     orderStore.loading = true;
     await addressForm.value?.submitStripePayment();
     orderStore.loading = false;
+  } else {
+    await orderStore.transitionToState("ArrangingPayment");
+    await orderStore.addPaymentToOrder({ method: state.code, metadata: {} });
   }
 
   if (!orderStore.error) {
