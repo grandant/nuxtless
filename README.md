@@ -4,7 +4,7 @@
 
 Built with a focus on SEO, security, and type safety in mind.
 
-**Live Demo:** https://nuxtless.unstack.dev
+**Live Demo:** [https://nuxtless.unstack.dev](https://nuxtless.unstack.dev)
 
 ---
 
@@ -161,7 +161,7 @@ nuxtless/
 
 ## Deployment
 
-Nuxtless now supports **instant deployment on Cloudflare Workers**, with NuxtHub Admin sunsetting as NuxtHub moves toward **self‑hosting**. See the announcement [here](https://hub.nuxt.com/changelog/self-hosting-first).
+Nuxtless now supports **instant deployment on Cloudflare Workers**, with NuxtHub Admin sunsetting as NuxtHub moves toward **self‑hosting**. See announcement: [https://hub.nuxt.com/changelog/self-hosting-first](https://hub.nuxt.com/changelog/self-hosting-first).
 
 ### Steps
 
@@ -173,7 +173,7 @@ Nuxtless now supports **instant deployment on Cloudflare Workers**, with NuxtHub
 
    - Update all values inside `wrangler.jsonc` according to your environment.
 
-3. **Deploy via Cloudflare Dashboard (or use the CLI)**
+3. **Deploy via Cloudflare Dashboard**
 
    - Go to **Cloudflare → Workers & Pages → Create Application**.
    - Choose **Link to Git Repository** and select your Nuxtless repo.
@@ -190,16 +190,22 @@ That's it — **Nuxtless running on the edge**.
 ## Environment Example
 
 ```env
-GQL_HOST="http://localhost:3001/shop-api"
+GQL_HOST="http://localhost:3000/shop-api"
+NUXT_IMAGE_PROVIDER="ipx"
+PORT=8080
 NUXT_PUBLIC_I18N_BASE_URL="nuxtless.unstack.dev"
-NUXT_PUBLIC_IMAGE_PROVIDER="ipx"
 NUXT_PUBLIC_CHANNEL_TOKEN="your-channel-token"
 NUXT_PUBLIC_SITE_NAME="Nuxtless"
 NUXT_PUBLIC_STRIPE_PUBLIC_KEY="pk_prod_super-long-key"
 NUXT_PUBLIC_UNSPLASH_API_KEY="your-unsplash-api-key"
 ```
 
-> `GQL_HOST` is the main GraphQL endpoint (typically Vendure's `/shop-api`). `NUXT_PUBLIC_I18N_BASE_URL` is the base domain used for localized routing and SEO. Both are **required** for the app to function correctly.
+> **Required:**
+>
+> - `GQL_HOST` is the main GraphQL endpoint (typically Vendure's `/shop-api`).
+> - `NUXT_IMAGE_PROVIDER` is set to `ipx` for local development.
+> - `PORT` can be set to `8080` to work with Vendure out of the box.
+> - `NUXT_PUBLIC_I18N_BASE_URL` is the base domain used for localized routing and SEO.
 >
 > `NUXT_PUBLIC_UNSPLASH_API_KEY` is only needed if not using your own images for the hero banner on the index page.
 
