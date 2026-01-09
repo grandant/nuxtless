@@ -21,7 +21,10 @@ export default defineNuxtConfig({
 
   srcDir: "./src/app",
 
-  extends: ["./src/base"],
+  extends: [
+    "./src/layers/lk",
+    "./src/base"
+  ],
 
   css: ["./src/app/assets/css/main.css"],
 
