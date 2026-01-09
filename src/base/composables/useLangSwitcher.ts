@@ -1,7 +1,7 @@
 import type { DropdownMenuItem } from "@nuxt/ui";
 
 export function useLangSwitcher(
-  appLocales: string[] = ["bg", "de", "en", "es", "fr", "it", "pt"],
+  appLocales: string[] = ["bg", "ru", "de", "en", "es", "fr", "it", "pt"],
 ) {
   const { locales, locale } = useI18n();
   const switchLocalePath = useSwitchLocalePath();
