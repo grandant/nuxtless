@@ -16,6 +16,7 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
 const orderStore = useOrderStore();
 const { customer } = storeToRefs(useCustomerStore());
 const { fetchCustomer } = useCustomerStore();
+const { countryCodeDefault } = useAppConfig()
 const isMounted = ref(false);
 
 if (!customer.value || !("phoneNumber" in customer.value)) {
@@ -75,7 +76,7 @@ onMounted(() => {
     state.streetLine1 = c.addresses?.[0]?.streetLine1 ?? "";
     state.city = c.addresses?.[0]?.city ?? "";
     state.postalCode = c.addresses?.[0]?.postalCode ?? "";
-    state.countryCode = c.addresses?.[0]?.country?.code ?? "BG";
+    state.countryCode = c.addresses?.[0]?.country?.code ?? countryCodeDefault;
   }
 });
 </script>

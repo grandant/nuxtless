@@ -2,6 +2,8 @@ export default defineAppConfig({
   myLayer: {
     name: "Base Layer",
   },
+  appLocales:["bg", "ru", "de", "en", "es", "fr", "it", "pt"],
+  countryCodeDefault:"BG"
 });
 
 declare module "@nuxt/schema" {
@@ -10,5 +12,9 @@ declare module "@nuxt/schema" {
       /** Project name */
       name?: "Nuxt Base Layer";
     };
+    appLocales:string[]
+    countryCodeDefault:string
   }
 }
+
+export {}
