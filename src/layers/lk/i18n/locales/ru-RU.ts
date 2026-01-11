@@ -29,6 +29,10 @@ export default defineI18nLocale(() => ({
       getLinkSuccess: "Ссылка на заказ скопирована в буфер обмена!",
       citySearchHint: "Начните вводить название города…",
       date: "Дата",
+      dates:{
+        startDate:'Дата начала',
+        endDate:'Дата окончания'
+      },
       status: "Статус",
       amount: "Сумма",
       paymentMethod: "Способ оплаты",
@@ -63,7 +67,11 @@ export default defineI18nLocale(() => ({
         unstack: "Создано с ❤️ в Unstack",
       },
     },
+    access:{
+      active:'Активен',
+    },
     account: {
+      access: "Мои доступы",
       password: "Пароль",
       newPassword: "Новый пароль",
       confirmNewPassword: "Подтвердите новый пароль",

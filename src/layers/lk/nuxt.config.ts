@@ -1,29 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    "@nuxt/eslint",
-    "@nuxt/fonts",
-    "@nuxtjs/i18n",
-    "@nuxt/icon",
-    "@nuxt/image",
-    "@nuxt/scripts",
-    "@nuxt/test-utils",
-    "@nuxt/ui",
-    "@nuxtjs/robots",
-    "@nuxtjs/sitemap",
-    "@pinia/nuxt",
-    "@vueuse/nuxt",
-    "nitro-cloudflare-dev",
-    "nuxt-graphql-client",
-    "nuxt-link-checker",
-    "nuxt-og-image",
-    "nuxt-schema-org",
-    "pinia-plugin-persistedstate/nuxt",
-  ],
-
-
-
-
+  // Global GraphQL Client Configuration
+  "graphql-client": {
+    codegen: {
+      disableOnBuild: false,
+      onlyOperationTypes: false,
+    },
+    documentPaths: [
+      "../layers/lk/gql/queries",
+      "../layers/lk/gql/fragments"
+    ]
+  },
 
   // Global NuxtImage  Configuration
   image: {

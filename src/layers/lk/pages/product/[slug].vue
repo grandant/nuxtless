@@ -1,0 +1,194 @@
+<script setup lang="ts">
+const route = useRoute();
+const slug = route.params.slug as string;
+const { t, locale } = useI18n();
+const { i18NBaseUrl } = useRuntimeConfig().public;
+const productStore = useProductStore();
+
+const { data } = await useAsyncGql("GetProductDetail", {
+  slug,
+});
+
+const product = computed(() => data.value.product);
+
+watch(
+  product,
+  (p) => {
+    if (p) productStore.init(p);
+  },
+  { immediate: true, flush: "post" },
+);
+
+const { hasVariants, selectedVariant } = storeToRefs(productStore);
+
+const formatPrice = (amount: number) =>
+  new Intl.NumberFormat(locale.value, {
+    style: "currency",
+    currency: selectedVariant.value?.currencyCode || "EUR",
+  }).format(amount / 100);
+
+// SEO Meta
+useSeoMeta({
+  title: product.value?.name,
+  description: product.value?.description,
+  ogTitle: product.value?.name,
+  ogDescription: product.value?.description,
+  twitterTitle: product.value?.name,
+  twitterDescription: product.value?.description,
+});
+
+// OgImage
+defineOgImageComponent("Frame", {
+  title: t("messages.site.title"),
+  description: `${product.value?.name}: ${product.value?.description}`,
+  image: product.value?.featuredAsset?.preview,
+  // logo: "/logo.png",
+});
+
+// SchemaOrg
+if (product.value && selectedVariant.value) {
+  const images = product.value.assets?.map((a) => a.preview) ?? [];
+
+  useSchemaOrg([
+    defineProduct({
+      name: selectedVariant.value.name,
+      description: product.value.description,
+      sku: selectedVariant.value.sku,
+      // brand: {
+      //   "@type": "Brand",
+      //   name: product.value.facetValues.brand,
+      // },
+      image: images,
+      inLanguage: locale.value,
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `${i18NBaseUrl}/products/${product.value.slug}`,
+      },
+
+      // Offers
+      offers: {
+        "@type": "Offer",
+        url: `${i18NBaseUrl}/products/${product.value.slug}`,
+        price: (selectedVariant.value.priceWithTax ?? 0) / 100,
+        priceCurrency: selectedVariant.value.currencyCode ?? "EUR",
+        availability:
+          selectedVariant.value.stockLevel === "IN_STOCK"
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
+        itemCondition: "https://schema.org/NewCondition",
+        seller: {
+          "@type": "Organization",
+          name: t("messages.site.title"),
+        },
+      },
+    }),
+    defineBreadcrumb({
+      itemListElement: [
+        ...getProductTrail(product.value).map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.label,
+          item: `${i18NBaseUrl}${c.to}`,
+        })),
+        {
+          "@type": "ListItem",
+          position: (getProductTrail(product.value).length ?? 0) + 1,
+          name: product.value.name,
+          item: `${i18NBaseUrl}/products/${product.value.slug}`,
+        },
+      ],
+    }),
+  ]);
+}
+</script>
+
+<template>
+  <main class="container">
+    <div
+      class="grid grid-flow-row grid-cols-1 gap-10 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-[auto_auto_auto_auto]"
+    >
+      <header class="mt-14">
+        <div class="flex gap-4">
+          <h1 class="text-2xl font-semibold">
+            {{ selectedVariant?.name ?? product?.name }}
+          </h1>
+        </div>
+        <UBadge color="info">
+          <div class="flex flex-row gap-2 text-sm font-bold">
+            <span>
+              {{ formatPrice(selectedVariant?.priceWithTax) }}
+            </span>
+          </div>
+        </UBadge>
+        <BreadcrumbTrail :product="product" trail="product" class="mt-2" />
+      </header>
+
+      <!-- Prouct Galley -->
+      <section aria-labelledby="product-gallery-heading">
+        <h2 id="product-gallery-heading" class="sr-only">Product Gallery</h2>
+        <ProductGallery />
+      </section>
+
+      <div class="row-span-3 grid grid-rows-subgrid gap-4">
+        <div class="row-start-2 flex flex-col sm:mt-2">
+          <!-- Product Details -->
+          <section aria-labelledby="product-details-heading">
+            <h2 id="product-details-heading" class="sr-only">
+              Product Details
+            </h2>
+
+            <ProductDetails
+              :stock-level="selectedVariant?.stockLevel"
+              :sku="selectedVariant?.sku"
+            />
+
+            <ProductDescription class="mt-8 line-clamp-2" />
+          </section>
+
+          <hr class="mt-8" />
+
+          <!-- Product Variants -->
+          <section class="mt-8" aria-labelledby="product-variants-heading">
+            <h2 id="product-variants-heading" class="sr-only">
+              Product Variants
+            </h2>
+            <ProductVariants />
+          </section>
+
+          <section
+            :class="[hasVariants ? 'mt-0 sm:mt-12' : 'mt-0']"
+            aria-labelledby="product-add-to-cart-heading"
+          >
+            <h2 id="product-add-to-cart-heading" class="sr-only">
+              Add to Cart
+            </h2>
+            <CartAddButton :variant-id="selectedVariant?.id" />
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <hr class="mt-4 mb-8 sm:mt-0" />
+
+    <!-- Full Description -->
+    <section aria-labelledby="product-description-heading">
+      <h2 id="product-description-heading" class="sr-only">
+        Product Description
+      </h2>
+      <ProductDescription
+        v-if="product?.description"
+        :description="product?.description"
+      />
+    </section>
+
+    <!-- Featured Products -->
+    <section class="mt-14 mb-14" aria-labelledby="related-products-heading">
+      <h2 id="related-products-heading" class="mb-4 text-2xl font-semibold">
+        {{ t("messages.shop.popularProducts") }}
+      </h2>
+      <HomeFeaturedProducts />
+    </section>
+  </main>
+</template>
+
+<style lang="css" scoped></style>

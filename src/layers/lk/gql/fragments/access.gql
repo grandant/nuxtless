@@ -1,0 +1,12 @@
+fragment DigitalAccessBase on DigitalAccess {
+  id
+  isCurrentlyActive
+  accessEndDate
+  accessStartDate
+  productContent {
+      id
+      name
+      slug
+  }
+  orderId
+}
