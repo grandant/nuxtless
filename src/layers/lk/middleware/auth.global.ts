@@ -1,4 +1,4 @@
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware((to, from) => {
   const authStore = useAuthStore();
   const publicRoutes = [
     '/account/login',
@@ -6,6 +6,11 @@ export default defineNuxtRouteMiddleware((to) => {
     '/account/request-password-reset',
     '/auth/callback'
   ]; // Добавьте сюда публичные маршруты
+  //@todo если пользователь разлогинится на странице / мидлвара не сработает
+  // Если пользователь пришёл с /account/login на /account
+  if (authStore.isAuthenticated && to.path === '/account' && from.path === '/account/login') {
+    return navigateTo('/', { redirectCode: 301 });
+  }
 
   // Если пользователь не аутентифицирован и пытается перейти на защищенный маршрут
   if (!authStore.isAuthenticated && !publicRoutes.includes(to.path)) {

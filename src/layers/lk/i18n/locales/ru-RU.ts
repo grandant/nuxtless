@@ -30,8 +30,8 @@ export default defineI18nLocale(() => ({
       citySearchHint: "Начните вводить название города…",
       date: "Дата",
       dates:{
-        startDate:'Дата начала',
-        endDate:'Дата окончания'
+        startDate:'Начало',
+        endDate:'Конец'
       },
       status: "Статус",
       amount: "Сумма",

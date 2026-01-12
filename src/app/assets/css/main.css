@@ -29,6 +29,10 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--ui-border);
   }
+}
+
+.dark header,.dark footer  {
+    background-color: initial !important; /* Замените на нужный цвет */
 }

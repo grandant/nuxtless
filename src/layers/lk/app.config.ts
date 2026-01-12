@@ -1,6 +1,18 @@
 export default defineAppConfig({
   appLocales:["ru","en"],
-  countryCodeDefault:"RU"
+  countryCodeDefault:"RU",
+  ui:{
+    colors: {
+      primary: 'violet',
+      neutral: 'zinc'
+    },
+    table: {
+      slots: {
+        tbody: '',
+        td: 'border-none'
+      }
+    },
+  }
 });
 
 declare module "@nuxt/schema" {

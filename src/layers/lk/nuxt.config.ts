@@ -1,6 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // Global GraphQL Client Configuration
+  modules: [
+    "@nuxt/ui",
+  ],
+  ui: {
+    colors: {
+      primary: 'violet',
+      neutral: 'zinc'
+    },
+    table: {
+      slots: {
+        tbody: '',
+        td: 'border-none'
+      }
+    }
+  },
   "graphql-client": {
     codegen: {
       disableOnBuild: false,
