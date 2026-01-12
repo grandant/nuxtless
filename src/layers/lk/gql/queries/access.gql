@@ -1,32 +1,28 @@
 
-
 query GetAccesses($options: DigitalAccessListOptions) {
-    accesses(options: $options) {
-        items {
-            id
-            createdAt
-            updatedAt
-            purchaserId
-            purchaser{
-                firstName
-                lastName
+    activeCustomer {
+        digitalAccesses(options: $options) {
+            items {
                 id
+                createdAt
+                updatedAt
+                productId
+                product {
+                    id
+                    name
+                    slug
+                }
+                accessStartDate
+                accessEndDate
+                remainingVisits
+                totalVisits
+                orderId
+                isActive
+                totalDurationDays
+                daysRemaining
             }
-            productContentId
-            productContent {
-                id
-                name
-                slug
-            }
-            beneficiaryId
-            beneficiaryType
-            accessStartDate
-            accessEndDate
-            remainingVisits
-            totalVisits
-            orderId
-            isCurrentlyActive
+            totalItems
         }
-        totalItems
     }
+
 }

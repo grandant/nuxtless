@@ -1,9 +1,9 @@
 fragment DigitalAccessBase on DigitalAccess {
   id
-  isCurrentlyActive
+  isActive
   accessEndDate
   accessStartDate
-  productContent {
+  product{
       id
       name
       slug

@@ -8,8 +8,8 @@ type Data = {
   id: string;
   accessStartDate?: Date;
   accessEndDate?: Date | null;
-  isCurrentlyActive:boolean;
-  productContent:{
+  isActive:boolean;
+  product:{
     name:string
     slug:string,
     id:string
@@ -47,7 +47,7 @@ const { data: accsessesData, refresh:refresh } = await useAsyncGql(
 
 
 const tableData = computed<Data[]>(() =>
-  accsessesData.value?.accesses?.items.map((item, index) => ({
+  accsessesData.value?.activeCustomer?.digitalAccesses.items.map((item, index) => ({
     ...item,
     accessStartDate: d(new Date(item.accessStartDate)),
     accessEndDate: d(new Date(item.accessEndDate)),
@@ -62,13 +62,13 @@ const columns: TableColumn<Data>[] = [
     cell: ({ row }) => `#${row.getValue("id")}`,
   },*/
   {
-    accessorKey: "productContent",
+    accessorKey: "product",
     header: t("messages.general.product"),
     cell: ({ row }) => {
-      const productContent = row.getValue("productContent")
+      const product = row.getValue("product")
       return h(ULink, {
-        to:localePath('/product/'+ productContent.slug),
-      },[productContent.name])
+        to:localePath('/product/'+ product.slug),
+      },[product.name])
     },
   },
   {
@@ -82,12 +82,27 @@ const columns: TableColumn<Data>[] = [
     cell: ({ row }) => `${row.getValue("accessEndDate")}`,
   },
   {
-    accessorKey: "isCurrentlyActive",
+    accessorKey: "totalDurationDays",
+    header: 'totalDurationDays',
+    cell: ({ row }) => `${row.getValue("totalDurationDays")}`,
+  },
+  {
+    accessorKey: "daysRemaining",
+    header: 'daysRemaining',
+    cell: ({ row }) => `${row.getValue("daysRemaining")}`,
+  },
+  {
+    accessorKey: "accessEndDate",
+    header: t("messages.general.dates.endDate"),
+    cell: ({ row }) => `${row.getValue("accessEndDate")}`,
+  },
+  {
+    accessorKey: "isActive",
     header: t("messages.access.active"),
     cell: ({ row }) => {
-      const isCurrentlyActive = row.getValue("isCurrentlyActive")
+      const isActive = row.getValue("isActive")
       return h(UCheckbox, {
-        defaultValue:isCurrentlyActive,
+        defaultValue:isActive,
         disabled:true,
       },)
     },
