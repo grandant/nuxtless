@@ -3,6 +3,14 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
+## 0.13.0
+
+### Added
+- Added Russian (RU) locale
+
+### Changed
+- Improved i18n handling by aligning the language switcher with app-defined locales
+
 ## [0.12.0] - 2025-11-08
 ### Fixes
 - Resolved an issue where logged-in users were logged out on hard refresh
