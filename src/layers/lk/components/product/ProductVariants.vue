@@ -28,7 +28,7 @@ const groupItems = computed<Record<string, OptionItem[]>>(() => {
 
       <fieldset v-if="group.values">
         <legend class="mb-2 text-sm">
-          {{ group.name }}
+          {{ group.name }} !!!
         </legend>
 
         <URadioGroup

@@ -10,6 +10,7 @@ import type {
   RequestPasswordResetMutation,
   ResetPasswordMutation,
   GetCustomerAddressesQuery,
+  UpdateCustomerMutation,
 } from "~~/.nuxt/gql/default";
 
 // ─────────────────────────────────────────────────────────────
@@ -44,3 +45,6 @@ export type ResetPasswordResult = ResetPasswordMutation["resetPassword"];
 
 export type GetCustomerAddressesResult =
   GetCustomerAddressesQuery["activeCustomer"];
+
+export type UpdateCustomerResult =
+  UpdateCustomerMutation["updateCustomer"];

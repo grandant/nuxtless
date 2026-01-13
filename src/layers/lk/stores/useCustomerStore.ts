@@ -76,6 +76,8 @@ export const useCustomerStore = defineStore("customer", () => {
     firstName: string;
     lastName: string;
     password?: string;
+    phoneNumber: string;
+    customFields:Record<string, unknown>
   }): Promise<RegisterResult | undefined> {
     try {
       const result = (await GqlRegisterCustomerAccount({ input }))
@@ -84,21 +86,6 @@ export const useCustomerStore = defineStore("customer", () => {
       return result;
     } catch (err) {
       console.error("Registration error:", err);
-      return undefined;
-    }
-  }
-
-
-  async function updateCustomer(input): Promise<UpdateCustomerResult | undefined> {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const result = (await GqlUpdateCustomer({ input })).updateCustomer;
-      customer.value = result;
-      return result;
-    } catch (err) {
-      console.error("updateCustomer request error:", err);
       return undefined;
     }
   }
@@ -147,6 +134,20 @@ export const useCustomerStore = defineStore("customer", () => {
       return result;
     } catch (err) {
       console.error("Reset password error:", err);
+      return undefined;
+    }
+  }
+
+  async function updateCustomer(input): Promise<UpdateCustomerResult | undefined> {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const result = (await GqlLKUpdateCustomer({ input })).updateCustomer;
+      customer.value = result;
+      return result;
+    } catch (err) {
+      console.error("updateCustomer request error:", err);
       return undefined;
     }
   }

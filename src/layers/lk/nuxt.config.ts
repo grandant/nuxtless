@@ -1,8 +1,37 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    "@nuxt/ui",
-  ],
+  nitro: {
+
+    preset: 'node-server', // Сброс к значению по умолчанию (автоопределение)
+    cloudflare: {
+      deployConfig: false,
+      nodeCompat: false,
+    },
+  },
+  experimental:{
+    viteEnvironmentApi: true,
+    noVueServer: true
+  },
+  future: {
+    compatibilityVersion: 5, // Или 5, если вы уже перешли на последние стандарты 2026 года
+  },
+  vite: {
+    server: {
+      hmr: {
+        protocol: 'ws',
+        host: '127.0.0.1'
+      }
+    },
+    optimizeDeps: {
+      // Принудительно включаем тяжелые модули в пре-бандлинг
+      //include: ['lodash', 'date-fns', 'your-heavy-library']
+    }
+  },
+  devServer: {
+    host: '127.0.0.1' // Ускоряет установку соединения в некоторых ОС
+  },
+  ogImage: { enabled: false },
+  ssr: false,
   ui: {
     colors: {
       primary: 'violet',

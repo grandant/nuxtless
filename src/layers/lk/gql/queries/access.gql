@@ -26,3 +26,4 @@ query GetAccesses($options: DigitalAccessListOptions) {
     }
 
 }
+

@@ -43,7 +43,7 @@ useState<CheckoutState>("checkoutState", () => ({
     shippingMethodId: "",
   },
   paymentForm: {
-    code: "",
+    code: "standard-payment",
   },
 }));
 
@@ -84,7 +84,7 @@ async function onSubmit() {
 
 onMounted(() => {
   isMounted.value = true;
-  useCheckout(); // recalc shipping under certain condtitions
+  //useCheckout(); // recalc shipping under certain condtitions
 });
 </script>
 

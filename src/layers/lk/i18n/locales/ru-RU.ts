@@ -19,6 +19,8 @@ export default defineI18nLocale(() => ({
       },
     },
     general: {
+      success:'Успешно',
+      submit:'Отправить',
       colorMode: "Цветовая тема",
       system: "Системная",
       light: "Светлая",
@@ -70,6 +72,7 @@ export default defineI18nLocale(() => ({
     access:{
       active:'Активен',
     },
+
     account: {
       access: "Мои доступы",
       password: "Пароль",
@@ -85,6 +88,8 @@ export default defineI18nLocale(() => ({
       lastNamePlaceholder: "Введите фамилию",
       enterPassword: "Введите пароль",
       confirmPassword: "Подтвердите пароль",
+      phoneNumber: "Номер телефона",
+      phoneNumberPlaceholder: "Введите номер телефона",
       email: "Электронная почта",
       emailPlaceholder: "Введите адрес электронной почты",
       login: "Войти",

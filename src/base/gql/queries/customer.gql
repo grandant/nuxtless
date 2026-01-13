@@ -100,3 +100,9 @@ mutation ResetPassword($token: String!, $password: String!) {
     }
   }
 }
+
+mutation UpdateCustomer($input: UpdateCustomerInput!) {
+    updateCustomer(input: $input) {
+        ...CustomerDetail
+    }
+}
