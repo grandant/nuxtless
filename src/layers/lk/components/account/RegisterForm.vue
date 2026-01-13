@@ -27,6 +27,9 @@ const state = reactive({
   }
 });
 
+const socialList = ref(['TG', 'WT', 'MAX','VK','OTHER'])
+const socialListSelected = ref(['VK'])
+
 async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
   const result = await register({
     firstName: event.data.firstName,
@@ -53,6 +56,8 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
       title: t("messages.account.registerSuccess"),
       description: t("messages.account.registerSuccessMessage"),
       color: "success",
+      icon: 'i-lucide-mail-warning',
+      duration:0,
     });
   } else if (result && "message" in result) {
     toast.add({
@@ -103,18 +108,34 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
       />
     </UFormField>
 
-    <!--lk logic-->
+    <!--lklogic-->
 
     <UFormField
       :label="t('messages.account.phoneNumber')"
       name="phoneNumber"
       size="xl"
     >
-      <UInput placeholder="89991112334" v-model="state.phoneNumber" class="w-full" type="text" />
+      <UInput placeholder="89008001234" v-model="state.phoneNumber" class="w-full" type="text" />
     </UFormField>
 
-    <h2 class="text-lg font-semibold">Укажите предпочитаемый канал связи</h2>
+    <h2 class="text-lg font-semibold mt-4">Укажите предпочитаемый канал связи</h2>
+    <UCheckboxGroup
+      orientation="horizontal"
+      v-model="socialListSelected"
+      :items="['VK','Телеграм', 'WhatsApp', 'MAX','Другой']"
+    />
+
     <UFormField
+      v-if="socialListSelected.includes('VK')"
+      :label="'Вконтакте'"
+      name="VK"
+      size="xl"
+    >
+      <UInput placeholder="Ваша страница Вконтакте" v-model="state.socialList.VK" class="w-full" type="text" />
+    </UFormField>
+
+    <UFormField
+      v-if="socialListSelected.includes('Телеграм')"
       :label="'Телеграм'"
       name="TG"
       size="xl"
@@ -124,32 +145,27 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
 
 
     <UFormField
+      v-if="socialListSelected.includes('WhatsApp')"
       :label="'WhatsApp'"
       name="WT"
       size="xl"
 
     >
-      <UInput placeholder="Ваш телефон" v-model="state.socialList.WT" class="w-full" type="text" />
+      <UInput placeholder="89008001234" v-model="state.socialList.WT" class="w-full" type="text" />
     </UFormField>
 
     <UFormField
-      :label="'Вконтакте'"
-      name="VK"
-      size="xl"
-    >
-      <UInput placeholder="Ваша страница Вконтакте" v-model="state.socialList.VK" class="w-full" type="text" />
-    </UFormField>
-
-    <UFormField
+      v-if="socialListSelected.includes('MAX')"
       :label="'Max'"
       name="Max"
       size="xl"
     >
-      <UInput placeholder="Ваш телефон"  v-model="state.socialList.MAX" class="w-full" type="text" />
+      <UInput placeholder="89008001234"  v-model="state.socialList.MAX" class="w-full" type="text" />
     </UFormField>
 
     <UFormField
-      :label="'Свой вариант'"
+      v-if="socialListSelected.includes('Другой')"
+      :label="'Другой вариант'"
       name="OTHER"
       size="xl"
     >
@@ -164,7 +180,6 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
     >
       <UInput v-model="state.city" class="w-full" type="text" />
     </UFormField>
-
 
     <UFormField
       :label="t('messages.billing.country')"

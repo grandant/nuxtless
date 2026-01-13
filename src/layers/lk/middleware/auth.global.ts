@@ -1,6 +1,7 @@
 export default defineNuxtRouteMiddleware((to, from) => {
   const authStore = useAuthStore();
   const publicRoutes = [
+    '/verify',
     '/account/login',
     '/account/register',
     '/account/request-password-reset',
