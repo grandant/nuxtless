@@ -4,6 +4,7 @@ import type { CheckoutState } from "~~/src/types/general";
 
 const router = useRouter();
 const { t } = useI18n();
+const { countryCodeDefault } = useAppConfig()
 const localePath = useLocalePath();
 const toast = useToast();
 const orderStore = useOrderStore();
@@ -36,7 +37,7 @@ useState<CheckoutState>("checkoutState", () => ({
     streetLine2: "",
     city: "",
     postalCode: "",
-    countryCode: "BG",
+    countryCode: countryCodeDefault,
     billingSameAsShipping: true,
   },
   shippingForm: {
