@@ -28,7 +28,7 @@ const features: ShopFeature[] = [
 </script>
 
 <template>
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
     <article v-for="feature in features" :key="feature.title">
       <UCard variant="outline" class="shadow">
         <div class="grid grid-cols-[auto_1fr] items-center gap-4">

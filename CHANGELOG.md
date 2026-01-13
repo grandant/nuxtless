@@ -3,7 +3,7 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
-## 0.14.0
+## 0.14.0 - 2026-01-13
 
 ### Changed
 - Reverted the recent introduction of the `src/` directory and returned to a flat Nuxt project structure
@@ -11,7 +11,7 @@ This project follows [Semantic Versioning](https://semver.org/) and the [Convent
 - Clarified type boundaries between domain models and UI view models
 - Made Vue runtime imports explicit where required by strict type checking
 
-## 0.13.0
+## 0.13.0 - 2026-01-13
 
 ### Added
 - Added Russian (RU) locale
