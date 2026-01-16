@@ -1,6 +1,6 @@
 {
   "name": "nuxtless",
-  "version": "0.12.2",
+  "version": "0.14.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,6 +9,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
     "deploy": "pnpm run build && wrangler deploy",
     "cf-typegen": "wrangler types"
   },

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
+## 0.14.0 - 2026-01-13
+
+### Changed
+- Reverted the recent introduction of the `src/` directory and returned to a flat Nuxt project structure
+- Improved overall TypeScript correctness based on `nuxt typecheck` feedback
+- Clarified type boundaries between domain models and UI view models
+- Made Vue runtime imports explicit where required by strict type checking
+
+## 0.13.0 - 2026-01-13
+
+### Added
+- Added Russian (RU) locale
+
+### Changed
+- Improved i18n handling by aligning the language switcher with app-defined locales
+
 ## [0.12.0] - 2025-11-08
 ### Fixes
 - Resolved an issue where logged-in users were logged out on hard refresh

@@ -1,6 +1,0 @@
-mutation CreateRobokassaPaymentIntent {
-  createRobokassaPaymentIntent {
-    paymentUrl
-    search
-  }
-}

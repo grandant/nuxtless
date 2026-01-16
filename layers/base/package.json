@@ -1,0 +1,6 @@
+{
+  "name": "nuxtless-base",
+  "private": true,
+  "type": "module",
+  "main": "./nuxt.config.ts"
+}
