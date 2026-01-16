@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 5, // Или 5, если вы уже перешли на последние стандарты 2026 года
   },
-  vite: {
+/*  vite: {
     server: {
       hmr: {
         protocol: 'ws',
@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   },
   devServer: {
     host: '127.0.0.1' // Ускоряет установку соединения в некоторых ОС
-  },
+  },*/
   ogImage: { enabled: false },
   ssr: false,
   ui: {

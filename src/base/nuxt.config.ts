@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     "@nuxtjs/sitemap",
     "@pinia/nuxt",
     "@vueuse/nuxt",
-    "nitro-cloudflare-dev",
+    //"nitro-cloudflare-dev",
     "nuxt-graphql-client",
     "nuxt-link-checker",
     "nuxt-og-image",

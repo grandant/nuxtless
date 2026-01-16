@@ -27,7 +27,6 @@ const state = reactive({
   }
 });
 
-const socialList = ref(['TG', 'WT', 'MAX','VK','OTHER'])
 const socialListSelected = ref(['VK'])
 
 async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
@@ -118,7 +117,7 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
       <UInput placeholder="89008001234" v-model="state.phoneNumber" class="w-full" type="text" />
     </UFormField>
 
-    <h2 class="text-lg font-semibold mt-4">Укажите предпочитаемый канал связи</h2>
+    <h2 class="text-lg font-semibold mt-4">Укажите предпочтительный канал связи</h2>
     <UCheckboxGroup
       orientation="horizontal"
       v-model="socialListSelected"
@@ -127,7 +126,7 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
 
     <UFormField
       v-if="socialListSelected.includes('VK')"
-      :label="'Вконтакте'"
+      label="VK"
       name="VK"
       size="xl"
     >
@@ -143,7 +142,6 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
       <UInput placeholder="Ваш логин или телефон" v-model="state.socialList.TG" class="w-full" type="text" />
     </UFormField>
 
-
     <UFormField
       v-if="socialListSelected.includes('WhatsApp')"
       :label="'WhatsApp'"
@@ -153,7 +151,6 @@ async function onSubmit(event: FormSubmitEvent<RegisterForm>) {
     >
       <UInput placeholder="89008001234" v-model="state.socialList.WT" class="w-full" type="text" />
     </UFormField>
-
     <UFormField
       v-if="socialListSelected.includes('MAX')"
       :label="'Max'"
