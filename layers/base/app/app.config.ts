@@ -12,7 +12,7 @@ declare module "@nuxt/schema" {
       /** Project name */
       name?: "Nuxt Base Layer";
     };
-    appLocales: string[];
-    countryCodeDefault: string;
+    appLocales?: string[];
+    countryCodeDefault?: string;
   }
 }
