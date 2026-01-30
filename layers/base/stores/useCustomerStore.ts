@@ -39,6 +39,9 @@ export const useCustomerStore = defineStore("customer", () => {
     password: string,
     rememberMe = true,
   ): Promise<LogInResult | undefined> {
+    loading.value = true;
+    error.value = null;
+
     try {
       const result = (
         await GqlLogInUser({ emailAddress: email, password, rememberMe })
@@ -50,12 +53,19 @@ export const useCustomerStore = defineStore("customer", () => {
 
       return result;
     } catch (err) {
-      console.error("Login error:", err);
+      if (err instanceof Error) {
+        error.value = err.message;
+      }
       return undefined;
+    } finally {
+      loading.value = false;
     }
   }
 
   async function logout(): Promise<LogOutResult | undefined> {
+    loading.value = true;
+    error.value = null;
+
     try {
       const result = (await GqlLogOutUser()).logout;
 
@@ -65,8 +75,12 @@ export const useCustomerStore = defineStore("customer", () => {
 
       return result;
     } catch (err) {
-      console.error("Logout error:", err);
+      if (err instanceof Error) {
+        error.value = err.message;
+      }
       return undefined;
+    } finally {
+      loading.value = false;
     }
   }
 
@@ -76,18 +90,28 @@ export const useCustomerStore = defineStore("customer", () => {
     lastName: string;
     password?: string;
   }): Promise<RegisterResult | undefined> {
+    loading.value = true;
+    error.value = null;
+
     try {
       const result = (await GqlRegisterCustomerAccount({ input }))
         .registerCustomerAccount;
 
       return result;
     } catch (err) {
-      console.error("Registration error:", err);
+      if (err instanceof Error) {
+        error.value = err.message;
+      }
       return undefined;
+    } finally {
+      loading.value = false;
     }
   }
 
   async function verify(token: string): Promise<VerifyResult | undefined> {
+    loading.value = true;
+    error.value = null;
+
     try {
       const result = (await GqlVerifyCustomerAccount({ token }))
         .verifyCustomerAccount;
@@ -97,22 +121,33 @@ export const useCustomerStore = defineStore("customer", () => {
       }
       return result;
     } catch (err) {
-      console.error("Unexpected verification error:", err);
+      if (err instanceof Error) {
+        error.value = err.message;
+      }
       return undefined;
+    } finally {
+      loading.value = false;
     }
   }
 
   async function requestPasswordReset(
     emailAddress: string,
   ): Promise<RequestPasswordResetResult | undefined> {
+    loading.value = true;
+    error.value = null;
+
     try {
       const result = (await GqlRequestPasswordReset({ emailAddress }))
         .requestPasswordReset;
 
       return result;
     } catch (err) {
-      console.error("Password reset request error:", err);
+      if (err instanceof Error) {
+        error.value = err.message;
+      }
       return undefined;
+    } finally {
+      loading.value = false;
     }
   }
 
@@ -120,6 +155,9 @@ export const useCustomerStore = defineStore("customer", () => {
     token: string,
     password: string,
   ): Promise<ResetPasswordResult | undefined> {
+    loading.value = true;
+    error.value = null;
+
     try {
       const result = (await GqlResetPassword({ token, password }))
         .resetPassword;
@@ -130,8 +168,12 @@ export const useCustomerStore = defineStore("customer", () => {
 
       return result;
     } catch (err) {
-      console.error("Reset password error:", err);
+      if (err instanceof Error) {
+        error.value = err.message;
+      }
       return undefined;
+    } finally {
+      loading.value = false;
     }
   }
 
