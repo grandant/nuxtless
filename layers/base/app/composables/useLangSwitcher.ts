@@ -1,16 +1,17 @@
 import type { DropdownMenuItem } from "@nuxt/ui";
 
-export function useLangSwitcher(
-  appLocales?: string[]
-) {
+export function useLangSwitcher(appLocales?: string[]) {
   const appConfig = useAppConfig();
-  const listLocales = appLocales ?? appConfig.appLocales
+  const listLocales = useState(
+    "appLocales",
+    () => appLocales ?? appConfig.appLocales,
+  );
   const { locales, locale } = useI18n();
   const switchLocalePath = useSwitchLocalePath();
 
   const localeItems = computed<DropdownMenuItem[]>(() =>
     locales.value
-      .filter((l) => listLocales.includes(l.code))
+      .filter((l) => listLocales.value.includes(l.code))
       .map((l) => ({
         label: l.name,
         to: switchLocalePath(l.code),

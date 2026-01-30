@@ -76,7 +76,7 @@ export default defineNuxtConfig({
         },
         retainToken: true,
         headers: {
-          "vendure-token": process.env.NUXT_PUBLIC_CHANNEL_TOKEN!,
+          "vendure-token": process.env.CHANNEL_TOKEN!,
         },
       },
     },

@@ -95,63 +95,62 @@ nuxtless/
 │   ├── critical-path.md
 │   ├── test-blueprint.md
 │   └── bundle-audit.md
-├── src/
-│   ├── app/                    # Application layer (final composition)
-│   │   ├── assets/             # Global assets processed by Vite (CSS, fonts, etc.)
-│   │   │   └── css/            # TailwindCSS and global styles
-│   │   ├── layouts/            # Application layouts (default, admin, etc.)
-│   │   ├── pages/              # Top-level page overrides (if any)
-│   │   └── app.vue             # Root Vue component
-│   │
-│   ├── base/                   # Nuxtless base layer - core ecommerce functionality
-│   │   ├── components/         # Base reusable UI components
-│   │   │   ├── account/        # Account-related components
-│   │   │   ├── cart/           # Shopping cart components
-│   │   │   ├── category/       # Category/collection components
-│   │   │   ├── checkout/       # Checkout flow components
-│   │   │   ├── header/         # Header components
-│   │   │   ├── product/        # Product display components
-│   │   │   └── CLAUDE.md       # Generic component/UI rules for Vue/Nuxt
-│   │   ├── composables/        # Core composition functions
-│   │   ├── gql/                # GraphQL queries and fragments
-│   │   │   ├── queries/        # GraphQL query definitions
-│   │   │   └── fragments/      # GraphQL fragment definitions
-│   │   ├── i18n/               # Internationalization files
-│   │   ├── pages/              # Base pages (can be overridden by layers)
-│   │   │   ├── account/        # Account pages
-│   │   │   ├── category/       # Category pages
-│   │   │   ├── checkout/       # Checkout pages
-│   │   │   ├── product/        # Product pages
-│   │   │   └── CLAUDE.md       # Generic page/SEO/routing rules for Nuxt
-│   │   ├── plugins/            # Core Nuxt plugins
-│   │   ├── stores/             # Base Pinia stores (state management, NOT data fetching)
-│   │   ├── utils/              # Base utility functions
-│   │   ├── validators/         # Base validation schemas
-│   │   └── nuxt.config.ts      # Base layer configuration (modules & settings)
-│   │
-│   ├── layers/                 # Custom extension layers (added by extending projects)
-│   │   └── <layer-name>/       # Example: unstack, theater, festival, etc.
-│   │       ├── components/     # Layer-specific components
-│   │       ├── composables/    # Layer-specific composables
-│   │       ├── pages/          # Layer-specific pages (extends base)
-│   │       ├── stores/         # Layer-specific stores
-│   │       ├── utils/          # Layer-specific utilities
-│   │       ├── validators/     # Layer-specific validators
-│   │       └── nuxt.config.ts  # Layer configuration
-│   │
-│   ├── schema/                 # Schema definitions (schema-org, structured data)
-│   ├── server/                 # Nuxt server directory
-│   │   ├── api/                # Server API routes
-│   │   └── routes/             # Server routes
-│   └── types/                  # Global TypeScript type definitions
-│       ├── collection.ts
-│       ├── customer.ts
-│       ├── order.ts
-│       ├── product.ts
-│       └── ...
+├── app/                      # Application layer (final composition)
+│   ├── assets/               # Global assets processed by Vite (CSS, fonts, etc.)
+│   │   └── css/              # TailwindCSS and global styles
+│   ├── layouts/              # Application layouts (default, admin, etc.)
+│   ├── pages/                # Top-level page overrides (if any)
+│   └── app.vue               # Root Vue component
 │
-├── public/                     # Static files served as-is (favicon, robots.txt, etc.)
-├── nuxt.config.ts              # Root config (extends base, defines srcDir)
+├── layers/
+│   ├── base/                 # Nuxtless base layer - core ecommerce functionality
+│   │   ├── components/       # Base reusable UI components
+│   │   │   ├── account/      # Account-related components
+│   │   │   ├── cart/         # Shopping cart components
+│   │   │   ├── category/     # Category/collection components
+│   │   │   ├── checkout/     # Checkout flow components
+│   │   │   ├── header/       # Header components
+│   │   │   ├── product/      # Product display components
+│   │   │   └── CLAUDE.md     # Generic component/UI rules for Vue/Nuxt
+│   │   ├── composables/      # Core composition functions
+│   │   ├── gql/              # GraphQL queries and fragments
+│   │   │   ├── queries/      # GraphQL query definitions
+│   │   │   └── fragments/    # GraphQL fragment definitions
+│   │   ├── i18n/             # Internationalization files
+│   │   ├── pages/            # Base pages (can be overridden by layers)
+│   │   │   ├── account/      # Account pages
+│   │   │   ├── category/     # Category pages
+│   │   │   ├── checkout/     # Checkout pages
+│   │   │   ├── product/      # Product pages
+│   │   │   └── CLAUDE.md     # Generic page/SEO/routing rules for Nuxt
+│   │   ├── plugins/          # Core Nuxt plugins
+│   │   ├── stores/           # Base Pinia stores (state management, NOT data fetching)
+│   │   ├── utils/            # Base utility functions
+│   │   ├── validators/       # Base validation schemas
+│   │   └── nuxt.config.ts    # Base layer configuration (modules & settings)
+│   │
+│   └── <layer-name>/         # Custom extension layers (Example: unstack, theater, festival, etc.)
+│       ├── components/       # Layer-specific components
+│       ├── composables/      # Layer-specific composables
+│       ├── pages/            # Layer-specific pages (extends base)
+│       ├── stores/           # Layer-specific stores
+│       ├── utils/            # Layer-specific utilities
+│       ├── validators/       # Layer-specific validators
+│       └── nuxt.config.ts    # Layer configuration
+│
+├── schema/                   # Schema definitions (schema-org, structured data)
+├── server/                   # Nuxt server directory
+│   ├── api/                  # Server API routes
+│   └── routes/               # Server routes
+├── types/                    # Global TypeScript type definitions
+│   ├── collection.ts
+│   ├── customer.ts
+│   ├── order.ts
+│   ├── product.ts
+│   └── ...
+│
+├── public/                   # Static files served as-is (favicon, robots.txt, etc.)
+├── nuxt.config.ts            # Root config (extends base)
 ├── tsconfig.json
 ├── package.json
 └── README.md
