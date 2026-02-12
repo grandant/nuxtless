@@ -3,18 +3,20 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
-## 0.14.0 - 2026-01-13
+## [0.15.0] - 2026-02-10
+### Added
+- Added Persian (fa-IR) locale with RTL support
 
+## 0.14.0 - 2026-01-13
 ### Changed
 - Reverted the recent introduction of the `src/` directory and returned to a flat Nuxt project structure
 - Improved overall TypeScript correctness based on `nuxt typecheck` feedback
 - Clarified type boundaries between domain models and UI view models
 - Made Vue runtime imports explicit where required by strict type checking
 
-## 0.13.0 - 2026-01-13
-
+## [0.13.0] - 2026-01-13
 ### Added
-- Added Russian (RU) locale
+- Added Russian (ru-RU) locale
 
 ### Changed
 - Improved i18n handling by aligning the language switcher with app-defined locales
@@ -96,7 +98,6 @@ This project follows [Semantic Versioning](https://semver.org/) and the [Convent
 - Checkout flow refactored; old form watchers and payment handling replaced by new composables.
 
 ## [0.5.0] - 2025-08-25
-
 ### Added
 - Unified loading states in cart and checkout components with `orderStore.loading`
 - New `syncOrderShippingAddress` util for updating shipping address in Vendure
@@ -112,7 +113,6 @@ This project follows [Semantic Versioning](https://semver.org/) and the [Convent
 - Minor refinements to existing GQL queries, UI elements, and `orderStore`
 
 ## [0.4.0] - 2025-05-13
-
 ### Added
 - Completed checkout flow: address → shipping → payment → confirmation
 - Confirmation page with dynamic order data
@@ -124,7 +124,6 @@ This project follows [Semantic Versioning](https://semver.org/) and the [Convent
 - Minor logic errors across shipping/payment handling
 
 ## [0.3.0] - 2025-05-05
-
 ### Added
 - Account verification page (`/account/verify`) with token-based activation
 - Password reset request page (`/account/request-reset`)
@@ -142,7 +141,6 @@ This project follows [Semantic Versioning](https://semver.org/) and the [Convent
 - Minor ESLint/TypeScript cleanup
 
 ## [0.2.0] - 2025-04-27
-
 ### Added
 - Customer account creation and login flow (Vendure integration)
 - Fixed session persistence (cart state survives page reloads and logins)
@@ -151,7 +149,6 @@ This project follows [Semantic Versioning](https://semver.org/) and the [Convent
 - Minor improvements (renamed GQL queries and mutations)
 
 ## [0.1.0] - 2025-04-06
-
 ### Added
 - Initial project structure (Nuxt 4 compat mode)
 - Tailwind CSS v4 support
