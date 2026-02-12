@@ -7,6 +7,9 @@ This project follows [Semantic Versioning](https://semver.org/) and the [Convent
 ### Added
 - Added Persian (fa-IR) locale with RTL support
 
+### Changed
+- Added `prose-invert` to ensure product description is correctly display on dark mode
+
 ## 0.14.0 - 2026-01-13
 ### Changed
 - Reverted the recent introduction of the `src/` directory and returned to a flat Nuxt project structure
