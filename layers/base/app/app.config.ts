@@ -2,7 +2,7 @@ export default defineAppConfig({
   myLayer: {
     name: "Base Layer",
   },
-  appLocales: ["bg", "ru", "de", "en", "es", "fr", "it", "pt"],
+  appLocales: ["en", "bg", "ru", "fa", "de", "es", "fr", "it", "pt"],
   countryCodeDefault: "BG",
 });
 
