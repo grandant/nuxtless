@@ -5,7 +5,7 @@ const description = product.value?.description;
 
 <template>
   <!-- eslint-disable-next-line vue/no-v-html -->
-  <div class="prose" v-html="description" />
+  <div class="prose dark:prose-invert" v-html="description" />
 </template>
 
 <style lang="css" scoped></style>
