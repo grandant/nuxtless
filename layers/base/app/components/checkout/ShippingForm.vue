@@ -29,9 +29,10 @@ await orderStore.setShippingMethod(shippingMethods.value[0]?.value ?? "");
 
 async function onSubmit() {
   if (!state.shippingMethodId) return;
-
+  orderStore.error = null;
   await orderStore.setShippingMethod(state.shippingMethodId);
-  if (!orderStore.error) isSubmitted.value = true;
+  if (orderStore.error) return;
+  isSubmitted.value = true;
 }
 
 async function onError() {
