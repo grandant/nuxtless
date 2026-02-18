@@ -28,20 +28,22 @@ const addressForm = useTemplateRef("stripeElement");
 
 async function onSubmit() {
   if (!state.code) return;
+  orderStore.error = null;
 
   // Note: consider a switch or a composable if more methods are added later
   if (state.code === "standard-payment") {
     await orderStore.transitionToState("ArrangingPayment");
+    if (orderStore.error) return;
     await orderStore.addPaymentToOrder({ method: state.code, metadata: {} });
+    if (orderStore.error) return;
   } else if (state.code === "stripe-payment") {
     orderStore.loading = true;
     await addressForm.value?.submitStripePayment();
     orderStore.loading = false;
+    if (orderStore.error) return;
   }
 
-  if (!orderStore.error) {
-    isSubmitted.value = true;
-  }
+  isSubmitted.value = true;
 }
 
 async function onError() {

@@ -42,12 +42,16 @@ const countries = computed(
 );
 
 async function onSubmit(event: FormSubmitEvent<AddressForm>) {
+  orderStore.error = null;
+
   if (!isAuthenticated.value) {
     await orderStore.setCustomerForOrder({
       firstName: event.data.firstName,
       lastName: event.data.lastName,
       emailAddress: event.data.emailAddress,
     });
+
+    if (orderStore.error) return;
   }
 
   await orderStore.setOrderShippingAddress({
@@ -58,7 +62,9 @@ async function onSubmit(event: FormSubmitEvent<AddressForm>) {
     countryCode: state.countryCode,
   });
 
-  if (!orderStore.error) isSubmitted.value = true;
+  if (orderStore.error) return;
+
+  isSubmitted.value = true;
 }
 
 async function onError() {
