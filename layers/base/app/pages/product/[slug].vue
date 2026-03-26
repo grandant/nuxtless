@@ -4,6 +4,7 @@ const slug = route.params.slug as string;
 const { t, locale } = useI18n();
 const { i18NBaseUrl } = useRuntimeConfig().public;
 const productStore = useProductStore();
+const { hasOptions, selectedVariant } = storeToRefs(productStore);
 
 const { data } = await useAsyncGql("GetProductDetail", {
   slug,
@@ -18,8 +19,6 @@ watch(
   },
   { immediate: true, flush: "post" },
 );
-
-const { hasVariants, selectedVariant } = storeToRefs(productStore);
 
 const formatPrice = (amount: number) =>
   new Intl.NumberFormat(locale.value, {
@@ -156,13 +155,13 @@ if (product.value && selectedVariant.value) {
           </section>
 
           <section
-            :class="[hasVariants ? 'mt-0 sm:mt-12' : 'mt-0']"
+            :class="[hasOptions ? 'mt-0 sm:mt-12' : 'mt-0']"
             aria-labelledby="product-add-to-cart-heading"
           >
             <h2 id="product-add-to-cart-heading" class="sr-only">
               Add to Cart
             </h2>
-            <CartAddButton :variant-id="selectedVariant?.id" />
+            <CartAddButton />
           </section>
         </div>
       </div>
