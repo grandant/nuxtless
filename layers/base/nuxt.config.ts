@@ -69,12 +69,6 @@ export default defineNuxtConfig({
       default: {
         schema: "../graphql.schema.json",
         host: process.env.GQL_HOST!,
-        token: {
-          type: "Bearer",
-          name: "Authorization",
-          value: "",
-        },
-        retainToken: true,
         headers: {
           "vendure-token": process.env.CHANNEL_TOKEN!,
         },

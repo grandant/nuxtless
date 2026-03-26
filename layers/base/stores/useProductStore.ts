@@ -31,9 +31,7 @@ export const useProductStore = defineStore("product", () => {
     return Array.from(groups.values());
   });
 
-  const hasVariants = computed(
-    () => (product.value?.variants?.length ?? 0) > 1,
-  );
+  const hasOptions = computed(() => optionGroups.value.length > 0);
 
   const selectedVariant = computed(
     () =>
@@ -93,7 +91,7 @@ export const useProductStore = defineStore("product", () => {
     product,
     selectedOptions,
     optionGroups,
-    hasVariants,
+    hasOptions,
     selectedVariant,
     stockLevel,
     galleryAssets,
