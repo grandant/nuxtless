@@ -51,7 +51,7 @@ const { openPhotoSwipe } = useProductLightbox({ select });
       />
     </UCarousel>
 
-    <div class="mx-auto flex max-w-xs justify-between gap-1 pt-4">
+    <div class="mx-auto flex max-w-xs justify-center gap-4 pt-4">
       <div
         v-for="(item, index) in galleryAssets"
         :key="item.id"
