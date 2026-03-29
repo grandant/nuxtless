@@ -21,6 +21,7 @@ const items = computed<NavigationMenuItem[]>(
         to: parentPath,
         avatar: { src: collection.featuredAsset?.preview },
         defaultOpen: isActive,
+        active: isActive,
         children: collection.children?.map((child) => ({
           label: child.name,
           to: localePath(`/category/${child.slug}`),
@@ -31,23 +32,31 @@ const items = computed<NavigationMenuItem[]>(
 </script>
 
 <template>
-  <header
-    class="z-10 border-b bg-gray-50/80 py-2 backdrop-blur dark:bg-gray-800/80"
-  >
-    <div class="container flex justify-between">
-      <div class="flex gap-4 sm:gap-6">
-        <HeaderMobileMenu :items="items" class="flex lg:hidden" />
-        <LogoElement />
-        <HeaderDesktopMenu :items="items" class="hidden lg:flex" />
-      </div>
-      <div class="flex items-center gap-2 sm:gap-4">
-        <SearchModal />
-        <AccountMenu />
-        <CartTrigger />
-      </div>
-    </div>
-    <CartPanel />
-  </header>
-</template>
+  <UHeader toggle-side="left">
+    <template #left>
+      <LogoElement :width="45" />
+    </template>
 
-<style lang="css" scoped></style>
+    <UNavigationMenu
+      :items="items"
+      variant="link"
+      content-orientation="vertical"
+    />
+
+    <template #right>
+      <SearchModal />
+      <AccountMenu />
+      <CartTrigger />
+    </template>
+
+    <template #body>
+      <UNavigationMenu
+        :items="items"
+        variant="pill"
+        orientation="vertical"
+        :ui="{ item: 'py-1', childItem: 'pt-2' }"
+      />
+    </template>
+  </UHeader>
+  <CartPanel />
+</template>

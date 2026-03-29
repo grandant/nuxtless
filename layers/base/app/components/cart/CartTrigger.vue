@@ -11,7 +11,7 @@ const itemCount = computed(
   <UChip :show="itemCount > 0" color="error" :text="itemCount" size="3xl">
     <UButton
       icon="i-lucide-shopping-cart"
-      size="xl"
+      size="md"
       @click="isCartOpen = !isCartOpen"
     />
   </UChip>
