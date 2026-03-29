@@ -1,9 +1,15 @@
 export default defineAppConfig({
-  myLayer: {
+  baseLayer: {
     name: "Base Layer",
   },
 
   countryCodeDefault: "BG",
+
+  logo: {
+    light: "/logo-top.svg",
+    dark: "/logo-top.svg",
+    width: 32,
+  },
 
   ui: {
     colors: {
@@ -14,10 +20,15 @@ export default defineAppConfig({
 
 declare module "@nuxt/schema" {
   interface AppConfigInput {
-    myLayer?: {
+    baseLayer?: {
       name?: string;
     };
     countryCodeDefault?: string;
+    logo?: {
+      light?: string;
+      dark?: string;
+      width?: number;
+    };
     ui?: {
       colors?: {
         primary?: string;
@@ -26,10 +37,15 @@ declare module "@nuxt/schema" {
   }
 
   interface AppConfig {
-    myLayer: {
+    baseLayer: {
       name: string;
     };
     countryCodeDefault: string;
+    logo: {
+      light: string;
+      dark: string;
+      width: number;
+    };
     ui: {
       colors: {
         primary: string;

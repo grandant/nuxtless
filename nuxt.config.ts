@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
-import { shopIdentity } from "./schema/identity";
+import { siteIdentity } from "./schema/identity";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
@@ -32,7 +32,6 @@ export default defineNuxtConfig({
       GQL_HOST: process.env.GQL_HOST,
       channelToken: process.env.CHANNEL_TOKEN,
       i18NBaseUrl: process.env.I18N_BASE_URL,
-      payloadBase: process.env.PAYLOAD_BASE,
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
       unsplashApiKey: process.env.UNSPLASH_API_KEY,
     },
@@ -46,13 +45,13 @@ export default defineNuxtConfig({
   },
 
   schemaOrg: {
-    identity: shopIdentity,
+    identity: siteIdentity,
   },
 
   site: {
-    url: process.env.NUXT_PUBLIC_I18N_BASE_URL,
-    name: process.env.NUXT_PUBLIC_SITE_NAME,
-    description: "Nuxt Level Headless E-commerce",
+    url: siteIdentity.url,
+    name: siteIdentity.name,
+    description: siteIdentity.description,
     env: process.env.NODE_ENV,
     indexable: process.env.NODE_ENV === "production",
     trailingSlash: false,
