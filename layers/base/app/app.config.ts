@@ -2,17 +2,40 @@ export default defineAppConfig({
   myLayer: {
     name: "Base Layer",
   },
-  appLocales: ["en", "bg", "ru", "fa", "de", "es", "fr", "it", "pt"],
+
   countryCodeDefault: "BG",
+
+  ui: {
+    colors: {
+      primary: "green",
+    },
+  },
 });
 
 declare module "@nuxt/schema" {
   interface AppConfigInput {
-    baseLayer?: {
-      /** Project name */
-      name?: "Nuxt Base Layer";
+    myLayer?: {
+      name?: string;
     };
-    appLocales?: string[];
     countryCodeDefault?: string;
+    ui?: {
+      colors?: {
+        primary?: string;
+      };
+    };
+  }
+
+  interface AppConfig {
+    myLayer: {
+      name: string;
+    };
+    countryCodeDefault: string;
+    ui: {
+      colors: {
+        primary: string;
+      };
+    };
   }
 }
+
+export {};

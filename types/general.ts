@@ -2,6 +2,14 @@ import type { AddressForm } from "~~/layers/base/validators/addressForm";
 import type { ShippingForm } from "~~/layers/base/validators/shippingForm";
 import type { PaymentForm } from "~~/layers/base/validators/paymentForm";
 
+export interface AppLocale {
+  code: string;
+  language: string;
+  file: string;
+  name: string;
+  dir?: "ltr" | "rtl";
+}
+
 export interface CheckoutState {
   addressForm: AddressForm;
   shippingForm: ShippingForm;
