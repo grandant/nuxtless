@@ -1,15 +1,16 @@
 <script setup lang="ts">
-const {
-  logoLight = "/logo-top.svg",
-  logoDark = "/logo-top.svg",
-  width = 32,
-} = defineProps<{
+const props = defineProps<{
   logoLight?: string;
   logoDark?: string;
   width?: number;
 }>();
 
+const appConfig = useAppConfig();
 const localePath = useLocalePath();
+
+const logoLight = computed(() => props.logoLight ?? appConfig.logo.light);
+const logoDark = computed(() => props.logoDark ?? appConfig.logo.dark);
+const width = computed(() => props.width ?? appConfig.logo.width);
 </script>
 
 <template>

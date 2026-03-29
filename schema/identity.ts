@@ -1,13 +1,13 @@
 import { defineOrganization } from "nuxt-schema-org/schema";
 
-export const shopIdentity = defineOrganization({
+export const siteIdentity = defineOrganization({
   "@type": ["Organization", "Store", "OnlineStore"],
   name: "Nuxtless",
   alternateName: "Unstack, UDevCo, unstack.dev",
   description:
     "Modern headless e-commerce platform built on Nuxt and Vendure. SEO-first, secure, type-safe.",
   url: "https://nuxtless.unstack.dev",
-  logo: "/favicon.ico",
+  logo: "/logo-full.svg",
   email: "support@unstack.dev",
   foundingDate: "2025-01-01",
   legalName: "Candaon Ltd.",
