@@ -41,7 +41,7 @@ watch(error, (val) => {
 });
 
 // OgImage
-defineOgImageComponent("Frame", {
+defineOgImage("Frame", {
   title: t("messages.site.title"),
   description: t("messages.site.tagline"),
   // image: "/logo.png",

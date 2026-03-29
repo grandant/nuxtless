@@ -38,6 +38,12 @@ export default defineNuxtConfig({
   },
 
   // NuxtSEO Modules Config
+  ogImage: {
+    security: {
+      secret: process.env.OG_IMAGE_SECRET,
+    },
+  },
+
   robots: {
     disallow: ["/account", "/checkout", "/confirmation", "/cart", "/search"],
     allow: "/",

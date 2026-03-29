@@ -83,7 +83,7 @@ This project follows [Semantic Versioning](https://semver.org/) and the [Convent
   - **Global**: `Organization`
   - **PDP**: `Product`, `Offer`, `BreadcrumbList`
   - **Category**: `CollectionPage`, `ItemList`, `BreadcrumbList`
-- Wired OG image generation via `defineOgImageComponent` (home, PDPs, categories)
+- Wired OG image generation via `defineOgImage` (home, PDPs, categories)
 - Enabled LinkChecker with baseline clean run (rules enforced project-wide)
 
 ## [0.6.0] - 2025-09-25
