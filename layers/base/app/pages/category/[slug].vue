@@ -75,7 +75,7 @@ useSeoMeta({
 });
 
 // OgImage
-defineOgImageComponent("Frame", {
+defineOgImage("Frame", {
   title: t("messages.site.title"),
   description: currentCollection?.name,
   image: currentCollection?.featuredAsset?.preview,
