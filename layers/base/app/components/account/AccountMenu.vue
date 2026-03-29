@@ -42,7 +42,7 @@ const colorModeItems = computed<DropdownMenuItem[]>(() => [
   },
 ]);
 
-const userItems = computed<DropdownMenuItem[]>(() => [
+const userItems = computed<DropdownMenuItem[][]>(() => [
   [
     {
       label: customer.value?.firstName,
@@ -74,7 +74,7 @@ const userItems = computed<DropdownMenuItem[]>(() => [
       children: colorModeItems.value,
     },
     {
-      label: currentLocaleName,
+      label: currentLocaleName.value,
       icon: "i-lucide-globe",
       class: "items-center",
       children: localeItems.value,
@@ -98,7 +98,7 @@ const userItems = computed<DropdownMenuItem[]>(() => [
   ],
 ]);
 
-const guestItems = computed<DropdownMenuItem[]>(() => [
+const guestItems = computed<DropdownMenuItem[][]>(() => [
   [
     {
       label: t("messages.account.login"),
@@ -115,7 +115,7 @@ const guestItems = computed<DropdownMenuItem[]>(() => [
       children: colorModeItems.value,
     },
     {
-      label: currentLocaleName,
+      label: currentLocaleName.value,
       icon: "i-lucide-globe",
       class: "items-center",
       children: localeItems.value,
@@ -151,7 +151,7 @@ onMounted(() => {
     </template>
 
     <UButton
-      size="xl"
+      size="md"
       icon="i-lucide-user"
       variant="outline"
       :loading="loading"

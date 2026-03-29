@@ -44,6 +44,11 @@ public/media/
 AGENTS.md
 CLAUDE.md
 
+# Skills
+.claude/
+.agents/
+skills-lock.json
+
 # Cloudflare
 .wrangler
 worker-configuration.d.ts

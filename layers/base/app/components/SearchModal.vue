@@ -28,7 +28,7 @@ watch(error, (err) => {
     :title="t('messages.shop.searchProducts')"
     :ui="{ content: 'h-screen sm:h-[32rem]' }"
   >
-    <UButton variant="outline" icon="i-lucide-search" size="xl" />
+    <UButton variant="outline" icon="i-lucide-search" size="md" />
 
     <template #body>
       <UInput

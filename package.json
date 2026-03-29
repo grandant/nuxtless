@@ -25,6 +25,7 @@
     "@nuxtjs/sitemap": "8.0.9",
     "@pinia/nuxt": "0.11.3",
     "@tailwindcss/vite": "4.2.2",
+    "@takumi-rs/core": "0.73.1",
     "@vueuse/core": "14.2.1",
     "@vueuse/integrations": "14.2.1",
     "graphql-request": "7.4.0",
