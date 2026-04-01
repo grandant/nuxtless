@@ -5,10 +5,14 @@ export default defineAppConfig({
 
   countryCodeDefault: "BG",
 
-  logo: {
+  logoTop: {
     light: "/logo-top.svg",
     dark: "/logo-top.svg",
-    width: 32,
+  },
+
+  logoFull: {
+    light: "/logo-full.svg",
+    dark: "/logo-full.svg",
   },
 
   ui: {
@@ -17,41 +21,3 @@ export default defineAppConfig({
     },
   },
 });
-
-declare module "@nuxt/schema" {
-  interface AppConfigInput {
-    baseLayer?: {
-      name?: string;
-    };
-    countryCodeDefault?: string;
-    logo?: {
-      light?: string;
-      dark?: string;
-      width?: number;
-    };
-    ui?: {
-      colors?: {
-        primary?: string;
-      };
-    };
-  }
-
-  interface AppConfig {
-    baseLayer: {
-      name: string;
-    };
-    countryCodeDefault: string;
-    logo: {
-      light: string;
-      dark: string;
-      width: number;
-    };
-    ui: {
-      colors: {
-        primary: string;
-      };
-    };
-  }
-}
-
-export {};

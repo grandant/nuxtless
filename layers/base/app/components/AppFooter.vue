@@ -42,19 +42,13 @@ const items = computed<NavigationMenuItem[]>(
 
     <template #left>
       <LogoElement
-        logo-light="/logo-full.svg"
-        logo-dark="/logo-full.svg"
-        :width="115"
         class="hidden md:block"
+        wrapper-class="h-[125px]"
+        height="125"
       />
     </template>
 
-    <LogoElement
-      logo-light="/logo-full.svg"
-      logo-dark="/logo-full.svg"
-      :width="95"
-      class="me-6 block md:hidden"
-    />
+    <LogoElement width-class="w-1/4" class="me-6 block md:hidden" />
 
     <UNavigationMenu
       :items="items"
