@@ -41,7 +41,7 @@ watch(error, (val) => {
 });
 
 // OgImage
-defineOgImage("Frame", {
+defineOgImage("Frame.takumi", {
   title: t("messages.site.title"),
   description: t("messages.site.tagline"),
   // image: "/logo.png",
