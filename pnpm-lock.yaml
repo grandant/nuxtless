@@ -61,7 +61,7 @@ importers:
         version: 5.0.6(@nuxt/schema@4.4.2)(db0@0.3.4)(ioredis@5.10.1)(magicast@0.5.2)(nuxt@4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.27.1(@babel/core@7.29.0))(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@parcel/watcher@2.5.1)(@types/node@24.12.0)(@vue/compiler-sfc@3.5.31)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.4(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.31(typescript@5.9.3)))(rollup-plugin-visualizer@7.0.1(rollup@4.60.0))(rollup@4.60.0)(terser@5.44.1)(typescript@5.9.3)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.2.6(typescript@5.9.3))(yaml@2.8.2))(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vue@3.5.31(typescript@5.9.3))
       nuxt-og-image:
         specifier: 6.3.0
-        version: 6.3.0(4c368106fa394a6d89450cae04602356)
+        version: 6.3.0(89d74d2568d4bc69628a836a922df3dc)
       nuxt-schema-org:
         specifier: 6.0.4
         version: 6.0.4(200912cabba082cb7c34d2926a8aebf8)
@@ -105,6 +105,9 @@ importers:
       '@tailwindcss/typography':
         specifier: 0.5.19
         version: 0.5.19(tailwindcss@4.2.2)
+      '@takumi-rs/wasm':
+        specifier: ^0.73.1
+        version: 0.73.1
       '@types/node':
         specifier: 24.12.0
         version: 24.12.0
@@ -3660,6 +3663,9 @@ packages:
 
   '@takumi-rs/helpers@0.73.1':
     resolution: {integrity: sha512-OONKM9+XtiRp7s2e3kwbnTyF9cYqk6L8d7Q2KG449OjphdlhuCZhVwmpqHI2nHEgL1TLC2LEHzxJHvfyAIdNBw==}
+
+  '@takumi-rs/wasm@0.73.1':
+    resolution: {integrity: sha512-WDrstyQettPQSmYDyj7lrJMKlm3E5dg0ZC+PFvKTdfP4aMTZgWBchIL3MfdUwpRIRf96sdL+pAdrwI42X9iRXg==}
 
   '@tanstack/table-core@8.21.3':
     resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
@@ -12332,6 +12338,10 @@ snapshots:
 
   '@takumi-rs/helpers@0.73.1': {}
 
+  '@takumi-rs/wasm@0.73.1':
+    dependencies:
+      '@takumi-rs/helpers': 0.73.1
+
   '@tanstack/table-core@8.21.3': {}
 
   '@tanstack/virtual-core@3.13.23': {}
@@ -15526,7 +15536,7 @@ snapshots:
       - vue
       - zod
 
-  nuxt-og-image@6.3.0(4c368106fa394a6d89450cae04602356):
+  nuxt-og-image@6.3.0(89d74d2568d4bc69628a836a922df3dc):
     dependencies:
       '@clack/prompts': 1.1.0
       '@nuxt/devtools-kit': 3.2.4(magicast@0.5.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
@@ -15567,6 +15577,7 @@ snapshots:
       '@resvg/resvg-js': 2.6.2
       '@resvg/resvg-wasm': 2.6.2
       '@takumi-rs/core': 0.73.1
+      '@takumi-rs/wasm': 0.73.1
       fontless: 0.2.1(db0@0.3.4)(ioredis@5.10.1)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
       playwright-core: 1.57.0
       sharp: 0.34.5

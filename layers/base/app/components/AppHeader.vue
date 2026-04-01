@@ -36,12 +36,17 @@ const items = computed<NavigationMenuItem[]>(
 <template>
   <UHeader toggle-side="left">
     <template #left>
-      <LogoElement
-        :logo-light="logoTop.light"
-        :logo-dark="logoTop.dark"
-        wrapper-class="w-full"
-        height="50"
-      />
+      <ULink
+        :to="localePath('/')"
+        class="transition-opacity hover:opacity-80"
+        aria-label="Home"
+      >
+        <LogoElement
+          :logo-light="logoTop.light"
+          :logo-dark="logoTop.dark"
+          wrapper-class="w-full h-[40px] md:h-[50px]"
+        />
+      </ULink>
     </template>
 
     <UNavigationMenu

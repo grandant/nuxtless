@@ -37,8 +37,7 @@ onMounted(() => {
       <LogoElement
         aria-hidden="true"
         focusable="false"
-        wrapper-class="justify-center flex"
-        height="125"
+        wrapper-class="w-1/2 h-[125px] justify-center"
         class="mb-4"
       />
       <h1 id="reset-password-heading" class="text-2xl font-bold">
