@@ -43,7 +43,7 @@ if (imgUrl.value?.urls?.raw) {
       <div class="">
         <NuxtImg
           format="webp"
-          class="h-[420px] w-full object-cover lg:h-[560px] xl:h-[540px]"
+          class="h-105 w-full object-cover lg:h-140 xl:h-135"
           :src="bannerUrl"
           alt="Hero image"
           loading="eager"
