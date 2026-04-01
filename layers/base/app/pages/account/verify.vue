@@ -53,11 +53,10 @@ onMounted(async () => {
       aria-labelledby="verify-heading"
     >
       <LogoElement
-        logo-light="/logo-full.svg"
-        logo-dark="/logo-full.svg"
-        :width="100"
         aria-hidden="true"
         focusable="false"
+        wrapper-class="justify-center flex"
+        height="125"
         class="mb-4"
       />
       <h1 id="verify-heading" class="text-2xl font-bold">

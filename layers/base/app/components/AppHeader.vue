@@ -2,9 +2,11 @@
 import type { NavigationMenuItem } from "@nuxt/ui";
 import type { MenuCollections } from "~~/types/collection";
 
+const { logoTop } = useAppConfig();
 const route = useRoute();
-const menuCollections = useState<MenuCollections>("menuCollections");
 const localePath = useLocalePath();
+
+const menuCollections = useState<MenuCollections>("menuCollections");
 
 const items = computed<NavigationMenuItem[]>(
   () =>
@@ -34,7 +36,12 @@ const items = computed<NavigationMenuItem[]>(
 <template>
   <UHeader toggle-side="left">
     <template #left>
-      <LogoElement :width="45" />
+      <LogoElement
+        :logo-light="logoTop.light"
+        :logo-dark="logoTop.dark"
+        wrapper-class="w-full"
+        height="50"
+      />
     </template>
 
     <UNavigationMenu
