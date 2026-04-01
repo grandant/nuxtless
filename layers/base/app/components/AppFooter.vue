@@ -32,23 +32,14 @@ const items = computed<NavigationMenuItem[]>(
 <template>
   <UFooter>
     <template #top>
-      <USeparator
-        :avatar="{
-          src: '/favicon.svg',
-          loading: 'lazy',
-        }"
-      />
+      <USeparator />
     </template>
 
     <template #left>
-      <LogoElement
-        class="hidden md:block"
-        wrapper-class="h-[125px]"
-        height="125"
-      />
+      <LogoElement wrapper-class="w-1/2" class="hidden md:block" />
     </template>
 
-    <LogoElement width-class="w-1/4" class="me-6 block md:hidden" />
+    <LogoElement class="me-6 block md:hidden" wrapper-class="w-1/3" />
 
     <UNavigationMenu
       :items="items"
