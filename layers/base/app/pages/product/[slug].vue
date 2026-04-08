@@ -1,10 +1,17 @@
 <script setup lang="ts">
 const route = useRoute();
-const slug = route.params.slug as string;
-const { t, locale } = useI18n();
 const { i18NBaseUrl } = useRuntimeConfig().public;
+const colorMode = useColorMode();
+const { t, locale } = useI18n();
+
+const ogColorMode = computed<"dark" | "light">(() =>
+  colorMode.value === "dark" ? "dark" : "light",
+);
+
 const productStore = useProductStore();
 const { hasOptions, selectedVariant } = storeToRefs(productStore);
+
+const slug = route.params.slug as string;
 
 const { data } = await useAsyncGql("GetProductDetail", {
   slug,
@@ -37,11 +44,13 @@ useSeoMeta({
 });
 
 // OgImage
-defineOgImage("Frame", {
-  title: t("messages.site.title"),
-  description: `${product.value?.name}: ${product.value?.description}`,
+defineOgImage("ProductCard.takumi", {
+  colorMode: ogColorMode,
+  productName: product.value?.name,
+  price: formatPrice(selectedVariant.value?.price),
+  // description: product.value?.description,
   image: product.value?.featuredAsset?.preview,
-  // logo: "/logo.png",
+  brand: t("messages.site.title"),
 });
 
 // SchemaOrg
