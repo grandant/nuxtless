@@ -1,7 +1,13 @@
 <script setup lang="ts">
 const { GQL_HOST: gqlHost, channelToken } = useRuntimeConfig().public;
+const colorMode = useColorMode();
 const { t, locale } = useI18n();
 const toast = useToast();
+
+const ogColorMode = computed<"dark" | "light">(() =>
+  colorMode.value === "dark" ? "dark" : "light",
+);
+
 const orderStore = useOrderStore();
 const { error } = storeToRefs(orderStore);
 
@@ -41,9 +47,12 @@ watch(error, (val) => {
 });
 
 // OgImage
-defineOgImage("Frame.takumi", {
-  title: t("messages.site.title"),
-  description: t("messages.site.tagline"),
+defineOgImage("BlogPost.takumi", {
+  colorMode: ogColorMode,
+  title: t("messages.site.tagline"),
+  category: t("messages.site.title"),
+  author: t("messages.site.shortDescription"),
+  backgroundImage: "logo-top.svg",
   // image: "/logo.png",
   // logo: "/logo-full.svg",
 });

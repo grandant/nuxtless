@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import type { MenuCollections, ChildCollection } from "~~/types/collection";
 
-const { i18NBaseUrl } = useRuntimeConfig().public;
 const route = useRoute();
-const slug = route.params.slug as string;
+const { i18NBaseUrl } = useRuntimeConfig().public;
+const colorMode = useColorMode();
 const { t, locale } = useI18n();
+
+const ogColorMode = computed<"dark" | "light">(() =>
+  colorMode.value === "dark" ? "dark" : "light",
+);
 
 const menuCollections = useState<MenuCollections>("menuCollections");
 const menuItems = menuCollections.value?.collections.items ?? [];
+
+const slug = route.params.slug as string;
 
 const currentCollection =
   menuItems.find((top) => top.slug === slug) ??
@@ -75,11 +81,11 @@ useSeoMeta({
 });
 
 // OgImage
-defineOgImage("Frame", {
-  title: t("messages.site.title"),
-  description: currentCollection?.name,
-  image: currentCollection?.featuredAsset?.preview,
-  // logo: "/logo.png",
+defineOgImage("BlogPost.takumi", {
+  colorMode: ogColorMode,
+  title: currentCollection?.name,
+  category: t("messages.site.title"),
+  backgroundImage: currentCollection?.featuredAsset?.preview,
 });
 
 // SchemaOrg
