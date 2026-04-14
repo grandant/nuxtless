@@ -40,9 +40,9 @@ export default defineNuxtConfig({
     domains: ["localhost"], // add prod domains
     provider: process.env.NUXT_IMAGE_PROVIDER,
     // Provider-specific configuration
-    cloudflare: {
-      // baseURL: "www.example.com",
-    },
+    // cloudflare: {
+    //   baseURL: "www.example.com",
+    // },
   },
 
   // ColorMode Settings (currently defaults)

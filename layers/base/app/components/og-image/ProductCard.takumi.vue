@@ -16,7 +16,7 @@ withDefaults(
     colorMode: "light",
     productName: "Product Name",
     price: "$99",
-    description: "A fantastic product that solves your problems",
+    // description: "A fantastic product that solves your problems",
     brand: "Brand",
   },
 );
