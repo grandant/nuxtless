@@ -37,12 +37,12 @@ const { openPhotoSwipe } = useProductLightbox({ select });
     >
       <NuxtImg
         format="webp"
-        class="mx-auto h-[250px] cursor-pointer rounded-lg object-contain transition-transform hover:opacity-90 sm:h-[350px] sm:object-cover"
+        class="mx-auto h-62.5 cursor-pointer rounded-lg object-contain transition-transform hover:opacity-90 sm:h-87.5 sm:object-cover"
         :src="item.preview"
         :alt="`${selectedVariant?.name || product?.name || 'Product image'} – Slide ${activeIndex + 1}`"
         :loading="activeIndex === 0 ? 'eager' : 'lazy'"
         :preload="activeIndex === 0"
-        sizes="90vw sm:30vw"
+        sizes="350px sm:40vw"
         placeholder
         placeholder-class="blur-xl"
         role="button"
@@ -61,7 +61,7 @@ const { openPhotoSwipe } = useProductLightbox({ select });
       >
         <NuxtImg
           format="webp"
-          class="h-[45px] w-[45px] rounded-lg object-cover"
+          class="h-11.25 w-11.25 rounded-lg object-cover"
           :src="item.preview"
           :alt="`${selectedVariant?.name || product?.name || 'Product image'} – Thumb ${index + 1}`"
           loading="eager"
