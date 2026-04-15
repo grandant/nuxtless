@@ -18,6 +18,7 @@ export const AddressForm = object({
   city: pipe(string(), nonEmpty("City is required")),
   postalCode: pipe(string(), nonEmpty("Postal code is required")),
   countryCode: pipe(string(), nonEmpty("Country is required")),
+  phoneNumber: optional(string()),
   billingSameAsShipping: boolean(),
 });
 
