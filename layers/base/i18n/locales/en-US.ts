@@ -146,6 +146,7 @@ export default defineI18nLocale(() => ({
       city: "City",
       zip: "Postal Code / ZIP",
       country: "Country",
+      phoneNumber: "Phone Number",
       email: "Email",
     },
     error: {
