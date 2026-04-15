@@ -152,6 +152,7 @@ export default defineI18nLocale(() => ({
       city: "شهر",
       zip: "کد پستی",
       country: "کشور",
+      phoneNumber: "شماره تلفن",
       email: "ایمیل",
     },
     error: {
