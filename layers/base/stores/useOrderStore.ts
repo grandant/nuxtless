@@ -195,6 +195,7 @@ export const useOrderStore = defineStore("order", () => {
     city?: string;
     postalCode?: string;
     countryCode: string;
+    phoneNumber: string;
   }): Promise<void> {
     loading.value = true;
     error.value = null;
