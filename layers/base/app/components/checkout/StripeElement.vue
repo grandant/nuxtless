@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CheckoutState } from "~~/types/general";
 
-const { stripePublicKey } = useRuntimeConfig().public;
+const { stripeAccountId, stripePublicKey } = useRuntimeConfig().public;
 const colorMode = useColorMode();
 const { locale } = useI18n();
 const { onLoaded } = useScriptStripe();
@@ -37,7 +37,10 @@ watch(colorMode, () => {
 
 onMounted(() => {
   onLoaded(async ({ Stripe }) => {
-    stripe.value = Stripe(stripePublicKey, { locale: locale.value });
+    stripe.value = Stripe(stripePublicKey, {
+      stripeAccount: stripeAccountId,
+      locale: locale.value,
+    });
 
     if (state.code === "stripe-payment") {
       const { createStripePaymentIntent } =

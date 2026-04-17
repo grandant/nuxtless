@@ -32,6 +32,7 @@ export default defineNuxtConfig({
       GQL_HOST: process.env.GQL_HOST,
       channelToken: process.env.CHANNEL_TOKEN,
       i18NBaseUrl: process.env.I18N_BASE_URL,
+      stripeAccountId: process.env.STRIPE_ACCOUNT_ID,
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
       unsplashApiKey: process.env.UNSPLASH_API_KEY,
     },
