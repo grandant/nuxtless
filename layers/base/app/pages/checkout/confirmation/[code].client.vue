@@ -4,15 +4,36 @@ import { h } from "vue";
 import type { TableColumn } from "@nuxt/ui";
 import type { OrderLineRow } from "~~/types/general";
 
-const { locale, t } = useI18n();
-const localePath = useLocalePath();
-const route = useRoute();
-const code = route.params.code as string;
-const isMounted = ref(false);
-
 definePageMeta({
   alias: ["/order/:code"],
 });
+
+const { locale, t } = useI18n();
+const localePath = useLocalePath();
+const route = useRoute();
+const router = useRouter();
+const toast = useToast();
+const orderStore = useOrderStore();
+
+const code = route.params.code as string;
+const isMounted = ref(false);
+
+const redirectStatus = computed(
+  () => route.query.redirect_status as string | undefined,
+);
+const paymentIntent = computed(
+  () => route.query.payment_intent as string | undefined,
+);
+
+const isStripeReturn = computed(() => {
+  return !!paymentIntent.value;
+});
+
+const isSuccessfulStripeReturn = computed(() => {
+  return redirectStatus.value === "succeeded";
+});
+
+const isPending = ref(false);
 
 const {
   data: orderData,
@@ -23,30 +44,30 @@ const {
 const order = computed(() => orderData.value?.orderByCode ?? null);
 const hasError = computed(() => !!error.value);
 
+const transitionalStates = ["AddingItems", "ArrangingPayment"];
+
+async function sleep(ms: number) {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function pollOrder(maxAttempts = 20, interval = 2000) {
   let attempts = 0;
+
   while (attempts < maxAttempts) {
     attempts++;
     await refresh();
 
-    if (error.value) {
-      console.error("Error during order polling:", error.value);
-      break;
-    }
-
     const state = order.value?.state;
-    const initialStates = ["AddingItems", "ArrangingPayment"];
 
-    if (!state) {
-      console.warn("Order state missing during polling, attempt", attempts);
-      await new Promise((res) => setTimeout(res, interval));
+    if (!state || transitionalStates.includes(state)) {
+      await sleep(interval);
       continue;
     }
 
-    if (!initialStates.includes(state)) break;
-
-    await new Promise((res) => setTimeout(res, interval));
+    return true;
   }
+
+  return false;
 }
 
 const formatPrice = (amount: number) =>
@@ -103,14 +124,73 @@ function printReceipt() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   isMounted.value = true;
-  pollOrder();
+
+  if (
+    isStripeReturn.value &&
+    redirectStatus.value &&
+    !isSuccessfulStripeReturn.value
+  ) {
+    await orderStore.transitionToState("AddingItems");
+    await router.replace(localePath("/checkout"));
+
+    toast.add({
+      title: t("messages.error.general"),
+      description: t("messages.error.generalMessage"),
+      color: "error",
+    });
+
+    return;
+  } else if (
+    isStripeReturn.value &&
+    redirectStatus.value &&
+    isSuccessfulStripeReturn.value
+  ) {
+    await orderStore.addPaymentToOrder({
+      method: "stripe-payment",
+      metadata: {
+        isAsyncRedirect: true,
+        paymentIntentId: paymentIntent.value,
+      } as Record<string, unknown>,
+    });
+
+    // TODO: investigate why the active order state is not rehydrated/reset here
+    // like it is in the normal COD/non-redirect checkout success flow.
+    orderStore.order = null;
+
+    await router.replace(
+      localePath(`/checkout/confirmation/${route.params.code}`),
+    );
+  }
+
+  const state = order.value?.state;
+
+  if (!state || transitionalStates.includes(state)) {
+    isPending.value = true;
+    const resolved = await pollOrder();
+    isPending.value = false;
+
+    if (!resolved) {
+      console.error("Order confirmation polling timed out", {
+        code,
+        state: order.value?.state,
+        redirectStatus: redirectStatus.value,
+        paymentIntent: paymentIntent.value,
+        hasError: hasError.value,
+        error: error.value,
+      });
+      return;
+    }
+  }
 });
 </script>
 
 <template>
-  <BaseLoader v-if="!isMounted && !order" width="sm:w-xs md:w-sm" />
+  <BaseLoader
+    v-if="(!isMounted && !order) || isPending"
+    width="sm:w-xs md:w-sm"
+  />
 
   <UError
     v-else-if="isMounted && hasError"
