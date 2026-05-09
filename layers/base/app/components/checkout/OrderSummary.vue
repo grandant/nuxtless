@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import type { ActiveOrderDetail } from "~~/types/order";
 
-const { onSubmit } = defineProps<{ onSubmit: () => Promise<void> | void }>();
+const { disabled, onSubmit } = defineProps<{
+  disabled?: boolean;
+  onSubmit: () => Promise<void> | void;
+}>();
 
 const { t } = useI18n();
 const orderStore = useOrderStore();
@@ -71,7 +74,7 @@ const shippingWithTax = computed(() =>
         size="xl"
         color="primary"
         :loading="loading"
-        :disabled="(activeOrder?.lines.length ?? 0) < 1"
+        :disabled="(activeOrder?.lines.length ?? 0) < 1 || disabled"
         class="w-full justify-center"
         @click="onSubmit"
       >

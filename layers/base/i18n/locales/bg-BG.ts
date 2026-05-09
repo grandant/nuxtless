@@ -52,7 +52,7 @@ export default defineI18nLocale(() => ({
         returns: "30 дни връщане",
         returnsText: "Не сте доволни? Върнете в рамките на 30 дни.",
         checkout: "Сигурно плащане",
-        checkoutText: "Сигурни онлйан плащания чрез Stripe.",
+        checkoutText: "Сигурни онлайн плащания чрез Stripe.",
         support: "Винаги тук",
         supportText: "Онлайн поддръжка 24/7 за всички въпроси.",
       },
