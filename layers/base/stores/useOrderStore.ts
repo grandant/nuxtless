@@ -167,6 +167,7 @@ export const useOrderStore = defineStore("order", () => {
     emailAddress: string;
     firstName: string;
     lastName: string;
+    phoneNumber?: string;
   }): Promise<void> {
     loading.value = true;
     error.value = null;

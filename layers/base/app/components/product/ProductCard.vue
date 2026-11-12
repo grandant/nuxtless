@@ -45,7 +45,7 @@ const imageSrc = computed(
     >
       <NuxtImg
         format="webp"
-        class="h-[250px] w-full rounded object-cover sm:h-[300px] lg:h-[325px] xl:h-[350px]"
+        class="h-62.5 w-full rounded object-cover sm:h-75 lg:h-81.25 xl:h-87.5"
         :src="imageSrc"
         :alt="product.productName"
         :loading="eager ? 'eager' : 'lazy'"
@@ -58,7 +58,7 @@ const imageSrc = computed(
         <h3>
           <ULink :to="localePath(`/product/${product.slug}`)">
             <span class="absolute inset-0 z-10"></span>
-            {{ product.productName }}
+            <span class="line-clamp-1 truncate">{{ product.productName }}</span>
           </ULink>
         </h3>
         <span>{{ productStartPrice }}</span>
