@@ -1,22 +1,21 @@
 # Nuxt dev/build outputs
+node_modules
+*.log
+.nuxt
+nuxt.d.ts
 .output
 .data
-.nuxt
-.nitro
-.cache
+.env
+framework
 dist
-package-lock.yaml
+.DS_Store
 
-# Node dependencies
-node_modules
+# Yarn
+.yarn/cache
+.yarn/*state*
 
-# Playground files
-**/.playground/
-
-# Logs
-logs
-*.log
-.pnpm-debug.log
+# GQL schema
+schema.graphql
 
 # Local History
 .history
@@ -26,30 +25,8 @@ logs
 .env.*
 !.env.example
 
-# Misc
-.DS_Store
-.idea
+# VSCode
 .vscode/
-.swp
-.swx
 
-# GQL schema
-schema.graphql
-graphql.schema.json
-
-# Media files
-public/media/
-
-# Agents
-AGENTS.md
-CLAUDE.md
-
-# Skills
-.claude/
-.agents/
-skills-lock.json
-
-# Cloudflare
-.wrangler
-worker-configuration.d.ts
-wrangler.jsonc
+# JetBrains/WebStorm
+.idea/

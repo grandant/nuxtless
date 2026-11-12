@@ -1,75 +1,80 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
-import { siteIdentity } from "./schema/identity";
+
+import { appLocales } from "./i18n/locales/locales";
 
 export default defineNuxtConfig({
-  compatibilityDate: "2025-07-15",
-  devtools: { enabled: import.meta.env.DEV },
+  modules: [
+    "@bicou/nuxt-urql",
+    "@nuxt/eslint",
+    "@nuxt/fonts",
+    "@nuxt/image",
+    "@nuxt/scripts",
+    "@nuxt/ui",
+    "@nuxtjs/i18n",
+    "@nuxtjs/seo",
+    "@pinia/nuxt",
+    "@vueuse/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
+  ],
 
-  experimental: {
-    typescriptPlugin: true,
+  $meta: {
+    name: "nuxtless",
   },
 
-  nitro: {
-    preset: "cloudflare_module",
+  components: [
+    {
+      path: "./components",
+      // prefix: "nuxtless",
+    },
+  ],
 
-    cloudflare: {
-      deployConfig: true,
-      nodeCompat: true,
+  devtools: { enabled: true },
+
+  css: ["#layers/nuxtless/app/assets/css/main.css"],
+
+  site: {
+    url: process.env.NUXT_SITE_URL,
+    name: "Nuxtless",
+  },
+
+  runtimeConfig: {
+    channelToken: process.env.NUXT_CHANNEL_TOKEN,
+    vendureBase: process.env.NUXT_VENDURE_BASE,
+    public: {
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
     },
   },
-
-  extends: ["./layers/base"],
-
-  css: ["./app/assets/css/main.css"],
 
   vite: {
     plugins: [tailwindcss()],
   },
 
-  runtimeConfig: {
-    public: {
-      GQL_HOST: process.env.GQL_HOST,
-      channelToken: process.env.CHANNEL_TOKEN,
-      i18NBaseUrl: process.env.I18N_BASE_URL,
-      stripeAccountId: process.env.STRIPE_ACCOUNT_ID,
-      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
-      unsplashApiKey: process.env.UNSPLASH_API_KEY,
+  i18n: {
+    defaultLocale: "en",
+    strategy: "prefix_except_default",
+    detectBrowserLanguage: false,
+    baseUrl: process.env.NUXT_SITE_URL,
+    locales: appLocales,
+  },
+
+  pinia: {
+    storesDirs: ["../stores/**"],
+  },
+
+  scripts: {
+    registry: {
+      stripe: {
+        trigger: "onNuxtReady",
+      },
     },
   },
 
-  // NuxtSEO Modules Config
-  ogImage: {
-    security: {
-      secret: process.env.OG_IMAGE_SECRET,
+  urql: {
+    endpoint: "/api/graphql",
+    client: fileURLToPath(new URL("./app/urql.config.ts", import.meta.url)),
+    ssr: {
+      endpoint: `${process.env.NUXT_SITE_URL}/api/graphql`,
     },
-  },
-
-  robots: {
-    disallow: ["/account", "/checkout", "/confirmation", "/cart", "/search"],
-    allow: "/",
-    blockNonSeoBots: true,
-  },
-
-  schemaOrg: {
-    identity: siteIdentity,
-  },
-
-  site: {
-    url: siteIdentity.url,
-    name: siteIdentity.name,
-    description: siteIdentity.description,
-    env: process.env.NODE_ENV,
-    indexable: process.env.NODE_ENV === "production",
-    trailingSlash: false,
-  },
-
-  sitemap: {
-    sources: [
-      // Optional sitemap integration.
-      // Requires custom logic to fetch Vendure products and collections.
-      // This can be handled via a third-party backend service.
-      // A recipe or mapping example can be provided on request.
-    ],
   },
 });

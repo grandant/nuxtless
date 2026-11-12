@@ -1,9 +1,15 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./.nuxt/tsconfig.app.json" },
-    { "path": "./.nuxt/tsconfig.server.json" },
-    { "path": "./.nuxt/tsconfig.shared.json" },
-    { "path": "./.nuxt/tsconfig.node.json" }
-  ]
+  "extends": "./.playground/.nuxt/tsconfig.json",
+
+  "compilerOptions": {
+    "strict": true,
+    "plugins": [
+      {
+        "name": "gql.tada/ts-plugin",
+        "schema": "./schema.graphql",
+        "tadaOutputLocation": "./gql/graphql-env.d.ts",
+        "shouldCheckForColocatedFragments": false,
+      },
+    ],
+  },
 }

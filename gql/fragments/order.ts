@@ -1,0 +1,96 @@
+import { graphql } from "#layers/nuxtless/gql/graphql";
+
+export const OrderBase = graphql(`
+  fragment OrderBase on Order {
+    id
+    code
+    couponCodes
+    state
+    totalQuantity
+    totalWithTax
+    currencyCode
+    lines {
+      id
+      unitPriceWithTax
+      quantity
+      linePriceWithTax
+      productVariant {
+        id
+        name
+        sku
+      }
+      featuredAsset {
+        id
+        preview
+      }
+    }
+  }
+`);
+
+export const OrderDetail = graphql(`
+  fragment OrderDetail on Order {
+    id
+    code
+    couponCodes
+    state
+    currencyCode
+    totalQuantity
+    subTotal
+    shippingWithTax
+    totalWithTax
+    orderPlacedAt
+    customer {
+      id
+      firstName
+      lastName
+      emailAddress
+    }
+    shippingAddress {
+      fullName
+      streetLine1
+      streetLine2
+      city
+      postalCode
+      country
+    }
+    billingAddress {
+      fullName
+      streetLine1
+      streetLine2
+      city
+      postalCode
+      country
+    }
+    discounts {
+      description
+      amountWithTax
+    }
+    lines {
+      id
+      unitPriceWithTax
+      quantity
+      linePriceWithTax
+      productVariant {
+        id
+        name
+        sku
+      }
+      featuredAsset {
+        id
+        preview
+      }
+    }
+    payments {
+      method
+    }
+    shippingLines {
+      shippingMethod {
+        name
+      }
+    }
+    taxSummary {
+      description
+      taxTotal
+    }
+  }
+`);

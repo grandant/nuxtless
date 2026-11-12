@@ -1,0 +1,86 @@
+<script setup lang="ts">
+const productStore = useProductStore();
+const { product, selectedVariant, galleryAssets } = storeToRefs(productStore);
+
+const carousel = useTemplateRef("carousel");
+const activeIndex = ref(0);
+
+function onClickPrev() {
+  activeIndex.value--;
+}
+function onClickNext() {
+  activeIndex.value++;
+}
+function onSelect(index: number) {
+  activeIndex.value = index;
+}
+
+function select(index: number) {
+  activeIndex.value = index;
+
+  carousel.value?.emblaApi?.scrollTo(index);
+}
+
+const { openPhotoSwipe } = useProductLightbox({ select });
+
+watch(
+  () => selectedVariant.value?.id,
+  () => {
+    activeIndex.value = 0;
+    carousel.value?.emblaApi?.scrollTo(0, true);
+  },
+);
+</script>
+
+<template>
+  <div class="w-full flex-1">
+    <UCarousel
+      ref="carousel"
+      v-slot="{ item }"
+      :items="galleryAssets"
+      :prev="{ onClick: onClickPrev }"
+      :next="{ onClick: onClickNext }"
+      class="mx-auto w-full"
+      @select="onSelect"
+    >
+      <NuxtImg
+        format="webp"
+        class="mx-auto h-62.5 cursor-pointer rounded-lg object-contain transition-transform hover:opacity-90 sm:h-87.5 sm:object-cover"
+        :src="item.preview"
+        :alt="`${selectedVariant?.name || product?.name || 'Product image'} – Slide ${activeIndex + 1}`"
+        :loading="activeIndex === 0 ? 'eager' : 'lazy'"
+        :preload="activeIndex === 0"
+        sizes="90vw sm:30vw"
+        placeholder
+        placeholder-class="blur-xl"
+        role="button"
+        tabindex="0"
+        @click="() => openPhotoSwipe(activeIndex)"
+      />
+    </UCarousel>
+
+    <div class="mx-auto flex max-w-xs justify-center gap-4 pt-4">
+      <div
+        v-for="(item, index) in galleryAssets"
+        :key="item.id"
+        class="opacity-25 transition-opacity hover:opacity-100"
+        :class="{ 'opacity-100': activeIndex === index }"
+        @click="select(index)"
+      >
+        <NuxtImg
+          format="webp"
+          class="h-11.25 w-11.25 rounded-lg object-cover"
+          :src="item.preview"
+          :alt="`${selectedVariant?.name || product?.name || 'Product image'} – Thumb ${index + 1}`"
+          loading="eager"
+          preload
+          sizes="45px"
+          placeholder
+          placeholder-class="blur-xl"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="css" scoped></style>
