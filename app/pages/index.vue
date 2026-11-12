@@ -1,42 +1,15 @@
 <script setup lang="ts">
-const nuxtApp = useNuxtApp();
-const { unsplashApiKey } = useRuntimeConfig().public;
 const { t } = useI18n();
 
-const { data: imgUrl } = await useFetch<{ urls: { raw: string } }>(
-  "https://api.unsplash.com/photos/random",
-  {
-    headers: {
-      Authorization: `Client-ID ${unsplashApiKey}`,
-    },
-    query: {
-      query: "electronics",
-      orientation: "landscape",
-    },
-    getCachedData(key) {
-      return nuxtApp.payload.data[key] || nuxtApp.static.data[key];
-    },
-  },
-);
-
-let bannerUrl = "/hero.avif";
-
-if (imgUrl.value?.urls?.raw) {
-  const url = new URL(imgUrl.value.urls.raw);
-  url.searchParams.set("w", "1600");
-  url.searchParams.set("h", "600");
-  url.searchParams.set("q", "80");
-  url.searchParams.set("auto", "format");
-  bannerUrl = url.toString();
-}
+const bannerUrl = "/hero.avif";
 </script>
 
 <template>
-  <main>
+  <UPage>
     <h1 class="sr-only">{{ t("messages.site.tagline") }}</h1>
 
     <!-- Hero Banner -->
-    <section class="mb-14" aria-labelledby="home-hero-heading">
+    <section aria-labelledby="home-hero-heading">
       <h2 id="home-hero-heading" class="sr-only">
         {{ t("messages.pages.index.welcome") }} {{ t("messages.site.title") }}
       </h2>
@@ -57,29 +30,28 @@ if (imgUrl.value?.urls?.raw) {
     </section>
 
     <!-- Categories Section -->
-    <div class="container">
-      <section class="mb-14" aria-labelledby="home-categories-heading">
-        <h2 id="home-categories-heading" class="mb-4 text-2xl font-semibold">
-          {{ t("messages.shop.shopByCategory") }}
-        </h2>
-        <HomeCategoryCarousel />
-      </section>
+    <UPageSection :title="t('messages.shop.shopByCategory')">
+      <HomeCategoryCarousel />
+    </UPageSection>
 
-      <!-- Shop Features -->
-      <section class="mt-20 mb-14" aria-labelledby="home-features-heading">
-        <h2 id="home-features-heading" class="sr-only">Why Shop With Us</h2>
-        <HomeShopFeatures />
-      </section>
+    <!-- Shop Features -->
+    <UPageSection
+      aria-labelledby="home-features-heading"
+      :ui="{ title: 'sr-only', container: 'lg:pt-0 pb-12' }"
+    >
+      <h2 id="home-features-heading" class="sr-only">Why Shop With Us</h2>
 
-      <!-- Featured Products -->
-      <section class="mb-14" aria-labelledby="home-products-heading">
-        <h2 id="home-products-heading" class="mb-4 text-2xl font-semibold">
-          {{ t("messages.shop.popularProducts") }}
-        </h2>
-        <HomeFeaturedProducts />
-      </section>
-    </div>
-  </main>
+      <HomeShopFeatures />
+    </UPageSection>
+
+    <!-- Featured Products -->
+    <UPageSection
+      :title="t('messages.shop.popularProducts')"
+      :ui="{ container: 'lg:pt-0 pb-12' }"
+    >
+      <HomeFeaturedProducts />
+    </UPageSection>
+  </UPage>
 </template>
 
 <style lang="css" scoped></style>
