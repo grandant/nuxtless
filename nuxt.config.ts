@@ -22,13 +22,6 @@ export default defineNuxtConfig({
     name: "nuxtless",
   },
 
-  components: [
-    {
-      path: "./components",
-      // prefix: "nuxtless",
-    },
-  ],
-
   devtools: { enabled: true },
 
   css: ["#layers/nuxtless/app/assets/css/main.css"],
@@ -48,6 +41,19 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [tailwindcss()],
+  },
+
+  fonts: {
+    families: [
+      {
+        name: "Inter",
+        provider: "google",
+        weights: [400, 500, 600, 700],
+        styles: ["normal", "italic"],
+        subsets: ["cyrillic", "latin", "latin-ext"],
+        global: true,
+      },
+    ],
   },
 
   i18n: {

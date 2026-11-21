@@ -322,6 +322,7 @@ export const useOrderStore = defineStore("order", () => {
 
   async function setOrderShippingAddress(input: {
     fullName?: string;
+    phoneNumber?: string;
     streetLine1: string;
     streetLine2?: string;
     city?: string;
