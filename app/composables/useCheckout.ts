@@ -39,7 +39,7 @@ export function useCheckout() {
     async (n, o) => {
       if (n && n !== o) {
         await setOrderCustomFields(n);
-        if (error) return;
+        if (error.value) return;
 
         await recalcShipping();
       }
