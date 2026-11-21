@@ -63,21 +63,24 @@ Create a local `.env` file (do not commit real credentials). Configure these var
 
 ```dotenv
 # Locales enabled in the storefront (use the format required by your app configuration)
-APP_LOCALES=en,bg
+APP_LOCALES="en, bg, ru, fa, de, es, fr, it, pt"
 
 # Vendure Shop API and channel (server-side)
 NUXT_VENDURE_BASE=http://localhost:3001/shop-api
-NUXT_CHANNEL_TOKEN=
+NUXT_CHANNEL_TOKEN=vendure-channel-token
 
 # Nuxt Image provider
 NUXT_IMAGE_PROVIDER=ipx
 
-# Secret for Nuxt OG Image
+# Nuxt application secret (generate with: openssl rand -base64 32)
+NUXT_APP_SECRET=replace-with-generated-secret
+
+# Secret for Nuxt OG Image (generate with: openssl rand -hex 32)
 NUXT_OG_IMAGE_SECRET=replace-with-generated-secret
 
 # Storefront URL and name
-NUXT_SITE_URL=http://localhost:3000
-NUXT_SITE_NAME=Nuxtless
+NUXT_SITE_URL=your-site-url
+NUXT_SITE_NAME=your-site-name
 
 # Stripe publishable key, if Stripe is enabled
 STRIPE_PUBLIC_KEY=

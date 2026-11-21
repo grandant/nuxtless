@@ -12,6 +12,7 @@ import type { InferOutput } from "valibot";
 export const AddressForm = object({
   firstName: pipe(string(), nonEmpty("First name is required")),
   lastName: pipe(string(), nonEmpty("Last name is required")),
+  phoneNumber: optional(string()),
   emailAddress: pipe(string(), email("Invalid email")),
   streetLine1: pipe(string(), nonEmpty("Street is required")),
   streetLine2: optional(string()),

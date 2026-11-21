@@ -11,7 +11,9 @@ export function useCheckout() {
   async function recalcShipping() {
     await setOrderShippingAddress({
       fullName: `${checkoutState.value.addressForm.firstName} ${checkoutState.value.addressForm.lastName}`,
+      phoneNumber: checkoutState.value.addressForm.phoneNumber,
       streetLine1: checkoutState.value.addressForm.streetLine1,
+      streetLine2: checkoutState.value.addressForm.streetLine2,
       city: checkoutState.value.addressForm.city,
       postalCode: checkoutState.value.addressForm.postalCode,
       countryCode: checkoutState.value.addressForm.countryCode,
