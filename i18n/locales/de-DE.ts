@@ -1,13 +1,13 @@
 export const de = {
+  nuxtSiteConfig: {
+    name: "Nuxtless",
+    tagline: "Nuxt Level Headless E-Commerce",
+    shortDescription:
+      "Eine moderne, schnelle und sichere Basis für den Aufbau von Headless-Onlineshops mit Nuxt und Vendure.",
+    description:
+      "Nuxtless ist ein flexibles und modulares Starterprojekt für Headless-E-Commerce, entwickelt für hohe Leistung, hervorragendes SEO und eine saubere Architektur. Es bietet fertige Integrationen mit Vendure, Nuxt UI und Payload, typsicheren Code und professionelle Sicherheitspraktiken – eine stabile Grundlage für jeden professionellen Onlineshop.",
+  },
   messages: {
-    site: {
-      title: "Nuxtless",
-      tagline: "Nuxt Level Headless E-Commerce",
-      shortDescription:
-        "Eine moderne, schnelle und sichere Basis für den Aufbau von Headless-Onlineshops mit Nuxt und Vendure.",
-      description:
-        "Nuxtless ist ein flexibles und modulares Starterprojekt für Headless-E-Commerce, entwickelt für hohe Leistung, hervorragendes SEO und eine saubere Architektur. Es bietet fertige Integrationen mit Vendure, Nuxt UI und Payload, typsicheren Code und professionelle Sicherheitspraktiken – eine stabile Grundlage für jeden professionellen Onlineshop.",
-    },
     pages: {
       index: {
         welcome: "Willkommen bei",
@@ -78,6 +78,7 @@ export const de = {
       enterPassword: "Passwort eingeben",
       confirmPassword: "Passwort bestätigen",
       email: "E-Mail",
+      phoneNumber: "Telefon",
       emailPlaceholder: "Geben Sie Ihre E-Mail-Adresse ein",
       login: "Anmelden",
       logout: "Logout",
@@ -154,6 +155,7 @@ export const de = {
       zip: "Postleitzahl / ZIP",
       country: "Land",
       email: "E-Mail",
+      phoneNumber: "Telefon",
     },
     error: {
       invalidPasswordResetLink: "Der Passwort-Reset-Link ist ungültig.",

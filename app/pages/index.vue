@@ -6,12 +6,12 @@ const bannerUrl = "/hero.avif";
 
 <template>
   <UPage>
-    <h1 class="sr-only">{{ t("messages.site.tagline") }}</h1>
+    <h1 class="sr-only">{{ t("nuxtSiteConfig.tagline") }}</h1>
 
     <!-- Hero Banner -->
     <section aria-labelledby="home-hero-heading">
       <h2 id="home-hero-heading" class="sr-only">
-        {{ t("messages.pages.index.welcome") }} {{ t("messages.site.title") }}
+        {{ t("messages.pages.index.welcome") }} {{ t("nuxtSiteConfig.name") }}
       </h2>
       <div class="">
         <NuxtImg

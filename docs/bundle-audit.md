@@ -277,7 +277,7 @@ Pinia module
 3. **SEO Meta Setup**: Complex SEO setup in layout that could be page-specific:
    ```vue
    const head = useLocaleHead();
-   const title = computed(() => t(route.meta.title || "messages.site.title"));
+   const title = computed(() => t(route.meta.title || "nuxtSiteConfig.name"));
    ```
 
 ---

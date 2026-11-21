@@ -103,7 +103,7 @@ useSeoMeta({
 
 // OgImage
 defineOgImage("Frame", {
-  title: t("messages.site.title"),
+  title: t("nuxtSiteConfig.name"),
   description: currentCollection?.name,
   image: currentCollection?.featuredAsset?.preview,
   // logo: "/logo.png",
