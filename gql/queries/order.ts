@@ -105,6 +105,7 @@ export const GetShippingMethods = graphql(`
       id
       name
       price
+      code
       description
     }
   }
