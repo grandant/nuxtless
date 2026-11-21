@@ -1,13 +1,13 @@
 export const bg = {
+  nuxtSiteConfig: {
+    name: "Nuxtless",
+    tagline: "Nuxt Level Headless E-commerce",
+    shortDescription:
+      "Модерна, бърза и сигурна основа за изграждане на хедлес онлайн магазини с Nuxt и Vendure.",
+    description:
+      "Nuxtless е гъвкав и модулен стартов проект за хедлес e-commerce, създаден за висока производителност, отлично SEO и чиста архитектура. Предлага готови интеграции с Vendure, Nuxt UI и Payload, типобезопасен код и професионални практики за сигурност — стабилна основа за всеки професионален онлайн магазин",
+  },
   messages: {
-    site: {
-      title: "Nuxtless",
-      tagline: "Nuxt Level Headless E-commerce",
-      shortDescription:
-        "Модерна, бърза и сигурна основа за изграждане на хедлес онлайн магазини с Nuxt и Vendure.",
-      description:
-        "Nuxtless е гъвкав и модулен стартов проект за хедлес e-commerce, създаден за висока производителност, отлично SEO и чиста архитектура. Предлага готови интеграции с Vendure, Nuxt UI и Payload, типобезопасен код и професионални практики за сигурност — стабилна основа за всеки професионален онлайн магазин",
-    },
     pages: {
       index: {
         welcome: "Добре дошли в",
@@ -75,6 +75,7 @@ export const bg = {
       enterPassword: "Въведете парола",
       confirmPassword: "Потвърдете паролата",
       email: "Имейл",
+      phoneNumber: "Телефон",
       emailPlaceholder: "Въведете вашия имейл",
       login: "Вход",
       logout: "Изход",
@@ -149,6 +150,7 @@ export const bg = {
       zip: "Пощенски код",
       country: "Държава",
       email: "Имейл",
+      phoneNumber: "Телефон",
     },
     error: {
       invalidPasswordResetLink:

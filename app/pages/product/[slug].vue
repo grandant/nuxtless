@@ -50,7 +50,7 @@ useSeoMeta({
 
 // OgImage
 defineOgImage("Frame", {
-  title: t("messages.site.title"),
+  title: t("nuxtSiteConfig.name"),
   description: `${product.value?.name}: ${product.value?.description}`,
   image: product.value?.featuredAsset?.preview,
   // logo: "/logo.png",
@@ -89,7 +89,7 @@ if (product.value && selectedVariant.value) {
         itemCondition: "https://schema.org/NewCondition",
         seller: {
           "@type": "Organization",
-          name: t("messages.site.title"),
+          name: t("nuxtSiteConfig.name"),
         },
       },
     }),
