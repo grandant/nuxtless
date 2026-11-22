@@ -22,6 +22,7 @@ export const CustomerDetail = graphql(`
       id
       fullName
       streetLine1
+      streetLine2
       city
       postalCode
       country {
