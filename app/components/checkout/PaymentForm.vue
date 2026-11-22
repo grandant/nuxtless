@@ -33,7 +33,7 @@ const paymentMethods = computed(
 
 const checkoutState = useState<CheckoutState>("checkoutState");
 const state = checkoutState.value.paymentForm;
-const addressForm = useTemplateRef("stripeElement");
+const stripeElement = useTemplateRef("stripeElement");
 
 async function onSubmit() {
   if (!state.code) return;
@@ -51,7 +51,7 @@ async function onSubmit() {
   } else if (state.code === "stripe-payment") {
     loading.value = true;
 
-    await addressForm.value?.submitStripePayment();
+    await stripeElement.value?.submitStripePayment();
 
     loading.value = false;
 
