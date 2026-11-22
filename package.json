@@ -1,7 +1,7 @@
 {
   "name": "nuxtless",
   "type": "module",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "main": "./nuxt.config.ts",
   "scripts": {
     "dev": "nuxi dev .playground",

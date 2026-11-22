@@ -3,6 +3,24 @@
 All notable changes to this project will be documented here.
 This project follows [Semantic Versioning](https://semver.org/) and the [Conventional Commits](https://www.conventionalcommits.org/) style.
 
+## [0.16.1] - 2026-11-22
+
+### Added
+
+- Added optional phone number support to the checkout address form and shipping address update.
+- Included shipping method codes and the second street line in Shop API queries.
+
+### Fixed
+
+- Corrected the checkout error check and Stripe element reference.
+- Updated site name and tagline references in storefront pages.
+- Removed the layer’s default app config so consuming applications can provide their own branding.
+
+### Changed
+
+- Pinned existing dependency versions and added Lucide icons.
+- Refined translations and setup documentation.
+
 ## [0.16.0] - 2026-11-12
 
 ### Breaking Changes
